@@ -1,86 +1,61 @@
 ---
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, author, category, tags } = Astro.props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<BaseLayout title={title} description={description}>
+  <article class="pt-24 pb-20">
+    <!-- Hero Image -->
+    <div class="mx-auto max-w-4xl px-6">
+      {heroImage && (
+        <div class="overflow-hidden rounded-2xl">
+          <Image
+            width={1020}
+            height={510}
+            src={heroImage}
+            alt={title}
+            class="w-full object-cover"
+          />
+        </div>
+      )}
+    </div>
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
-</html>
+    <!-- Prose Content -->
+    <div class="prose mx-auto mt-10 px-6">
+      <div class="mb-10 border-b border-dark/10 pb-8">
+        <div class="flex items-center gap-3 text-sm text-dark/50">
+          <FormattedDate date={pubDate} />
+          {author && <span>· {author}</span>}
+          {category && (
+            <span class="rounded-full bg-secondary/20 px-3 py-0.5 text-xs font-semibold text-primary">
+              {category}
+            </span>
+          )}
+        </div>
+        {updatedDate && (
+          <p class="mt-2 text-sm italic text-dark/40">
+            Last updated on <FormattedDate date={updatedDate} />
+          </p>
+        )}
+        <h1 class="mt-4 font-heading text-3xl font-bold text-dark md:text-4xl lg:text-5xl">
+          {title}
+        </h1>
+        {tags && tags.length > 0 && (
+          <div class="mt-4 flex flex-wrap gap-2">
+            {tags.map((tag: string) => (
+              <span class="rounded-full bg-dark/5 px-3 py-1 text-xs text-dark/60">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

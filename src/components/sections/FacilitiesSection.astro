@@ -1,0 +1,54 @@
+---
+/**
+ * FacilitiesSection — Reassures guests about comfort and amenities.
+ * Headline + 3-column card grid.
+ */
+import SectionHeader from '../ui/SectionHeader.astro';
+
+const facilities = [
+  {
+    name: 'Clean Bathrooms & Hot Water',
+    description: 'Kamar mandi bersih dengan air panas tersedia di setiap vila dan area camping.',
+    icon: '🚿',
+  },
+  {
+    name: 'Reliable Electricity 24hr',
+    description: 'Listrik stabil 24 jam untuk kenyamanan Anda selama menginap.',
+    icon: '⚡',
+  },
+  {
+    name: 'Wi-Fi Access',
+    description: 'Akses Wi-Fi tersedia untuk tetap terhubung meskipun di tengah hutan.',
+    icon: '📶',
+  },
+  {
+    name: 'Parking Area',
+    description: 'Area parkir luas dan aman untuk kendaraan Anda.',
+    icon: '🅿️',
+  },
+];
+---
+
+<section class="bg-highlight px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl">
+    <SectionHeader
+      label="Fasilitas"
+      title="Nature Outside. Comfort Inside."
+      subtitle="Just because you're surrounded by forest and fresh mountain air doesn't mean you leave comfort behind. Kasumi Resort offers clean bathrooms, reliable electricity, Wi-Fi access, and more."
+    />
+
+    <!-- Facility Cards Grid -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4" data-animate="stagger">
+      {facilities.map((facility) => (
+        <div class="rounded-2xl bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+          <!-- Icon -->
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/20 text-2xl">
+            {facility.icon}
+          </div>
+          <h3 class="font-heading text-lg font-bold text-dark">{facility.name}</h3>
+          <p class="mt-2 text-sm text-dark/60">{facility.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

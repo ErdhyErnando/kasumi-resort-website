@@ -1,0 +1,82 @@
+---
+import { SITE_NAME, CONTACT_EMAIL, ADDRESS, SOCIAL_LINKS } from '../../lib/constants';
+---
+
+<footer class="sticky bottom-0 z-0 bg-primary text-highlight">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+    <!-- Main Footer Grid -->
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Col 1: Contact -->
+      <div>
+        <h3 class="mb-4 font-heading text-lg font-bold">Contact</h3>
+        <ul class="space-y-2 text-sm text-highlight/70">
+          <li>
+            <a href={`mailto:${CONTACT_EMAIL}`} class="transition-colors hover:text-highlight">
+              {CONTACT_EMAIL}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 2: Follow -->
+      <div>
+        <h3 class="mb-4 font-heading text-lg font-bold">Follow</h3>
+        <ul class="space-y-2 text-sm text-highlight/70">
+          <li>
+            <a
+              href={SOCIAL_LINKS.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-colors hover:text-highlight"
+            >
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a
+              href={SOCIAL_LINKS.tiktok}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-colors hover:text-highlight"
+            >
+              TikTok
+            </a>
+          </li>
+          <li>
+            <a href="/id/blog" class="transition-colors hover:text-highlight">Blog</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Logo & Address -->
+      <div>
+        <h3 class="mb-4 font-heading text-xl font-bold">{SITE_NAME}</h3>
+        <p class="text-sm text-highlight/70">
+          <a
+            href="https://maps.google.com/?q=TNGHS+Cidahu+Sukabumi+Jawa+Barat+43358"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition-colors hover:text-highlight"
+          >
+            {ADDRESS}
+          </a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-highlight/20 pt-8 text-xs text-highlight/50 md:flex-row">
+      <span>Privacy Policy</span>
+      <span>&copy; {new Date().getFullYear()} {SITE_NAME}</span>
+      <div class="flex items-center gap-4">
+        <span>Credit</span>
+        <!-- Language Toggle Placeholder -->
+        <button class="rounded-full border border-highlight/30 px-3 py-1 text-highlight/70 transition-colors hover:bg-highlight/10">
+          ID / EN
+        </button>
+      </div>
+    </div>
+  </div>
+</footer>

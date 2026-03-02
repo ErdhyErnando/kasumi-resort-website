@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  // Placeholder — will be replaced with dynamic villa data from content collection
+  return [
+    { params: { id: 'hana' } },
+    { params: { id: 'mori' } },
+  ];
+}
+
+const { id } = Astro.params;
+---
+
+<BaseLayout title={`Villa ${id}`}>
+  <section class="px-6 pt-32 pb-20">
+    <div class="mx-auto max-w-6xl">
+      <p class="text-dark/50">Villa detail page for: <strong>{id}</strong></p>
+      <p class="mt-4 text-dark/40">Content akan ditampilkan di sini — menunggu data dan foto.</p>
+    </div>
+  </section>
+</BaseLayout>

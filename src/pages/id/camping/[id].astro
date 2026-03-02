@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+  // Placeholder — will be replaced with dynamic camping data
+  return [
+    { params: { id: 'forest-riverside' } },
+    { params: { id: 'mountain-view' } },
+  ];
+}
+
+const { id } = Astro.params;
+---
+
+<BaseLayout title={`Camping ${id}`}>
+  <section class="px-6 pt-32 pb-20">
+    <div class="mx-auto max-w-6xl">
+      <p class="text-dark/50">Camping detail page for: <strong>{id}</strong></p>
+      <p class="mt-4 text-dark/40">Content akan ditampilkan di sini — menunggu data dan foto.</p>
+    </div>
+  </section>
+</BaseLayout>

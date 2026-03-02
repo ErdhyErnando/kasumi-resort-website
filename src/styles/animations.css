@@ -1,0 +1,23 @@
+/* ─── GSAP Animation Utility Classes ───────────────────────────────── */
+/* These classes are used as hooks for GSAP ScrollTrigger animations.   */
+/* Initial states are set here; GSAP animates them in via gsap.ts.     */
+
+[data-animate="fade-up"] {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+[data-animate="stagger"]>* {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* ─── Keyframe Fallbacks (for non-JS / reduced-motion) ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    [data-animate="fade-up"],
+    [data-animate="stagger"]>* {
+        opacity: 1;
+        transform: none;
+    }
+}

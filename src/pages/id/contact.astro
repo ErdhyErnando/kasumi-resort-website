@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ADDRESS, CONTACT_EMAIL, WHATSAPP_DISPLAY, SOCIAL_LINKS } from '../../lib/constants';
+import WhatsAppButton from '../../components/ui/WhatsAppButton.astro';
+---
+
+<BaseLayout title="Kontak">
+  <section class="px-6 pt-32 pb-20">
+    <div class="mx-auto max-w-6xl">
+      <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+
+        <!-- Info Column -->
+        <div>
+          <h1 class="font-heading text-4xl font-bold text-dark md:text-5xl">
+            Let's Plan Your Stay
+          </h1>
+          <p class="mt-4 text-lg text-dark/60">
+            Have questions about villa, camping area, or availability? We're here to help!
+          </p>
+
+          <div class="mt-10 space-y-6">
+            <div>
+              <h3 class="font-semibold text-dark">Address</h3>
+              <p class="text-dark/60">{ADDRESS}</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-dark">Email</h3>
+              <p><a href={`mailto:${CONTACT_EMAIL}`} class="text-primary underline">{CONTACT_EMAIL}</a></p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-dark">WhatsApp</h3>
+              <p class="text-dark/60">{WHATSAPP_DISPLAY}</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-dark">Social</h3>
+              <div class="flex gap-4">
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" class="text-primary underline">Instagram</a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" class="text-primary underline">TikTok</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10">
+            <WhatsAppButton />
+          </div>
+
+          <!-- Directions -->
+          <div class="mt-12">
+            <h3 class="font-heading text-xl font-bold text-dark">How to Get Here</h3>
+            <ul class="mt-4 space-y-2 text-dark/60">
+              <li>🚗 Dari Jakarta: ~2 jam via Tol Jagorawi → Bogor → Cidahu</li>
+              <li>🚗 Dari Bogor: ~1.5 jam via Jl. Raya Sukabumi → Cidahu</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Map Column -->
+        <div class="overflow-hidden rounded-2xl">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15845.0!2d106.6885!3d-6.7415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNDQnMjkuNCJTIDEwNsKwNDEnMTguNiJF!5e0!3m2!1sid!2sid!4v1"
+            width="100%"
+            height="100%"
+            style="border:0; min-height: 500px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Kasumi Resort Location"
+          ></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>

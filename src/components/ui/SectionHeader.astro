@@ -1,0 +1,38 @@
+---
+interface Props {
+  label?: string;
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  dark?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  title,
+  subtitle,
+  align = 'center',
+  dark = false,
+  class: className,
+} = Astro.props;
+
+const alignClasses = align === 'center' ? 'text-center mx-auto' : 'text-left';
+const colorClasses = dark ? 'text-highlight' : 'text-dark';
+---
+
+<div class:list={['mb-12 max-w-3xl', alignClasses, className]}>
+  {label && (
+    <span class:list={['mb-3 block text-sm font-semibold uppercase tracking-widest', dark ? 'text-accent' : 'text-secondary']}>
+      {label}
+    </span>
+  )}
+  <h2 class:list={['font-heading text-3xl font-bold md:text-4xl lg:text-5xl', colorClasses]}>
+    {title}
+  </h2>
+  {subtitle && (
+    <p class:list={['mt-4 text-lg', dark ? 'text-highlight/70' : 'text-dark/60']}>
+      {subtitle}
+    </p>
+  )}
+</div>

@@ -1,0 +1,93 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../lib/constants';
+import '../styles/global.css';
+import '../styles/animations.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  class?: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const {
+  title = SITE_NAME,
+  description = SITE_DESCRIPTION,
+  image = '/og-image.jpg',
+  class: className,
+} = Astro.props;
+
+const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <!-- Global Metadata -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={SITE_NAME}
+      href={new URL('rss.xml', Astro.site)}
+    />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Fonts: Libre Baskerville (heading) + DM Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Primary Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={pageTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <!-- Astro View Transitions -->
+    <ClientRouter />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <Navbar />
+    <div class="page-content flex-1" class:list={[className]}>
+      <slot />
+    </div>
+    <Footer />
+
+    <!-- GSAP initialization on every page transition -->
+    <script>
+      import { initAnimations } from '../lib/gsap';
+      document.addEventListener('astro:page-load', () => {
+        initAnimations();
+      });
+    </script>
+  </body>
+</html>

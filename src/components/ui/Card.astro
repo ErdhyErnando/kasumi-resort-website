@@ -1,0 +1,35 @@
+---
+interface Props {
+  class?: string;
+  href?: string;
+}
+
+const { class: className, href } = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md',
+    className,
+  ]}
+>
+  <!-- Image slot -->
+  <div class="aspect-video overflow-hidden">
+    <slot name="image">
+      <div class="h-full w-full bg-secondary/20"></div>
+    </slot>
+  </div>
+
+  <!-- Content -->
+  <div class="p-5">
+    <slot name="badge" />
+    <slot name="title">
+      <h3 class="font-heading text-lg font-bold text-dark">Card Title</h3>
+    </slot>
+    <slot name="body" />
+    <slot name="cta" />
+  </div>
+</Tag>

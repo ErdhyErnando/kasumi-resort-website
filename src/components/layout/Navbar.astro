@@ -1,0 +1,131 @@
+---
+import { SITE_NAME, NAV_LINKS } from '../../lib/constants';
+import { getWhatsAppUrl } from '../../lib/whatsapp';
+import Button from '../ui/Button.astro';
+---
+
+<header
+  id="main-navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  transition:persist
+>
+  <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+    <!-- Logo -->
+    <a href="/id/" class="flex items-center gap-2 font-heading text-xl font-bold text-highlight">
+      {SITE_NAME}
+    </a>
+
+    <!-- Desktop Nav Links -->
+    <div class="hidden items-center gap-8 md:flex">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={`/id${link.href}`}
+            class="text-sm font-medium text-highlight/80 transition-colors hover:text-highlight"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+
+    <!-- CTA + Mobile Toggle -->
+    <div class="flex items-center gap-4">
+      <div class="hidden md:block">
+        <Button
+          label="Book Now"
+          href={getWhatsAppUrl()}
+          variant="accent"
+          size="sm"
+        />
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        id="mobile-menu-btn"
+        class="flex items-center justify-center md:hidden text-highlight"
+        aria-label="Toggle menu"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-primary/95 backdrop-blur-sm"
+  >
+    <button
+      id="mobile-menu-close"
+      class="absolute top-6 right-6 text-highlight"
+      aria-label="Close menu"
+      type="button"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+    {
+      NAV_LINKS.map((link) => (
+        <a
+          href={`/id${link.href}`}
+          class="font-heading text-2xl text-highlight transition-colors hover:text-accent"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+    <Button
+      label="Book Now"
+      href={getWhatsAppUrl()}
+      variant="accent"
+      size="md"
+    />
+  </div>
+</header>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const navbar = document.getElementById('main-navbar');
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const menuClose = document.getElementById('mobile-menu-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // Scroll-aware navbar background
+    function updateNavbar() {
+      if (!navbar) return;
+      if (window.scrollY > 80) {
+        navbar.classList.add('bg-primary/90', 'backdrop-blur-md', 'shadow-lg');
+      } else {
+        navbar.classList.remove('bg-primary/90', 'backdrop-blur-md', 'shadow-lg');
+      }
+    }
+    window.addEventListener('scroll', updateNavbar, { passive: true });
+    updateNavbar();
+
+    // Mobile menu toggle
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu?.classList.remove('hidden');
+      mobileMenu?.classList.add('flex');
+    });
+    menuClose?.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      mobileMenu?.classList.remove('flex');
+    });
+
+    // Close mobile menu on link click
+    mobileMenu?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu?.classList.add('hidden');
+        mobileMenu?.classList.remove('flex');
+      });
+    });
+  });
+</script>

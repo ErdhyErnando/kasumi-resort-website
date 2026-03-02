@@ -1,0 +1,79 @@
+---
+/**
+ * HeroSection — Full viewport hero with dramatic landscape photo.
+ * Headline overlays image. Navbar sits transparently on top.
+ * GSAP parallax + staggered headline reveal hooks included.
+ */
+---
+
+<section
+  id="hero"
+  class="relative flex h-svh items-center justify-center overflow-hidden"
+>
+  <!-- Background Image Placeholder -->
+  <div
+    id="hero-bg"
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+    style="background-image: url('/images/hero-placeholder.jpg'); background-color: #1a3a1a;"
+  >
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-dark/40"></div>
+  </div>
+
+  <!-- Headline Content -->
+  <div class="relative z-10 max-w-4xl px-6 text-center md:text-right md:mr-12 lg:mr-24">
+    <h1
+      id="hero-headline"
+      class="font-heading text-5xl font-bold leading-tight text-highlight md:text-7xl lg:text-8xl"
+      style="font-size: clamp(3rem, 6vw, 6rem);"
+    >
+      <span class="block">Leave the city</span>
+      <span class="block">Wake up in the mist</span>
+    </h1>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-highlight/60">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5v14" />
+      <path d="m19 12-7 7-7-7" />
+    </svg>
+  </div>
+</section>
+
+<script>
+  import { gsap, ScrollTrigger } from '../../lib/gsap';
+
+  document.addEventListener('astro:page-load', () => {
+    const heroBg = document.getElementById('hero-bg');
+    const headline = document.getElementById('hero-headline');
+
+    if (!heroBg || !headline) return;
+
+    // Parallax on hero background
+    gsap.to(heroBg, {
+      yPercent: 30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+
+    // Headline staggered reveal
+    const lines = headline.querySelectorAll('span');
+    gsap.fromTo(
+      lines,
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        stagger: 0.3,
+        ease: 'power3.out',
+      },
+    );
+  });
+</script>

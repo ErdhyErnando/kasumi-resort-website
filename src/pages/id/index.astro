@@ -1,0 +1,23 @@
+---
+/**
+ * Landing Page — Kasumi Resort Marketing Homepage
+ * 7 sections: Hero, Intro, Activity, Facilities, Location, CTA, Footer (via layout)
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/sections/HeroSection.astro';
+import IntroSection from '../../components/sections/IntroSection.astro';
+import ActivitySection from '../../components/sections/ActivitySection.astro';
+import FacilitiesSection from '../../components/sections/FacilitiesSection.astro';
+import LocationSection from '../../components/sections/LocationSection.astro';
+import CTASection from '../../components/sections/CTASection.astro';
+import { SITE_DESCRIPTION } from '../../lib/constants';
+---
+
+<BaseLayout description={SITE_DESCRIPTION}>
+  <HeroSection />
+  <IntroSection />
+  <ActivitySection />
+  <FacilitiesSection />
+  <LocationSection />
+  <CTASection />
+</BaseLayout>

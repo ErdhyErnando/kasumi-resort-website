@@ -5,27 +5,29 @@
 ---
 
 ## Sprint 0 — Project Setup & Baseline
-- [ ] Initialize Astro 5.x project with pnpm
-- [ ] Configure `astro.config.mjs`:
-  - [ ] `site` URL
-  - [ ] i18n routing (`defaultLocale: "id"`, `locales: ["id","en"]`, `routing.prefixDefaultLocale` decision)
-  - [ ] `@astrojs/sitemap` integration
-  - [ ] Output target (static) + Cloudflare adapter (if needed)
-- [ ] Install dependencies:
-  - [ ] React 19
-  - [ ] Tailwind v4
-  - [ ] GSAP + ScrollTrigger + SplitText
-  - [ ] Lucide (icons)
-  - [ ] Embla carousel
-  - [ ] Lightbox library
-- [ ] Set up base folders per PRD
-- [ ] Add `src/content.config.ts` and baseline collections
-- [ ] Add `src/styles/global.css` + `animations.css`
-- [ ] Add lint/format (optional, recommended)
+
+- [x] Initialize Astro 5.x project with pnpm
+- [x] Configure `astro.config.mjs`:
+  - [x] `site` URL
+  - [x] i18n routing (`defaultLocale: "id"`, `locales: ["id","en"]`, `routing.prefixDefaultLocale` decision)
+  - [x] `@astrojs/sitemap` integration
+  - [x] Output target (static) + Cloudflare adapter (if needed)
+- [x] Install dependencies:
+  - [x] React 19
+  - [x] Tailwind v4
+  - [x] GSAP + ScrollTrigger + SplitText
+  - [x] Lucide (icons)
+  - [x] Embla carousel
+  - [x] Lightbox library
+- [x] Set up base folders per PRD
+- [x] Add `src/content.config.ts` and baseline collections
+- [x] Add `src/styles/global.css` + `animations.css`
+- [x] Add lint/format (optional, recommended)
 
 ---
 
 ## Sprint 1 — Design System + Base Layout
+
 - [ ] Implement CSS variables for brand colors + typography tokens
 - [ ] Configure fonts (Astro font optimization or self-hosted)
 - [ ] Tailwind theme extensions for brand tokens
@@ -50,6 +52,7 @@
 ---
 
 ## Sprint 2 — Data & Content Layer
+
 - [ ] Define content collections:
   - [ ] `blog` markdown collection with Zod schema
   - [ ] `villas` data source (md or ts)
@@ -66,6 +69,7 @@
 ---
 
 ## Sprint 3 — Homepage (Landing Page)
+
 - [ ] Build `HeroSection.astro`
   - [ ] Image with parallax hook
   - [ ] Headline animation hook
@@ -86,6 +90,7 @@
 ---
 
 ## Sprint 4 — Villas Pages
+
 - [ ] Create `src/pages/villa/index.astro`:
   - [ ] Grid listing of 10 villas
   - [ ] Card hover + transition:name
@@ -99,6 +104,7 @@
 ---
 
 ## Sprint 5 — Camping Pages
+
 - [ ] Create `src/pages/camping/index.astro`:
   - [ ] Two hero cards (Forest & Riverside, Mountain View)
 - [ ] Create `src/pages/camping/[id].astro`:
@@ -109,6 +115,7 @@
 ---
 
 ## Sprint 6 — Gallery + Contact
+
 - [ ] Build `src/pages/gallery.astro`:
   - [ ] Floating images layout
   - [ ] IG CTA
@@ -120,6 +127,7 @@
 ---
 
 ## Sprint 7 — Blog
+
 - [ ] Create `src/pages/blog/index.astro`
   - [ ] Filter chips UI
   - [ ] Blog card list
@@ -132,6 +140,7 @@
 ---
 
 ## Sprint 8 — i18n + Language Switcher
+
 - [ ] Configure localized routes (`/en/` folder)
 - [ ] Add translation utilities (`src/i18n/*`)
 - [ ] Implement `LanguageToggle.tsx` and language picker in footer
@@ -141,6 +150,7 @@
 ---
 
 ## Sprint 9 — Animations + View Transitions
+
 - [ ] Add GSAP init/cleanup in `src/lib/gsap.ts`
 - [ ] Hook `astro:page-load` to re-init GSAP
 - [ ] Add `transition:name` on shared elements
@@ -150,6 +160,7 @@
 ---
 
 ## Sprint 10 — SEO, Performance, QA
+
 - [ ] Verify per-page meta tags
 - [ ] Add OG tags + JSON-LD
 - [ ] Confirm sitemap + robots.txt
@@ -160,6 +171,7 @@
 ---
 
 ## Final Acceptance Checklist
+
 - [ ] Responsive across 375/768/1280/1920
 - [ ] No console errors in production build
 - [ ] View transitions work on supported browsers
