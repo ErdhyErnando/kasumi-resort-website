@@ -1,22 +1,28 @@
 ---
 /**
- * CTASection — Pre-footer call-to-action. Large bold text + single prominent button.
+ * CTASection — Pre-footer call-to-action.
+ * Large bold headline + single prominent pill-shaped Booking button.
  */
 import Button from '../ui/Button.astro';
 import { getWhatsAppUrl } from '../../lib/whatsapp';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/utils';
+
+const locale = (Astro.currentLocale ?? 'id') as Locale;
+const t = useTranslations(locale);
 ---
 
-<section class="bg-highlight px-6 py-24 md:py-32">
+<section class="bg-highlight px-6 py-24 md:py-32 lg:py-40">
   <div class="mx-auto max-w-4xl text-center" data-animate="fade-up">
     <h2
-      class="font-heading text-4xl font-bold leading-tight text-dark md:text-5xl lg:text-6xl"
+      class="font-heading text-3xl font-bold leading-tight text-dark md:text-5xl lg:text-6xl"
     >
-      Ready To Leave The City Behind?
+      {t.cta.headline}
     </h2>
 
     <div class="mt-10">
       <Button
-        label="Booking"
+        label={t.cta.buttonLabel}
         href={getWhatsAppUrl()}
         variant="accent"
         size="lg"

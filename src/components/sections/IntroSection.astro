@@ -1,37 +1,67 @@
 ---
 /**
- * IntroSection — Brief orientation with large intro text + image carousel.
- * bg: --color-highlight. Text above, carousel below (or side-by-side on desktop).
+ * IntroSection — Brief orientation with large centered intro text
+ * + horizontal scrolling 3-photo image carousel.
+ * bg: --color-highlight. Text above, carousel below.
  */
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/utils';
+
+const locale = (Astro.currentLocale ?? 'id') as Locale;
+const t = useTranslations(locale);
+
+const imageSrcs = ['/images/intro-1.jpg', '/images/intro-2.jpg', '/images/intro-3.jpg'];
+const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
 ---
 
 <section class="bg-highlight px-6 py-20 md:py-28 lg:py-32">
-  <div class="mx-auto max-w-6xl">
+  <div class="mx-auto max-w-5xl">
     <!-- Intro Text -->
     <div class="mb-16 text-center" data-animate="fade-up">
-      <p class="mx-auto max-w-3xl font-heading text-2xl leading-relaxed text-dark md:text-3xl lg:text-4xl">
-        Villa di tengah hutan, camping ground dengan pemandangan pegunungan Sukabumi.
-      </p>
-      <p class="mx-auto mt-4 max-w-2xl text-lg text-dark/60">
-        A villa in the heart of the forest, a camping ground with mountain views in Sukabumi.
+      <p class="mx-auto max-w-2xl font-body text-xl leading-relaxed text-dark/80 md:text-2xl">
+        {t.intro.text.split('\n').map((line, i) => (
+          <>
+            {i > 0 && <br class="hidden sm:inline" />}
+            {line}
+          </>
+        ))}
       </p>
     </div>
+  </div>
 
-    <!-- Image Carousel Placeholder -->
-    <div class="relative overflow-hidden" data-animate="fade-up">
-      <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-6 pb-4 -mx-6 px-6 scrollbar-hide">
-        <!-- 3 Placeholder images -->
-        {[1, 2, 3].map((i) => (
-          <div class="flex-shrink-0 snap-center">
-            <div
-              class="h-64 w-[500px] max-w-[80vw] rounded-2xl bg-secondary/20 flex items-center justify-center text-dark/30"
-            >
-              <span class="text-sm">Photo {i} — 600×400</span>
+  <!-- Image Carousel — overflows container edges for editorial feel -->
+  <div class="relative" data-animate="fade-up">
+    <div
+      class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-4 scrollbar-hide md:gap-6 md:px-[calc(50vw-540px)] lg:justify-center"
+    >
+      {images.map((img, i) => (
+        <div
+          class="relative flex-shrink-0 snap-center overflow-hidden rounded-2xl"
+          style={`width: clamp(320px, 40vw, 520px); aspect-ratio: 3/2;`}
+        >
+          <!-- Image placeholder with gradient bg -->
+          <div
+            class="h-full w-full bg-cover bg-center"
+            style={`background-image: url('${img.src}'); background-color: #d4c9a8;`}
+          >
+            <!-- Fallback when image not loaded -->
+            <div class="flex h-full w-full items-center justify-center bg-secondary/15 text-dark/25">
+              <span class="text-sm font-medium">Photo {i + 1}</span>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
-    <!-- React Carousel island will replace the above in a future sprint -->
   </div>
 </section>
+
+<style>
+  /* Hide scrollbar for the carousel strip */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+</style>

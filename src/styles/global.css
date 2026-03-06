@@ -35,7 +35,12 @@ body {
 }
 
 /* ─── Typography ───────────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   line-height: 1.2;
   margin: 0;
@@ -101,7 +106,7 @@ img {
   overflow-x: auto;
 }
 
-.prose pre > code {
+.prose pre>code {
   all: unset;
 }
 

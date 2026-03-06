@@ -1,12 +1,17 @@
 ---
 /**
  * LocationSection — Dark-themed card with embedded Google Map + text content.
- * Two-column inside: map embed left, text right.
+ * Rounded dark card. Two-column: map embed left, text right.
  */
 import { ADDRESS } from '../../lib/constants';
+import { useTranslations } from '../../i18n/ui';
+import type { Locale } from '../../i18n/utils';
+
+const locale = (Astro.currentLocale ?? 'id') as Locale;
+const t = useTranslations(locale);
 ---
 
-<section class="px-6 py-20 md:py-28">
+<section class="px-4 py-12 md:px-8 lg:px-12">
   <div class="mx-auto max-w-6xl">
     <div
       class="overflow-hidden rounded-3xl bg-dark"
@@ -15,12 +20,13 @@ import { ADDRESS } from '../../lib/constants';
       <div class="grid grid-cols-1 lg:grid-cols-2">
 
         <!-- Map Embed -->
-        <div class="aspect-square lg:aspect-auto">
+        <div class="relative min-h-[350px] lg:min-h-[450px]">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15845.0!2d106.6885!3d-6.7415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNDQnMjkuNCJTIDEwNsKwNDEnMTguNiJF!5e0!3m2!1sid!2sid!4v1"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15845.0!2d106.6885!3d-6.7415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNDQnMjkuNCJTIDEwNsKwNDEnMTguNiJF!5e1!3m2!1sid!2sid!4v1"
             width="100%"
             height="100%"
-            style="border:0; min-height: 400px;"
+            class="absolute inset-0"
+            style="border:0;"
             allowfullscreen=""
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
@@ -29,31 +35,25 @@ import { ADDRESS } from '../../lib/constants';
         </div>
 
         <!-- Text Content -->
-        <div class="flex flex-col justify-center p-8 md:p-12 lg:p-16">
-          <h2 class="font-heading text-3xl font-bold leading-tight text-highlight md:text-4xl lg:text-5xl">
-            <span class="block">Close to the city</span>
-            <span class="block text-accent">Far from noise</span>
+        <div class="flex flex-col justify-center p-8 md:p-10 lg:p-14">
+          <h2 class="font-heading text-3xl font-bold leading-tight text-highlight md:text-4xl">
+            <span class="block">{t.location.line1}</span>
+            <span class="block">{t.location.line2}</span>
           </h2>
 
-          <div class="mt-8 space-y-4 text-highlight/70">
-            <p class="flex items-center gap-3">
-              <span class="text-accent">📍</span>
-              2 hours from Jakarta
-            </p>
-            <p class="flex items-center gap-3">
-              <span class="text-accent">📍</span>
-              1.5 hours from Bogor
-            </p>
+          <div class="mt-8 space-y-3 text-sm text-highlight/70 md:text-base">
+            <p>{t.location.distanceJakarta}</p>
+            <p>{t.location.distanceBogor}</p>
           </div>
 
           <a
             href="https://maps.google.com/?q=TNGHS+Cidahu+Sukabumi+Jawa+Barat+43358"
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-8 inline-flex items-center gap-2 text-sm text-accent underline underline-offset-4 transition-colors hover:text-accent/80"
+            class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-highlight/90 underline underline-offset-4 decoration-highlight/30 transition-colors hover:text-highlight hover:decoration-highlight/60"
           >
             {ADDRESS}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               <polyline points="15 3 21 3 21 9" />
               <line x1="10" y1="14" x2="21" y2="3" />
