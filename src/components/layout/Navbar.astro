@@ -160,21 +160,21 @@ const alternateLabel = locale === "id" ? "EN" : "ID";
         const menuClose = document.getElementById("mobile-menu-close");
         const mobileMenu = document.getElementById("mobile-menu");
 
-        // Scroll-aware navbar background
+        // Scroll-aware navbar background.
+        // Only go transparent when the page has a full-viewport hero that
+        // provides its own dark backdrop; on all other pages always show the
+        // solid background so text remains legible.
+        const hasHero = !!document.getElementById("hero");
+
         function updateNavbar() {
             if (!navbar) return;
-            if (window.scrollY > 80) {
-                navbar.classList.add(
-                    "bg-primary/90",
-                    "backdrop-blur-md",
-                    "shadow-lg",
-                );
+            // backdrop-filter must NOT be applied to the header because it
+            // creates a new CSS containing block in WebKit/mobile, which
+            // collapses the fixed-inset-0 mobile overlay to the header height.
+            if (!hasHero || window.scrollY > 80) {
+                navbar.classList.add("bg-primary/90", "shadow-lg");
             } else {
-                navbar.classList.remove(
-                    "bg-primary/90",
-                    "backdrop-blur-md",
-                    "shadow-lg",
-                );
+                navbar.classList.remove("bg-primary/90", "shadow-lg");
             }
         }
         window.addEventListener("scroll", updateNavbar, { passive: true });
@@ -209,22 +209,23 @@ const alternateLabel = locale === "id" ? "EN" : "ID";
                 if (label) el.textContent = label;
             });
 
-        // Mobile menu toggle
-        menuBtn?.addEventListener("click", () => {
+        function openMenu() {
             mobileMenu?.classList.remove("hidden");
             mobileMenu?.classList.add("flex");
-        });
-        menuClose?.addEventListener("click", () => {
+            document.body.style.overflow = "hidden";
+        }
+        function closeMenu() {
             mobileMenu?.classList.add("hidden");
             mobileMenu?.classList.remove("flex");
-        });
+            document.body.style.overflow = "";
+        }
+
+        menuBtn?.addEventListener("click", openMenu);
+        menuClose?.addEventListener("click", closeMenu);
 
         // Close mobile menu on link click
         mobileMenu?.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                mobileMenu?.classList.add("hidden");
-                mobileMenu?.classList.remove("flex");
-            });
+            link.addEventListener("click", closeMenu);
         });
     });
 </script>

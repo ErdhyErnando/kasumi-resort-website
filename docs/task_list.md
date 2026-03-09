@@ -36,10 +36,10 @@
   - [x] `<ClientRouter />` (astro:transitions)
   - [x] Site-wide SEO defaults
   - [x] Global styles import
-- [ ] Implement `Navbar.astro`:
+- [x] Implement `Navbar.astro`:
   - [x] Sticky with transparency on hero
   - [x] CTA button
-  - [ ] Mobile toggle placeholder
+  - [x] Mobile toggle placeholder
 - [x] Implement `Footer.astro`:
   - [x] Curtain effect structure
   - [x] ID/EN language switcher placeholder
@@ -53,8 +53,8 @@
 
 ## Sprint 2 — Data & Content Layer
 
-- [ ] Define content collections:
-  - [ ] `blog` markdown collection with Zod schema
+- [x] Define content collections:
+  - [x] `blog` markdown collection with Zod schema
   - [ ] `villas` data source (md or ts)
   - [ ] `camping` data source (md or ts)
 - [ ] Add example content:
