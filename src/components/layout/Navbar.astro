@@ -6,211 +6,225 @@ import { getLocalizedPath } from "../../i18n/utils";
 import type { Locale } from "../../i18n/utils";
 import Button from "../ui/Button.astro";
 
-const locale = (Astro.currentLocale ?? 'id') as Locale;
+const locale = (Astro.currentLocale ?? "id") as Locale;
 const t = useTranslations(locale);
-const alternatePath = getLocalizedPath(Astro.url.pathname, locale === 'id' ? 'en' : 'id');
-const alternateLabel = locale === 'id' ? 'EN' : 'ID';
+const alternatePath = getLocalizedPath(
+    Astro.url.pathname,
+    locale === "id" ? "en" : "id",
+);
+const alternateLabel = locale === "id" ? "EN" : "ID";
 ---
 
 <header
-  id="main-navbar"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-  transition:persist
+    id="main-navbar"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+    transition:persist
 >
-  <nav
-    class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
-  >
-    <!-- Logo -->
-    <a
-      href={`/${locale}/`}
-      class="flex items-center gap-2 font-heading text-xl font-bold text-highlight"
+    <nav
+        class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
     >
-      {SITE_NAME}
-    </a>
-
-    <!-- Desktop Nav Links -->
-    <div class="hidden items-center gap-8 md:flex">
-      {
-        NAV_LINKS.map((link) => (
-          <a
-            href={`/${locale}${link.href}`}
-            data-nav-link
-            data-nav-path={link.href}
-            data-label-id={link.label}
-            data-label-en={link.labelEn}
-            class="text-sm font-medium text-white transition-colors hover:text-highlight"
-          >
-            {locale === 'en' ? link.labelEn : link.label}
-          </a>
-        ))
-      }
-    </div>
-
-    <!-- CTA + Language Toggle + Mobile Toggle -->
-    <div class="flex items-center gap-3">
-      <!-- Language Toggle (desktop) -->
-      <a
-        id="lang-toggle-desktop"
-        href={alternatePath}
-        data-lang-toggle
-        class="hidden md:flex items-center rounded-full border border-white/25 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-white/50 hover:text-white"
-      >
-        {alternateLabel}
-      </a>
-
-      <div class="hidden md:block">
-        <Button
-          label={t.navbar.bookNow}
-          href={getWhatsAppUrl()}
-          variant="accent"
-          size="sm"
-        />
-      </div>
-
-      <!-- Mobile Hamburger -->
-      <button
-        id="mobile-menu-btn"
-        class="flex items-center justify-center md:hidden text-highlight"
-        aria-label="Toggle menu"
-        type="button"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Mobile Menu Overlay -->
-  <div
-    id="mobile-menu"
-    class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-primary/95 backdrop-blur-sm"
-  >
-    <button
-      id="mobile-menu-close"
-      class="absolute top-6 right-6 text-highlight cursor-pointer"
-      aria-label="Close menu"
-      type="button"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-    {
-      NAV_LINKS.map((link) => (
+        <!-- Logo -->
         <a
-          href={`/${locale}${link.href}`}
-          data-nav-link
-          data-nav-path={link.href}
-          data-label-id={link.label}
-          data-label-en={link.labelEn}
-          class="font-heading text-2xl text-white transition-colors hover:text-highlight"
+            href={`/${locale}/`}
+            class="flex items-center gap-2 font-heading text-xl font-bold! text-highlight!"
         >
-          {locale === 'en' ? link.labelEn : link.label}
+            {SITE_NAME}
         </a>
-      ))
-    }
-    <Button
-      label={t.navbar.bookNow}
-      href={getWhatsAppUrl()}
-      variant="accent"
-      size="md"
-    />
-    <a
-      id="lang-toggle-mobile"
-      href={alternatePath}
-      data-lang-toggle
-      class="rounded-full border border-white/30 px-4 py-1.5 text-sm font-medium text-white/60 transition-colors hover:border-white/60 hover:text-white"
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden items-center gap-8 md:flex">
+            {
+                NAV_LINKS.map((link) => (
+                    <a
+                        href={`/${locale}${link.href}`}
+                        data-nav-link
+                        data-nav-path={link.href}
+                        data-label-id={link.label}
+                        data-label-en={link.labelEn}
+                        class="text-sm font-medium text-white! transition-colors! hover:text-highlight!"
+                    >
+                        {locale === "en" ? link.labelEn : link.label}
+                    </a>
+                ))
+            }
+        </div>
+
+        <!-- CTA + Language Toggle + Mobile Toggle -->
+        <div class="flex items-center gap-3">
+            <!-- Language Toggle (desktop) -->
+            <a
+                id="lang-toggle-desktop"
+                href={alternatePath}
+                data-lang-toggle
+                class="hidden md:flex items-center rounded-full border border-white/25 px-3 py-1.5 text-xs font-medium text-white/70 transition-colors hover:border-white/50 hover:text-white"
+            >
+                {alternateLabel}
+            </a>
+
+            <div class="hidden md:block">
+                <Button
+                    label={t.navbar.bookNow}
+                    href={getWhatsAppUrl()}
+                    variant="accent"
+                    size="sm"
+                />
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button
+                id="mobile-menu-btn"
+                class="flex items-center justify-center md:hidden text-highlight"
+                aria-label="Toggle menu"
+                type="button"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div
+        id="mobile-menu"
+        class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-primary/95 backdrop-blur-sm"
     >
-      {alternateLabel}
-    </a>
-  </div>
+        <button
+            id="mobile-menu-close"
+            class="absolute top-6 right-6 text-highlight! cursor-pointer"
+            aria-label="Close menu"
+            type="button"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        {
+            NAV_LINKS.map((link) => (
+                <a
+                    href={`/${locale}${link.href}`}
+                    data-nav-link
+                    data-nav-path={link.href}
+                    data-label-id={link.label}
+                    data-label-en={link.labelEn}
+                    class="font-heading text-2xl text-white! transition-colors! hover:text-highlight!"
+                >
+                    {locale === "en" ? link.labelEn : link.label}
+                </a>
+            ))
+        }
+        <Button
+            label={t.navbar.bookNow}
+            href={getWhatsAppUrl()}
+            variant="accent"
+            size="md"
+        />
+        <a
+            id="lang-toggle-mobile"
+            href={alternatePath}
+            data-lang-toggle
+            class="rounded-full border border-white/30 px-4 py-1.5 text-sm font-medium text-white/60 transition-colors hover:border-white/60 hover:text-white"
+        >
+            {alternateLabel}
+        </a>
+    </div>
 </header>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const navbar = document.getElementById("main-navbar");
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const menuClose = document.getElementById("mobile-menu-close");
-    const mobileMenu = document.getElementById("mobile-menu");
+    document.addEventListener("astro:page-load", () => {
+        const navbar = document.getElementById("main-navbar");
+        const menuBtn = document.getElementById("mobile-menu-btn");
+        const menuClose = document.getElementById("mobile-menu-close");
+        const mobileMenu = document.getElementById("mobile-menu");
 
-    // Scroll-aware navbar background
-    function updateNavbar() {
-      if (!navbar) return;
-      if (window.scrollY > 80) {
-        navbar.classList.add("bg-primary/90", "backdrop-blur-md", "shadow-lg");
-      } else {
-        navbar.classList.remove(
-          "bg-primary/90",
-          "backdrop-blur-md",
-          "shadow-lg",
-        );
-      }
-    }
-    window.addEventListener("scroll", updateNavbar, { passive: true });
-    updateNavbar();
+        // Scroll-aware navbar background
+        function updateNavbar() {
+            if (!navbar) return;
+            if (window.scrollY > 80) {
+                navbar.classList.add(
+                    "bg-primary/90",
+                    "backdrop-blur-md",
+                    "shadow-lg",
+                );
+            } else {
+                navbar.classList.remove(
+                    "bg-primary/90",
+                    "backdrop-blur-md",
+                    "shadow-lg",
+                );
+            }
+        }
+        window.addEventListener("scroll", updateNavbar, { passive: true });
+        updateNavbar();
 
-    // Recalculate locale-sensitive links after each navigation (navbar is transition:persist)
-    const path = window.location.pathname;
-    const currentLocale = path.startsWith("/en") ? "en" : "id";
-    const altLocale = currentLocale === "id" ? "en" : "id";
-    const altPath =
-      path.replace(new RegExp(`^/${currentLocale}`), `/${altLocale}`) ||
-      `/${altLocale}/`;
+        // Recalculate locale-sensitive links after each navigation (navbar is transition:persist)
+        const path = window.location.pathname;
+        const currentLocale = path.startsWith("/en") ? "en" : "id";
+        const altLocale = currentLocale === "id" ? "en" : "id";
+        const altPath =
+            path.replace(new RegExp(`^/${currentLocale}`), `/${altLocale}`) ||
+            `/${altLocale}/`;
 
-    // Language toggle links
-    document.querySelectorAll<HTMLAnchorElement>("[data-lang-toggle]").forEach((el) => {
-      el.href = altPath;
-      el.textContent = altLocale.toUpperCase();
+        // Language toggle links
+        document
+            .querySelectorAll<HTMLAnchorElement>("[data-lang-toggle]")
+            .forEach((el) => {
+                el.href = altPath;
+                el.textContent = altLocale.toUpperCase();
+            });
+
+        // Nav links — update href and label based on current locale
+        document
+            .querySelectorAll<HTMLAnchorElement>("[data-nav-link]")
+            .forEach((el) => {
+                const navPath = el.dataset.navPath ?? "";
+                const label =
+                    currentLocale === "en"
+                        ? el.dataset.labelEn
+                        : el.dataset.labelId;
+                el.href = `/${currentLocale}${navPath}`;
+                if (label) el.textContent = label;
+            });
+
+        // Mobile menu toggle
+        menuBtn?.addEventListener("click", () => {
+            mobileMenu?.classList.remove("hidden");
+            mobileMenu?.classList.add("flex");
+        });
+        menuClose?.addEventListener("click", () => {
+            mobileMenu?.classList.add("hidden");
+            mobileMenu?.classList.remove("flex");
+        });
+
+        // Close mobile menu on link click
+        mobileMenu?.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                mobileMenu?.classList.add("hidden");
+                mobileMenu?.classList.remove("flex");
+            });
+        });
     });
-
-    // Nav links — update href and label based on current locale
-    document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]").forEach((el) => {
-      const navPath = el.dataset.navPath ?? "";
-      const label = currentLocale === "en" ? el.dataset.labelEn : el.dataset.labelId;
-      el.href = `/${currentLocale}${navPath}`;
-      if (label) el.textContent = label;
-    });
-
-    // Mobile menu toggle
-    menuBtn?.addEventListener("click", () => {
-      mobileMenu?.classList.remove("hidden");
-      mobileMenu?.classList.add("flex");
-    });
-    menuClose?.addEventListener("click", () => {
-      mobileMenu?.classList.add("hidden");
-      mobileMenu?.classList.remove("flex");
-    });
-
-    // Close mobile menu on link click
-    mobileMenu?.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu?.classList.add("hidden");
-        mobileMenu?.classList.remove("flex");
-      });
-    });
-  });
 </script>

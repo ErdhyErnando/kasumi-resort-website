@@ -28,26 +28,26 @@
 
 ## Sprint 1 — Design System + Base Layout
 
-- [ ] Implement CSS variables for brand colors + typography tokens
-- [ ] Configure fonts (Astro font optimization or self-hosted)
-- [ ] Tailwind theme extensions for brand tokens
-- [ ] Build `BaseLayout.astro`:
-  - [ ] Common `<head>` meta
-  - [ ] `<ClientRouter />` (astro:transitions)
-  - [ ] Site-wide SEO defaults
-  - [ ] Global styles import
+- [x] Implement CSS variables for brand colors + typography tokens
+- [x] Configure fonts (Astro font optimization or self-hosted)
+- [x] Tailwind theme extensions for brand tokens
+- [x] Build `BaseLayout.astro`:
+  - [x] Common `<head>` meta
+  - [x] `<ClientRouter />` (astro:transitions)
+  - [x] Site-wide SEO defaults
+  - [x] Global styles import
 - [ ] Implement `Navbar.astro`:
-  - [ ] Sticky with transparency on hero
-  - [ ] CTA button
+  - [x] Sticky with transparency on hero
+  - [x] CTA button
   - [ ] Mobile toggle placeholder
-- [ ] Implement `Footer.astro`:
-  - [ ] Curtain effect structure
-  - [ ] ID/EN language switcher placeholder
-- [ ] Create core UI components:
-  - [ ] `Button.astro`
-  - [ ] `Card.astro`
-  - [ ] `Badge.astro`
-  - [ ] `SectionHeader.astro`
+- [x] Implement `Footer.astro`:
+  - [x] Curtain effect structure
+  - [x] ID/EN language switcher placeholder
+- [x] Create core UI components:
+  - [x] `Button.astro`
+  - [x] `Card.astro`
+  - [x] `Badge.astro`
+  - [x] `SectionHeader.astro`
 
 ---
 
@@ -70,22 +70,22 @@
 
 ## Sprint 3 — Homepage (Landing Page)
 
-- [ ] Build `HeroSection.astro`
-  - [ ] Image with parallax hook
-  - [ ] Headline animation hook
-- [ ] Build `IntroSection.astro`
-  - [ ] Large text (bilingual)
-  - [ ] Carousel island
-- [ ] Build `ActivitySection.astro`
+- [x] Build `HeroSection.astro`
+  - [x] Image with parallax hook
+  - [x] Headline animation hook
+- [x] Build `IntroSection.astro`
+  - [x] Large text (bilingual)
+  - [x] Carousel island
+- [x] Build `ActivitySection.astro`
   - [ ] Sticky left panel
   - [ ] Cards list right
-- [ ] Build `FacilitiesSection.astro`
-  - [ ] 3-column cards
-- [ ] Build `LocationSection.astro`
-  - [ ] Dark card + map iframe
-- [ ] Build `CTASection.astro`
-- [ ] Implement Footer curtain reveal
-- [ ] Compose sections in `src/pages/index.astro`
+- [x] Build `FacilitiesSection.astro`
+  - [x] 3-column cards
+- [x] Build `LocationSection.astro`
+  - [x] Dark card + map iframe
+- [x] Build `CTASection.astro`
+- [x] Implement Footer curtain reveal
+- [x] Compose sections in `src/pages/index.astro`
 
 ---
 

@@ -1,102 +1,158 @@
 ---
-import { SITE_NAME, SITE_TAGLINE, CONTACT_EMAIL, ADDRESS, SOCIAL_LINKS } from '../../lib/constants';
-import { useTranslations, } from '../../i18n/ui';
-import { getLocalizedPath } from '../../i18n/utils';
-import type { Locale } from '../../i18n/utils';
+import {
+    SITE_NAME,
+    SITE_TAGLINE,
+    CONTACT_EMAIL,
+    WHATSAPP_NUMBER,
+    WHATSAPP_DISPLAY,
+    ADDRESS,
+    SOCIAL_LINKS,
+} from "../../lib/constants";
+import { useTranslations } from "../../i18n/ui";
+import { getLocalizedPath } from "../../i18n/utils";
+import type { Locale } from "../../i18n/utils";
 
-const locale = (Astro.currentLocale ?? 'id') as Locale;
+const locale = (Astro.currentLocale ?? "id") as Locale;
 const t = useTranslations(locale);
-const alternatePath = getLocalizedPath(Astro.url.pathname, locale === 'id' ? 'en' : 'id');
+const alternatePath = getLocalizedPath(
+    Astro.url.pathname,
+    locale === "id" ? "en" : "id",
+);
 ---
 
-<footer class="sticky bottom-0 z-0 flex min-h-[85svh] flex-col bg-primary text-highlight">
-  <div class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 py-16 lg:px-8">
-
-    <!-- Large brand statement — fills upper space -->
-    <div class="flex flex-1 flex-col justify-center pb-12 pt-4">
-      <p class="font-heading text-[clamp(2.5rem,7vw,5.5rem)] font-bold italic leading-[1.05] text-highlight/90">
-        {SITE_NAME}
-      </p>
-      <p class="mt-4 max-w-xs text-sm leading-relaxed text-highlight/45 md:text-base">
-        {SITE_TAGLINE}
-      </p>
-    </div>
-
-    <!-- Links Grid -->
-    <div class="grid grid-cols-1 gap-10 border-t border-highlight/15 pt-12 sm:grid-cols-2 lg:grid-cols-3">
-
-      <!-- Col 1: Contact -->
-      <div>
-        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-highlight/40">{t.footer.contactLabel}</h3>
-        <a
-          href={`mailto:${CONTACT_EMAIL}`}
-          class="text-sm font-medium text-highlight/80 transition-colors hover:text-highlight"
-        >
-          {CONTACT_EMAIL}
-        </a>
-      </div>
-
-      <!-- Col 2: Follow -->
-      <div>
-        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-highlight/40">{t.footer.followLabel}</h3>
-        <ul class="space-y-2 text-sm font-medium text-highlight/80">
-          <li>
-            <a
-              href={SOCIAL_LINKS.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="transition-colors hover:text-highlight"
+<footer
+    class="sticky bottom-0 z-0 flex min-h-[75svh] flex-col bg-primary text-highlight"
+>
+    <div
+        class="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 py-16 lg:px-8"
+    >
+        <!-- Large brand statement — fills upper space -->
+        <div class="flex flex-1 flex-col justify-center p-2">
+            <p
+                class="font-heading text-[clamp(2.5rem,4vw,5.5rem)] font-bold italic leading-[1.05] text-highlight/90"
             >
-              Instagram
-            </a>
-          </li>
-          <li>
-            <a
-              href={SOCIAL_LINKS.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="transition-colors hover:text-highlight"
+                {SITE_NAME}
+            </p>
+            <p
+                class="mt-4 max-w-xs text-sm leading-relaxed text-highlight/45 md:text-base"
             >
-              TikTok
-            </a>
-          </li>
-          <li>
-            <a href={`/${locale}/blog`} class="transition-colors hover:text-highlight">Blog</a>
-          </li>
-        </ul>
-      </div>
+                {SITE_TAGLINE}
+            </p>
+        </div>
 
-      <!-- Col 3: Address -->
-      <div class="sm:text-right lg:text-right">
-        <h3 class="mb-4 text-xs font-semibold uppercase tracking-widest text-highlight/40">
-          {locale === 'id' ? 'lokasi' : 'location'}
-        </h3>
-        <a
-          href="https://maps.google.com/?q=TNGHS+Cidahu+Sukabumi+Jawa+Barat+43358"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-sm text-highlight/70 transition-colors hover:text-highlight"
+        <!-- Links Grid -->
+        <div
+            class="grid grid-cols-1 gap-10 border-t border-highlight/15 pt-12 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {ADDRESS}
-        </a>
-      </div>
+            <!-- Col 1: Contact -->
+            <div>
+                <h3
+                    class="mb-4 text-sm font-body! font-semibold uppercase tracking-widest text-highlight/40"
+                >
+                    {t.footer.contactLabel}
+                </h3>
+                <div class="flex flex-col gap-2">
+                    <a
+                        href={`mailto:${CONTACT_EMAIL}`}
+                        class="text-sm font-medium text-highlight/80 transition-colors hover:text-highlight"
+                    >
+                        {CONTACT_EMAIL}
+                    </a>
+                    <a
+                        href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-sm font-medium text-highlight/80 transition-colors hover:text-highlight"
+                    >
+                        Whatsapp
+                    </a>
+                </div>
+            </div>
 
-    </div>
+            <!-- Col 2: Follow -->
+            <div>
+                <h3
+                    class="mb-4 text-sm font-body! font-semibold uppercase tracking-widest text-highlight/40"
+                >
+                    {t.footer.followLabel}
+                </h3>
+                <ul
+                    class="space-y-2 text-sm font-medium text-highlight/80 hover:cursor-pointer"
+                >
+                    <li>
+                        <a
+                            href={SOCIAL_LINKS.instagram}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="transition-colors hover:text-highlight"
+                        >
+                            Instagram
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={SOCIAL_LINKS.tiktok}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="transition-colors hover:text-highlight"
+                        >
+                            TikTok
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href={`/${locale}/blog`}
+                            class="transition-colors hover:text-highlight"
+                            >Blog</a
+                        >
+                    </li>
+                </ul>
+            </div>
 
-    <!-- Bottom Bar -->
-    <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-highlight/10 pt-8 text-xs text-highlight/35 sm:flex-row">
-      <span class="cursor-pointer transition-colors hover:text-highlight/60">{t.footer.privacyPolicy}</span>
-      <span>&copy; {new Date().getFullYear()} {SITE_NAME}</span>
-      <div class="flex items-center gap-4">
-        <span class="cursor-pointer transition-colors hover:text-highlight/60">{t.footer.credit}</span>
-        <a
-          href={alternatePath}
-          class="rounded-full border border-highlight/25 px-3 py-1 text-highlight/60 transition-colors hover:bg-highlight/10 hover:text-highlight/80"
+            <!-- Col 3: Address -->
+            <div class="sm:text-right lg:text-right">
+                <h3
+                    class="mb-4 text-sm font-body! font-semibold uppercase tracking-widest text-highlight/40"
+                >
+                    {locale === "id" ? "lokasi" : "location"}
+                </h3>
+                <a
+                    href="https://maps.google.com/?q=TNGHS+Cidahu+Sukabumi+Jawa+Barat+43358"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm text-highlight/70 transition-colors hover:text-highlight!"
+                >
+                    {ADDRESS}
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div
+            class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-highlight/10 pt-8 text-xs text-highlight/35 sm:flex-row"
         >
-          {locale === 'id' ? 'EN' : 'ID'}
-        </a>
-      </div>
+            <span
+                class="cursor-pointer transition-colors hover:text-highlight/60"
+                >{t.footer.privacyPolicy}</span
+            >
+            <span>&copy; {new Date().getFullYear()} {SITE_NAME}</span>
+            <div class="flex items-center gap-4">
+                <span class="cursor-pointer transition-colors">
+                    <a
+                        href="https://erdhyernando.xyz"
+                        target="_blank"
+                        class="mr-2 hover:text-highlight/60!"
+                    >
+                        {t.footer.credit}
+                    </a>
+                    <a
+                        href={alternatePath}
+                        class="rounded-full border border-highlight/25 px-3 py-1 text-highlight/60 transition-colors hover:bg-highlight/10 hover:text-highlight/80"
+                    >
+                        {locale === "id" ? "EN" : "ID"}
+                    </a>
+                </span>
+            </div>
+        </div>
     </div>
-
-  </div>
 </footer>

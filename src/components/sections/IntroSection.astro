@@ -10,11 +10,11 @@ import type { Locale } from '../../i18n/utils';
 const locale = (Astro.currentLocale ?? 'id') as Locale;
 const t = useTranslations(locale);
 
-const imageSrcs = ['/images/intro-1.jpg', '/images/intro-2.jpg', '/images/intro-3.jpg'];
+const imageSrcs = ["/images/intro-1.webp", "/images/intro-2.webp", "/images/intro-3.webp"];
 const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
 ---
 
-<section class="bg-highlight px-6 py-20 md:py-28 lg:py-32">
+<section class="bg-highlight py-32 md:py-28 lg:py-32">
   <div class="mx-auto max-w-5xl">
     <!-- Intro Text -->
     <div class="mb-16 text-center" data-animate="fade-up">
@@ -32,12 +32,12 @@ const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
   <!-- Image Carousel — overflows container edges for editorial feel -->
   <div class="relative" data-animate="fade-up">
     <div
-      class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory px-6 pb-4 scrollbar-hide md:gap-6 md:px-[calc(50vw-540px)] lg:justify-center"
+      class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 px-2 md:px-0 scrollbar-hide md:gap-6 lg:justify-center"
     >
       {images.map((img, i) => (
         <div
           class="relative flex-shrink-0 snap-center overflow-hidden rounded-2xl"
-          style={`width: clamp(320px, 40vw, 520px); aspect-ratio: 3/2;`}
+          style={`width: clamp(480px, 70vw, 740px); aspect-ratio: 3/2;`}
         >
           <!-- Image placeholder with gradient bg -->
           <div
