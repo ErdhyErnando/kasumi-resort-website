@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { villas, formatVillaPrice } from "@/lib/villas";
+import { useTranslations } from "@/i18n/ui";
+import type { Locale } from "@/i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t.villa.index.title}>
+    <section class="px-6 pt-32 pb-20">
+        <div class="mx-auto max-w-6xl">
+            <SectionHeader
+                label={t.villa.index.label}
+                title={t.villa.index.title}
+                subtitle={t.villa.index.subtitle}
+            />
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                {
+                    villas.map((villa) => (
+                        <a
+                            href={`/${locale}/villa/${villa.id}`}
+                            class="group overflow-hidden rounded-2xl border border-dark/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        >
+                            <img
+                                src={villa.heroImage}
+                                alt={villa.name}
+                                loading="lazy"
+                                class="aspect-square object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                            />
+                            <div class="space-y-3 p-5">
+                                <h3 class="font-heading text-2xl text-dark">
+                                    {villa.name}
+                                </h3>
+                                <p class="text-sm leading-relaxed text-dark/70">
+                                    {villa.shortDescription[locale]}
+                                </p>
+                                <p class="font-semibold text-primary">
+                                    {t.villa.index.from}{" "}
+                                    {formatVillaPrice(villa.price, locale)}
+                                    {t.villa.index.night}
+                                </p>
+                                <span class="inline-block text-sm font-semibold text-secondary">
+                                    {t.villa.index.viewDetail}
+                                </span>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+</BaseLayout>

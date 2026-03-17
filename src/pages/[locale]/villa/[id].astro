@@ -1,0 +1,138 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getVillaById, villas, formatVillaPrice } from "@/lib/villas";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { useTranslations } from "@/i18n/ui";
+import type { Locale } from "@/i18n/utils";
+
+export function getStaticPaths() {
+    const locales: Locale[] = ["id", "en"];
+    return locales.flatMap((locale) =>
+        villas.map((villa) => ({
+            params: { locale, id: villa.id },
+        })),
+    );
+}
+
+// const locale = "id" as Locale; // or "en" for English version
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+
+const { id } = Astro.params;
+const villa = getVillaById(id ?? "");
+
+if (!villa) {
+    return Astro.redirect(`/${locale}/villa`);
+}
+
+// Helper function to replace placeholders
+function formatMessage(
+    template: string,
+    values: Record<string, string>,
+): string {
+    return template.replace(/{(\w+)}/g, (_, key) => values[key] || "");
+}
+
+const whatsappMsg = formatMessage(t.villa.detail.whatsappMessage, {
+    villaName: villa.name,
+});
+const capacityText = formatMessage(t.villa.detail.capacityValue, {
+    count: villa.capacity.toString(),
+});
+---
+
+<BaseLayout title={villa.name}>
+    <section class="px-6 pt-32 pb-20">
+        <div class="mx-auto max-w-6xl space-y-10">
+            <a
+                href={`/${locale}/villa`}
+                class="inline-block text-sm font-medium text-dark/60 hover:text-dark"
+            >
+                {t.villa.detail.breadcrumbHome} / {t.villa.detail.breadcrumbVilla} / {villa.name}
+            </a>
+
+            <img
+                src={villa.heroImage}
+                alt={villa.name}
+                class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
+            />
+
+            <div class="grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
+                <article class="space-y-6">
+                    <h1 class="font-heading text-4xl text-dark md:text-5xl">
+                        {villa.name}
+                    </h1>
+                    <p class="leading-relaxed text-dark/75">
+                        {villa.description[locale]}
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+                        <div class="rounded-xl bg-highlight p-4">
+                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                                {t.villa.detail.capacity}
+                            </p>
+                            <p class="mt-1 text-xl font-semibold text-dark">
+                                {capacityText}
+                            </p>
+                        </div>
+                        <div class="rounded-xl bg-highlight p-4">
+                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                                {t.villa.detail.bedrooms}
+                            </p>
+                            <p class="mt-1 text-xl font-semibold text-dark">
+                                {villa.bedrooms}
+                            </p>
+                        </div>
+                        <div class="rounded-xl bg-highlight p-4">
+                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                                {t.villa.detail.bathrooms}
+                            </p>
+                            <p class="mt-1 text-xl font-semibold text-dark">
+                                {villa.bathrooms}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="font-heading text-2xl text-dark">
+                            {t.villa.detail.amenities}
+                        </h2>
+                        <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+                            {
+                                villa.amenities.map((amenity) => (
+                                    <li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
+                                        {amenity[locale]}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </article>
+
+                <aside class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
+                    <p class="text-sm text-dark/60">{t.villa.detail.pricePerNight}</p>
+                    <p class="mt-2 text-3xl font-bold text-primary">
+                        Rp {formatVillaPrice(villa.price, locale)}
+                    </p>
+                    <a
+                        href={getWhatsAppUrl(whatsappMsg)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+                    >
+                        {t.villa.detail.bookingButton}
+                    </a>
+                </aside>
+            </div>
+        </div>
+        <div class="mt-24 flex flex-col items-center justify-between">
+            <h2 class="text-2xl font-bold">{t.villa.detail.ctaHeadline}</h2>
+            <a
+                href={getWhatsAppUrl(whatsappMsg)}
+                class="mt-4 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+            >
+                {t.villa.detail.ctaButton}
+            </a>
+        </div>
+    </section>
+</BaseLayout>
