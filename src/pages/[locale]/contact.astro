@@ -1,0 +1,113 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+    ADDRESS,
+    CONTACT_EMAIL,
+    WHATSAPP_DISPLAY,
+    SOCIAL_LINKS,
+} from "@/lib/constants";
+import WhatsAppButton from "@/components/ui/WhatsAppButton.astro";
+import { useTranslations } from "@/i18n/ui";
+import type { Locale } from "@/i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t.contact.title}>
+    <section class="min-h-screen px-6 pt-24 pb-20">
+        <div class="mx-auto max-w-6xl pt-16">
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+                <!-- Info Column -->
+                <div>
+                    <h1
+                        class="font-heading text-4xl font-bold text-dark md:text-5xl"
+                    >
+                        {t.contact.headline}
+                    </h1>
+                    <p class="mt-4 text-lg text-dark/60">
+                        {t.contact.subheadline}
+                    </p>
+
+                    <div class="mt-10 space-y-6">
+                        <div>
+                            <h3 class="font-semibold text-dark">
+                                {t.contact.addressLabel}
+                            </h3>
+                            <p class="text-dark/60">{ADDRESS}</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-dark">
+                                {t.contact.emailLabel}
+                            </h3>
+                            <p>
+                                <a
+                                    href={`mailto:${CONTACT_EMAIL}`}
+                                    class="text-primary underline"
+                                    >{CONTACT_EMAIL}</a
+                                >
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-dark">
+                                {t.contact.whatsappLabel}
+                            </h3>
+                            <p class="text-dark/60">{WHATSAPP_DISPLAY}</p>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-dark">
+                                {t.contact.socialLabel}
+                            </h3>
+                            <div class="flex gap-4">
+                                <a
+                                    href={SOCIAL_LINKS.instagram}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary underline">Instagram</a
+                                >
+                                <a
+                                    href={SOCIAL_LINKS.tiktok}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-primary underline">TikTok</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <WhatsAppButton />
+                    </div>
+
+                    <!-- Directions -->
+                    <div class="mt-12">
+                        <h3 class="font-heading text-xl font-bold text-dark">
+                            {t.contact.directionsTitle}
+                        </h3>
+                        <ul class="mt-4 space-y-2 text-dark/60">
+                            <li>🚗 {t.contact.fromJakarta}</li>
+                            <li>🚗 {t.contact.fromBogor}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Map Column -->
+                <div class="overflow-hidden rounded-2xl">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1588.0!2d106.716366!3d-6.74877!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69d3f85ae8cd67%3A0xd9d73a79a3daa796!2sKASUMI%20Resorts%20-%20Enjoy%20Living!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+                        width="100%"
+                        height="100%"
+                        style="border:0; min-height: 500px;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title={t.contact.mapTitle}></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

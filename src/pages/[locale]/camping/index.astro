@@ -1,0 +1,30 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { useTranslations } from "@/i18n/ui";
+import type { Locale } from "@/i18n/utils";
+
+export function getStaticPaths() {
+    return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t.camping.index.title}>
+    <section class="px-6 pt-32 pb-20">
+        <div class="mx-auto max-w-6xl">
+            <SectionHeader
+                label={t.camping.index.label}
+                title={t.camping.index.title}
+                subtitle={t.camping.index.subtitle}
+            />
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <p class="col-span-full text-center text-dark/50">
+                    {t.camping.index.placeholder}
+                </p>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

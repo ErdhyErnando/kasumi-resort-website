@@ -29,13 +29,64 @@ export type UiTranslations = {
     privacyPolicy: string;
     credit: string;
   };
+  villa: {
+    index: {
+      title: string;
+      label: string;
+      subtitle: string;
+      from: string;
+      night: string;
+      viewDetail: string;
+    };
+    detail: {
+      breadcrumbHome: string;
+      breadcrumbVilla: string;
+      capacity: string;
+      capacityValue: string;
+      bedrooms: string;
+      bathrooms: string;
+      amenities: string;
+      pricePerNight: string;
+      bookingButton: string;
+      ctaHeadline: string;
+      ctaButton: string;
+      whatsappMessage: string;
+    };
+  };
+  camping: {
+    index: {
+      title: string;
+      label: string;
+      subtitle: string;
+      placeholder: string;
+    };
+  };
+  gallery: {
+    title: string;
+    label: string;
+    subtitle: string;
+    placeholder: string;
+  };
+  contact: {
+    title: string;
+    headline: string;
+    subheadline: string;
+    addressLabel: string;
+    emailLabel: string;
+    whatsappLabel: string;
+    socialLabel: string;
+    directionsTitle: string;
+    fromJakarta: string;
+    fromBogor: string;
+    mapTitle: string;
+  };
 };
 
 const id: UiTranslations = {
   hero: {
     line1: "Tinggalkan kota",
     line2: "Bangun di tengah kabut",
-    scrollLabel: "Gulir",
+    scrollLabel: "Scroll",
   },
 
   intro: {
@@ -123,6 +174,67 @@ const id: UiTranslations = {
     followLabel: "ikuti",
     privacyPolicy: "kebijakan privasi",
     credit: "kredit",
+  },
+
+  villa: {
+    index: {
+      title: "Villa Kami",
+      label: "Akomodasi",
+      subtitle:
+        "10 villa di tengah hutan, masing-masing dengan pemandangan dan pengalaman unik.",
+      from: "Mulai Rp",
+      night: "/malam",
+      viewDetail: "Lihat Detail",
+    },
+    detail: {
+      breadcrumbHome: "Beranda",
+      breadcrumbVilla: "Villa",
+      capacity: "Kapasitas",
+      capacityValue: "hingga {count} orang",
+      bedrooms: "Kamar Tidur",
+      bathrooms: "Kamar Mandi",
+      amenities: "Fasilitas",
+      pricePerNight: "Harga per malam",
+      bookingButton: "Booking via WhatsApp",
+      ctaHeadline: "Bayangkan akhir pekan di sini",
+      ctaButton: "Reserve now",
+      whatsappMessage:
+        "Halo, saya tertarik untuk booking {villaName}. Bisa info ketersediaan dan harganya?",
+    },
+  },
+
+  camping: {
+    index: {
+      title: "Camping di Kasumi",
+      label: "Camping Ground",
+      subtitle:
+        "Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
+      placeholder:
+        "Camping cards akan ditampilkan di sini — menunggu data dan foto.",
+    },
+  },
+
+  gallery: {
+    title: "Galeri",
+    label: "Galeri",
+    subtitle: "Ikuti kami dan tag @kasumi_resort untuk ditampilkan!",
+    placeholder:
+      "Floating photo gallery akan ditampilkan di sini — menunggu foto dan aset.",
+  },
+
+  contact: {
+    title: "Kontak",
+    headline: "Mari Rencanakan Penginapan Anda",
+    subheadline:
+      "Punya pertanyaan tentang villa, area camping, atau ketersediaan? Kami siap membantu!",
+    addressLabel: "Alamat",
+    emailLabel: "Email",
+    whatsappLabel: "WhatsApp",
+    socialLabel: "Sosial Media",
+    directionsTitle: "Cara ke Kasumi",
+    fromJakarta: "Dari Jakarta: ~2 jam via Tol Jagorawi → Bogor → Cidahu",
+    fromBogor: "Dari Bogor: ~1.5 jam via Jl. Raya Sukabumi → Cidahu",
+    mapTitle: "Lokasi Kasumi Resort",
   },
 };
 
@@ -219,6 +331,67 @@ const en: UiTranslations = {
     followLabel: "follow",
     privacyPolicy: "privacy policy",
     credit: "credit",
+  },
+
+  villa: {
+    index: {
+      title: "Our Villas",
+      label: "Accommodation",
+      subtitle:
+        "10 villas in the heart of the forest, each with a unique view and experience.",
+      from: "Starts from Rp",
+      night: "/night",
+      viewDetail: "View Details",
+    },
+    detail: {
+      breadcrumbHome: "Home",
+      breadcrumbVilla: "Villa",
+      capacity: "Capacity",
+      capacityValue: "up to {count} people",
+      bedrooms: "Bedrooms",
+      bathrooms: "Bathrooms",
+      amenities: "Amenities",
+      pricePerNight: "Price per night",
+      bookingButton: "Book via WhatsApp",
+      ctaHeadline: "Imagine You're next weekend here",
+      ctaButton: "Reserve now",
+      whatsappMessage:
+        "Hello, I am interested in booking {villaName}. Can I get availability and pricing details?",
+    },
+  },
+
+  camping: {
+    index: {
+      title: "Camping at Kasumi",
+      label: "Camping Ground",
+      subtitle:
+        "Two different camping experiences — choose the one that suits your adventurous spirit.",
+      placeholder:
+        "Camping cards will be displayed here — waiting for data and photos.",
+    },
+  },
+
+  gallery: {
+    title: "Gallery",
+    label: "Gallery",
+    subtitle: "Follow us and tag @kasumi_resort to be featured!",
+    placeholder:
+      "Floating photo gallery will be displayed here — waiting for photos and assets.",
+  },
+
+  contact: {
+    title: "Contact",
+    headline: "Let's Plan Your Stay",
+    subheadline:
+      "Have questions about villa, camping area, or availability? We're here to help!",
+    addressLabel: "Address",
+    emailLabel: "Email",
+    whatsappLabel: "WhatsApp",
+    socialLabel: "Social",
+    directionsTitle: "How to Get Here",
+    fromJakarta: "From Jakarta: ~2 hours via Jagorawi Toll → Bogor → Cidahu",
+    fromBogor: "From Bogor: ~1.5 hours via Sukabumi Road → Cidahu",
+    mapTitle: "Kasumi Resort Location",
   },
 };
 
