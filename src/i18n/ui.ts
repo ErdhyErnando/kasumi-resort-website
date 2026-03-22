@@ -82,6 +82,26 @@ export type UiTranslations = {
     fromBogor: string;
     mapTitle: string;
   };
+  blog: {
+    index: {
+      title: string;
+      label: string;
+      subtitle: string;
+      filterAll: string;
+      filterCampingTips: string;
+      filterWisata: string;
+      filterResort: string;
+      filterNature: string;
+      readTime: string;
+      noImage: string;
+      filterToolbarAria: string;
+      noPostsForFilter: string;
+    };
+    post: {
+      breadcrumbAria: string;
+      breadcrumbBlog: string;
+    };
+  };
 };
 
 const id: UiTranslations = {
@@ -239,6 +259,28 @@ const id: UiTranslations = {
     fromJakarta: "Dari Jakarta: ~2 jam via Tol Jagorawi → Bogor → Cidahu",
     fromBogor: "Dari Bogor: ~1.5 jam via Jl. Raya Sukabumi → Cidahu",
     mapTitle: "Lokasi Kasumi Resort",
+  },
+
+  blog: {
+    index: {
+      title: "Blog Kasumi",
+      label: "Cerita & tips",
+      subtitle:
+        "Cerita perjalanan, ide wisata sekitar Cidahu, dan tips menikmati alam.",
+      filterAll: "Semua",
+      filterCampingTips: "Tips Berkemah",
+      filterWisata: "Wisata Sukabumi",
+      filterResort: "Update Resort",
+      filterNature: "Nature Info",
+      readTime: "{n} menit baca",
+      noImage: "Tanpa gambar",
+      filterToolbarAria: "Saring artikel berdasarkan topik",
+      noPostsForFilter: "Belum ada artikel untuk topik ini.",
+    },
+    post: {
+      breadcrumbAria: "Jejak navigasi artikel",
+      breadcrumbBlog: "Blog",
+    },
   },
 };
 
@@ -398,6 +440,28 @@ const en: UiTranslations = {
     fromJakarta: "From Jakarta: ~2 hours via Jagorawi Toll → Bogor → Cidahu",
     fromBogor: "From Bogor: ~1.5 hours via Sukabumi Road → Cidahu",
     mapTitle: "Kasumi Resort Location",
+  },
+
+  blog: {
+    index: {
+      title: "Kasumi Blog",
+      label: "Stories & tips",
+      subtitle:
+        "Trip ideas around Cidahu, Sukabumi highlights, and tips for enjoying nature.",
+      filterAll: "All",
+      filterCampingTips: "Camping tips",
+      filterWisata: "Sukabumi travel",
+      filterResort: "Resort updates",
+      filterNature: "Nature info",
+      readTime: "{n} min read",
+      noImage: "No image",
+      filterToolbarAria: "Filter posts by topic",
+      noPostsForFilter: "No posts for this topic yet.",
+    },
+    post: {
+      breadcrumbAria: "Article breadcrumbs",
+      breadcrumbBlog: "Blog",
+    },
   },
 };
 

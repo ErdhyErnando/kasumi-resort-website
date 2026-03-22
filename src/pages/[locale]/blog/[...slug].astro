@@ -1,23 +1,36 @@
 ---
 /**
- * Blog Post Detail — /id/blog/[slug]
+ * Blog post — /[locale]/blog/[...slug]
  */
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../../layouts/BlogPost.astro';
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import BlogPost from "@/layouts/BlogPost.astro";
+import type { Locale } from "@/i18n/utils";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: post,
-  }));
+    const posts = await getCollection("blog");
+    return posts.map((post) => {
+        const segments = post.id.split("/");
+        const locale = segments[0] as Locale;
+        const slug = segments.slice(1).join("/");
+        if (locale !== "id" && locale !== "en") {
+            throw new Error(`Invalid blog locale in id "${post.id}"`);
+        }
+        if (!slug) {
+            throw new Error(`Invalid blog id "${post.id}"`);
+        }
+        return {
+            params: { locale, slug },
+            props: { post },
+        };
+    });
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
+type Props = { post: CollectionEntry<"blog"> };
+
+const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
 <BlogPost {...post.data}>
-  <Content />
+    <Content />
 </BlogPost>

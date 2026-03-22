@@ -1,78 +1,256 @@
 ---
 /**
- * Blog Index — /id/blog
- * Lists blog posts with filter chips UI (placeholder).
+ * Blog index — /[locale]/blog
  */
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import FormattedDate from '../../../components/FormattedDate.astro';
-import Badge from '../../../components/ui/Badge.astro';
-import SectionHeader from '../../../components/ui/SectionHeader.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import FormattedDate from "@/components/FormattedDate.astro";
+import Badge from "@/components/ui/Badge.astro";
+import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { useTranslations } from "@/i18n/ui";
+import type { Locale } from "@/i18n/utils";
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+export function getStaticPaths() {
+    return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const t = useTranslations(locale);
+
+const allPosts = await getCollection("blog");
+const posts = allPosts
+    .filter((p) => p.id.startsWith(`${locale}/`))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function slugFromPostId(postId: string): string {
+    return postId.split("/").slice(1).join("/");
+}
+
+const metaDescription =
+    locale === "id"
+        ? "Cerita, tips, dan informasi seputar alam serta wisata Sukabumi dari Kasumi Resort."
+        : "Stories, tips, and nature & travel notes from Kasumi Resort.";
+
+const chipBase =
+    "rounded-full px-3 py-1 text-xs font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+const chipInactive = "bg-primary/10 text-primary hover:bg-primary/15";
+const chipActive = "bg-secondary text-dark";
 ---
 
-<BaseLayout title="Blog" description="Stories, tips & nature information from Kasumi Resort.">
-  <section class="px-6 pt-32 pb-20">
-    <div class="mx-auto max-w-4xl">
-      <SectionHeader
-        title="Stories, Tips & Nature Information"
-        subtitle="Cerita, tips, dan informasi seputar alam dari Kasumi Resort."
-        align="left"
-      />
+<BaseLayout title={t.blog.index.title} description={metaDescription}>
+    <section class="px-6 pt-32 pb-20">
+        <div class="mx-auto max-w-4xl">
+            <nav aria-label={t.blog.post.breadcrumbAria} class="mb-8">
+                <ol
+                    class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-dark/60"
+                >
+                    <li>
+                        <a
+                            href={`/${locale}/`}
+                            class="font-medium hover:text-dark"
+                        >
+                            {t.villa.detail.breadcrumbHome}
+                        </a>
+                    </li>
+                    <li aria-hidden="true" class="text-dark/35">/</li>
+                    <li class="text-dark/45" aria-current="page">
+                        {t.blog.index.title}
+                    </li>
+                </ol>
+            </nav>
 
-      <!-- Filter chips (placeholder) -->
-      <div class="mb-10 flex flex-wrap gap-2">
-        <Badge label="Semua" variant="secondary" />
-        <Badge label="Tips Berkemah" />
-        <Badge label="Wisata Sukabumi" />
-        <Badge label="Update Resort" />
-        <Badge label="Nature Info" />
-      </div>
+            <SectionHeader
+                label={t.blog.index.label}
+                title={t.blog.index.title}
+                subtitle={t.blog.index.subtitle}
+                align="center"
+            />
 
-      <!-- Blog Post List -->
-      <div class="space-y-8">
-        {
-          posts.map((post) => (
-            <a
-              href={`/id/blog/${post.id}/`}
-              class="group flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md sm:flex-row sm:items-start"
+            <div
+                id="blog-filter-toolbar"
+                class="mb-10 flex w-full flex-wrap justify-center gap-2"
+                role="toolbar"
+                aria-label={t.blog.index.filterToolbarAria}
             >
-              {/* Thumbnail */}
-              <div class="aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl sm:w-48">
-                {post.data.heroImage ? (
-                  <Image
-                    width={384}
-                    height={216}
-                    src={post.data.heroImage}
-                    alt={post.data.title}
-                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                ) : (
-                  <div class="flex h-full w-full items-center justify-center bg-secondary/20 text-dark/30 text-xs">
-                    No image
-                  </div>
-                )}
-              </div>
+                <button
+                    type="button"
+                    class:list={[chipBase, chipActive]}
+                    data-blog-filter-btn="all"
+                    aria-pressed="true"
+                >
+                    {t.blog.index.filterAll}
+                </button>
+                <button
+                    type="button"
+                    class:list={[chipBase, chipInactive]}
+                    data-blog-filter-btn="tips"
+                    aria-pressed="false"
+                >
+                    {t.blog.index.filterCampingTips}
+                </button>
+                <button
+                    type="button"
+                    class:list={[chipBase, chipInactive]}
+                    data-blog-filter-btn="wisata"
+                    aria-pressed="false"
+                >
+                    {t.blog.index.filterWisata}
+                </button>
+                <button
+                    type="button"
+                    class:list={[chipBase, chipInactive]}
+                    data-blog-filter-btn="resort"
+                    aria-pressed="false"
+                >
+                    {t.blog.index.filterResort}
+                </button>
+                <button
+                    type="button"
+                    class:list={[chipBase, chipInactive]}
+                    data-blog-filter-btn="nature"
+                    aria-pressed="false"
+                >
+                    {t.blog.index.filterNature}
+                </button>
+            </div>
 
-              {/* Content */}
-              <div class="flex-1">
-                {post.data.category && <Badge label={post.data.category} variant="secondary" class="mb-2" />}
-                <h3 class="font-heading text-xl font-bold text-dark group-hover:text-primary transition-colors">
-                  {post.data.title}
-                </h3>
-                <p class="mt-1 text-sm text-dark/60 line-clamp-2">{post.data.description}</p>
-                <div class="mt-3 text-xs text-dark/40">
-                  <FormattedDate date={post.data.pubDate} />
+            <div
+                class="flex min-h-[28rem] flex-col rounded-3xl border border-dark/10 bg-white/50 p-5 sm:min-h-[40rem] md:p-8"
+            >
+                <div id="blog-post-list" class="space-y-8">
+                    {
+                        posts.map((post) => {
+                            const slug = slugFromPostId(post.id);
+                            const readMins = post.data.readingTimeMinutes ?? 3;
+                            const readLabel = t.blog.index.readTime.replace(
+                                "{n}",
+                                String(readMins),
+                            );
+                            const filters = post.data.blogFilters.join(" ");
+                            return (
+                                <a
+                                    href={`/${locale}/blog/${slug}/`}
+                                    class="blog-post-card group flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:flex-row sm:items-start"
+                                    data-blog-filters={filters}
+                                >
+                                    <div class="aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl sm:w-48">
+                                        {post.data.heroImage ? (
+                                            <img
+                                                width={384}
+                                                height={216}
+                                                src={post.data.heroImage}
+                                                alt={post.data.title}
+                                                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-103"
+                                            />
+                                        ) : (
+                                            <div class="flex h-full w-full items-center justify-center bg-secondary/20 text-xs text-dark/30">
+                                                {t.blog.index.noImage}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div class="flex-1">
+                                        {post.data.category && (
+                                            <Badge
+                                                label={post.data.category}
+                                                variant="secondary"
+                                                class="mb-2"
+                                            />
+                                        )}
+                                        <h3 class="font-heading text-xl font-bold text-dark transition-colors group-hover:text-primary">
+                                            {post.data.title}
+                                        </h3>
+                                        <p class="mt-1 line-clamp-2 text-sm text-dark/60">
+                                            {post.data.description}
+                                        </p>
+                                        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-dark/40">
+                                            <FormattedDate
+                                                date={post.data.pubDate}
+                                            />
+                                            <span aria-hidden="true">·</span>
+                                            <span>{readLabel}</span>
+                                        </div>
+                                    </div>
+                                </a>
+                            );
+                        })
+                    }
                 </div>
-              </div>
-            </a>
-          ))
+
+                <p
+                    id="blog-filter-empty"
+                    class="hidden flex flex-1 flex-col items-center justify-center py-12 text-center text-dark/60"
+                    role="status"
+                >
+                    {t.blog.index.noPostsForFilter}
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script define:vars={{ chipInactive, chipActive }}>
+        function setChipStyles(btn, active) {
+            btn.setAttribute("aria-pressed", active ? "true" : "false");
+            btn.classList.remove(chipInactive, chipActive);
+            btn.classList.add(active ? chipActive : chipInactive);
         }
-      </div>
-    </div>
-  </section>
+
+        function applyBlogFilter(filterKey) {
+            const list = document.getElementById("blog-post-list");
+            const toolbar = document.getElementById("blog-filter-toolbar");
+            if (!list || !toolbar) return;
+
+            const cards = list.querySelectorAll("[data-blog-filters]");
+            let visible = 0;
+            cards.forEach((card) => {
+                const raw = card.getAttribute("data-blog-filters") || "";
+                const tags = raw.split(/\s+/).filter(Boolean);
+                const show = filterKey === "all" || tags.includes(filterKey);
+                card.classList.toggle("hidden", !show);
+                if (show) visible += 1;
+            });
+
+            const empty = document.getElementById("blog-filter-empty");
+            if (empty) {
+                const showEmpty = visible === 0;
+                empty.classList.toggle("hidden", !showEmpty);
+                empty.classList.toggle("flex", showEmpty);
+            }
+
+            toolbar
+                .querySelectorAll("[data-blog-filter-btn]")
+                .forEach((btn) => {
+                    const key = btn.getAttribute("data-blog-filter-btn");
+                    setChipStyles(btn, key === filterKey);
+                });
+        }
+
+        function onBlogFilterClick(event) {
+            const rawTarget = event.target;
+            const el =
+                rawTarget instanceof Element
+                    ? rawTarget
+                    : rawTarget.parentElement;
+            const btn = el?.closest("[data-blog-filter-btn]");
+            if (!btn) return;
+            const toolbar = document.getElementById("blog-filter-toolbar");
+            if (!toolbar || !toolbar.contains(btn)) return;
+            const key = btn.getAttribute("data-blog-filter-btn");
+            if (!key) return;
+            event.preventDefault();
+            applyBlogFilter(key);
+        }
+
+        if (!window.__blogFilterBound) {
+            window.__blogFilterBound = true;
+            document.addEventListener("click", onBlogFilterClick);
+            document.addEventListener("astro:page-load", () => {
+                if (document.getElementById("blog-filter-toolbar")) {
+                    applyBlogFilter("all");
+                }
+            });
+        }
+
+        applyBlogFilter("all");
+    </script>
 </BaseLayout>
