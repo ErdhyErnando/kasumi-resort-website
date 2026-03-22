@@ -1,26 +1,71 @@
 ---
-import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { useTranslations } from '@/i18n/ui';
+import type { Locale } from '@/i18n/utils';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, author, category, tags } = Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  author,
+  category,
+  tags,
+  readingTimeMinutes,
+} = Astro.props;
+const readMins = readingTimeMinutes ?? 3;
+
+const pathSeg = Astro.url.pathname.split('/').filter(Boolean)[0];
+const locale = (pathSeg === 'en' || pathSeg === 'id' ? pathSeg : 'id') as Locale;
+const t = useTranslations(locale);
+const readLabel = t.blog.index.readTime.replace('{n}', String(readMins));
 ---
 
 <BaseLayout title={title} description={description}>
   <article class="pt-24 pb-20">
+    <div class="mx-auto max-w-4xl px-6">
+      <nav aria-label={t.blog.post.breadcrumbAria} class="mb-8">
+        <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-dark/60">
+          <li>
+            <a href={`/${locale}/`} class="font-medium hover:text-dark">
+              {t.villa.detail.breadcrumbHome}
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-dark/35">
+            /
+          </li>
+          <li>
+            <a href={`/${locale}/blog/`} class="font-medium hover:text-dark">
+              {t.blog.post.breadcrumbBlog}
+            </a>
+          </li>
+          <li aria-hidden="true" class="text-dark/35">
+            /
+          </li>
+          <li class="max-w-[min(100%,28rem)] truncate text-dark/45" aria-current="page">
+            {title}
+          </li>
+        </ol>
+      </nav>
+    </div>
+
     <!-- Hero Image -->
     <div class="mx-auto max-w-4xl px-6">
       {heroImage && (
         <div class="overflow-hidden rounded-2xl">
-          <Image
+          <img
             width={1020}
             height={510}
             src={heroImage}
             alt={title}
-            class="w-full object-cover"
+            class="h-auto w-full object-cover"
+            loading="eager"
+            decoding="async"
           />
         </div>
       )}
@@ -29,9 +74,10 @@ const { title, description, pubDate, updatedDate, heroImage, author, category, t
     <!-- Prose Content -->
     <div class="prose mx-auto mt-10 px-6">
       <div class="mb-10 border-b border-dark/10 pb-8">
-        <div class="flex items-center gap-3 text-sm text-dark/50">
+        <div class="flex flex-wrap items-center gap-3 text-sm text-dark/50">
           <FormattedDate date={pubDate} />
           {author && <span>· {author}</span>}
+          <span>· {readLabel}</span>
           {category && (
             <span class="rounded-full bg-secondary/20 px-3 py-0.5 text-xs font-semibold text-primary">
               {category}

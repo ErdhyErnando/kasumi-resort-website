@@ -8,9 +8,14 @@ export async function GET(context) {
 		title: SITE_NAME,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: posts.map((post) => ({
-			...post.data,
-			link: `/id/blog/${post.id}/`,
-		})),
+		items: posts.map((post) => {
+			const segments = post.id.split('/');
+			const locale = segments[0];
+			const slug = segments.slice(1).join('/');
+			return {
+				...post.data,
+				link: `/${locale}/blog/${slug}/`,
+			};
+		}),
 	});
 }

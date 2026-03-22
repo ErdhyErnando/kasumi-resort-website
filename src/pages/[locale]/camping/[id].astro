@@ -1,12 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { campings } from "@/lib/camping";
 
 export function getStaticPaths() {
-    // Placeholder — will be replaced with dynamic camping data
-    return [
-        { params: { id: "forest-riverside" } },
-        { params: { id: "mountain-view" } },
-    ];
+    return ["id", "en"].flatMap((locale) =>
+        campings.map((camping) => ({
+            params: { locale, id: camping.id },
+        })),
+    );
 }
 
 const { id } = Astro.params;

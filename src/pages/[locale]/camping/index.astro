@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
+import { campings, formatCampingPrice } from "@/lib/camping";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 
@@ -10,6 +11,24 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
+const localizedCampings = campings.map((camping) => ({
+    id: camping.id,
+    tabLabel: camping.tabLabel[locale],
+    name: camping.name[locale],
+    tagline: camping.tagline[locale],
+    description: camping.description[locale],
+    heroImage: camping.heroImage,
+    gallery: camping.gallery,
+    price: camping.price,
+    amenities: camping.amenities.map((item) => item[locale]),
+    perfectFor: camping.perfectFor.map((item) => item[locale]),
+}));
+const initialCamping = localizedCampings[0];
+const campingsJson = JSON.stringify(localizedCampings);
+
+function getHeroBackgroundStyle(imagePath: string): string {
+    return `background-image: linear-gradient(135deg, rgba(151, 188, 98, 0.25), rgba(43, 43, 43, 0.18)), url('${imagePath}');`;
+}
 ---
 
 <BaseLayout title={t.camping.index.title}>
@@ -19,12 +38,241 @@ const t = useTranslations(locale);
                 label={t.camping.index.label}
                 title={t.camping.index.title}
                 subtitle={t.camping.index.subtitle}
+                class="mb-20"
             />
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-                <p class="col-span-full text-center text-dark/50">
-                    {t.camping.index.placeholder}
-                </p>
+
+            <div class="relative left-1/2 my-28 w-screen -translate-x-1/2">
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1200 120"
+                    class="h-10 w-full fill-secondary"
+                    preserveAspectRatio="none"
+                >
+                    <path d="M0,40 C250,5 350,5 600,40 C850,75 950,75 1200,40 L1200,120 L0,120 Z"></path>
+                </svg>
+                <div class="bg-secondary px-6 py-10 text-center text-highlight md:px-20">
+                    <p class="mx-auto max-w-2xl text-lg leading-relaxed md:text-3xl md:leading-relaxed">
+                        {t.camping.index.introText}
+                    </p>
+                </div>
+                <svg
+                    aria-hidden="true"
+                    viewBox="0 0 1200 120"
+                    class="h-10 w-full fill-secondary"
+                    preserveAspectRatio="none"
+                >
+                    <path d="M0,80 C250,115 350,115 600,80 C850,45 950,45 1200,80 L1200,0 L0,0 Z"></path>
+                </svg>
+            </div>
+
+            <div
+                class="sticky top-20 z-30 mt-8 rounded-xl bg-dark px-2 py-2 shadow-lg md:rounded-full"
+            >
+                <div class="flex items-center gap-2 overflow-x-auto px-1">
+                    {
+                        localizedCampings.map((camping, index) => (
+                            <button
+                                type="button"
+                                class:list={[
+                                    "camping-tab min-w-max rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                                    index === 0
+                                        ? "bg-secondary text-dark"
+                                        : "text-highlight/85 hover:bg-white/10 hover:text-highlight",
+                                ]}
+                                data-camping-tab={camping.id}
+                            >
+                                {camping.tabLabel}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="mt-8 rounded-3xl border border-dark/10 bg-white/50 p-5 md:p-8">
+                <div class="grid items-start gap-7 md:grid-cols-[1.1fr_1fr]">
+                    <div class="space-y-5">
+                        <div
+                            id="camping-hero-visual"
+                            class="aspect-16/10 w-full rounded-2xl border border-dark/5 bg-center bg-cover shadow-sm"
+                            style={getHeroBackgroundStyle(initialCamping.heroImage)}
+                            role="img"
+                            aria-label={initialCamping.name}
+                        ></div>
+
+                        <div id="camping-amenities-dots" class="flex flex-wrap gap-2">
+                            {
+                                initialCamping.amenities.map((amenity) => (
+                                    <span class="inline-flex max-w-full items-center gap-2 rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
+                                        <span
+                                            class="h-2 w-2 shrink-0 rounded-full bg-secondary"
+                                            aria-hidden="true"
+                                        ></span>
+                                        <span>{amenity}</span>
+                                    </span>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <div class="space-y-5">
+                        <div class="flex flex-wrap items-start justify-between gap-4">
+                            <h3 id="camping-name" class="font-heading text-3xl text-dark md:text-4xl">
+                                {initialCamping.name}
+                            </h3>
+                            <p id="camping-price" class="text-lg font-semibold text-dark">
+                                Rp {formatCampingPrice(initialCamping.price, locale)}{t.camping.index.priceSuffix}
+                            </p>
+                        </div>
+
+                        <p id="camping-tagline" class="text-base text-dark/85 md:text-lg">
+                            {initialCamping.tagline}
+                        </p>
+                        <p id="camping-description" class="leading-relaxed text-dark/70">
+                            {initialCamping.description}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-10 border-t border-dark/10 pt-8">
+                    <div class="grid gap-4 md:grid-cols-[220px_1fr] md:gap-8">
+                        <h4 class="font-heading text-3xl text-dark">
+                            {t.camping.index.perfectFor}
+                        </h4>
+                        <ul id="camping-perfect-for" class="grid gap-3 text-dark/85 sm:grid-cols-2">
+                            {
+                                initialCamping.perfectFor.map((item) => (
+                                    <li class="text-base leading-relaxed">{item}</li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
+    <script
+        id="camping-data"
+        type="application/json"
+        data-locale={locale}
+        data-price-suffix={t.camping.index.priceSuffix}
+        set:html={campingsJson}
+    ></script>
+    <script>
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;");
+        }
+
+        function parseCampings() {
+            const dataElement = document.getElementById("camping-data");
+            const raw = dataElement?.textContent?.trim();
+            if (!raw) return null;
+            try {
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
+            } catch {
+                return null;
+            }
+        }
+
+        function getLocaleAndSuffix() {
+            const dataElement = document.getElementById("camping-data");
+            const loc = dataElement?.dataset.locale ?? "id";
+            const priceSuffix = dataElement?.dataset.priceSuffix ?? "";
+            return { loc, priceSuffix };
+        }
+
+        function renderCamping(id) {
+            const campings = parseCampings();
+            if (!campings) return;
+
+            const { loc, priceSuffix } = getLocaleAndSuffix();
+            const currencyFormatter = new Intl.NumberFormat(
+                loc === "id" ? "id-ID" : "en-US",
+            );
+
+            const selected = campings.find((item) => item.id === id) ?? campings[0];
+            if (!selected) return;
+
+            const heroVisual = document.getElementById("camping-hero-visual");
+            const nameElement = document.getElementById("camping-name");
+            const priceElement = document.getElementById("camping-price");
+            const taglineElement = document.getElementById("camping-tagline");
+            const descriptionElement = document.getElementById("camping-description");
+            const amenitiesDotsElement = document.getElementById("camping-amenities-dots");
+            const perfectForElement = document.getElementById("camping-perfect-for");
+            const tabs = document.querySelectorAll("[data-camping-tab]");
+
+            if (heroVisual) {
+                heroVisual.style.backgroundImage =
+                    `linear-gradient(135deg, rgba(151, 188, 98, 0.25), rgba(43, 43, 43, 0.18)), url('${selected.heroImage}')`;
+                heroVisual.setAttribute("aria-label", selected.name);
+            }
+            if (nameElement) nameElement.textContent = selected.name;
+            if (priceElement) {
+                priceElement.textContent = `Rp ${currencyFormatter.format(selected.price)}${priceSuffix}`;
+            }
+            if (taglineElement) taglineElement.textContent = selected.tagline;
+            if (descriptionElement) descriptionElement.textContent = selected.description;
+            if (amenitiesDotsElement) {
+                amenitiesDotsElement.innerHTML = selected.amenities
+                    .map(
+                        (item) =>
+                            `<span class="inline-flex max-w-full items-center gap-2 rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90"><span class="h-2 w-2 shrink-0 rounded-full bg-secondary" aria-hidden="true"></span><span>${escapeHtml(item)}</span></span>`,
+                    )
+                    .join("");
+            }
+            if (perfectForElement) {
+                perfectForElement.innerHTML = selected.perfectFor
+                    .map(
+                        (item) =>
+                            `<li class="text-base leading-relaxed">${escapeHtml(item)}</li>`,
+                    )
+                    .join("");
+            }
+
+            tabs.forEach((tab) => {
+                const tabId = tab.getAttribute("data-camping-tab");
+                const isActive = tabId === selected.id;
+                tab.classList.toggle("bg-secondary", isActive);
+                tab.classList.toggle("text-dark", isActive);
+                tab.classList.toggle("text-highlight/85", !isActive);
+                tab.classList.toggle("hover:bg-white/10", !isActive);
+                tab.classList.toggle("hover:text-highlight", !isActive);
+            });
+        }
+
+        function onCampingTabClick(event) {
+            const rawTarget = event.target;
+            const el =
+                rawTarget instanceof Element ? rawTarget : rawTarget.parentElement;
+            const tab = el?.closest("[data-camping-tab]");
+            if (!tab || !document.getElementById("camping-hero-visual")) return;
+
+            const id = tab.getAttribute("data-camping-tab");
+            if (!id) return;
+
+            event.preventDefault();
+            renderCamping(id);
+        }
+
+        if (!window.__campingTabClickBound) {
+            window.__campingTabClickBound = true;
+            document.addEventListener("click", onCampingTabClick);
+        }
+
+        if (!window.__campingPageLoadBound) {
+            window.__campingPageLoadBound = true;
+            document.addEventListener("astro:page-load", () => {
+                if (!document.getElementById("camping-hero-visual")) return;
+                const campings = parseCampings();
+                if (!campings) return;
+                renderCamping(campings[0].id);
+            });
+        }
+    </script>
 </BaseLayout>
