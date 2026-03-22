@@ -58,7 +58,9 @@ export type UiTranslations = {
       title: string;
       label: string;
       subtitle: string;
-      placeholder: string;
+      introText: string;
+      perfectFor: string;
+      priceSuffix: string;
     };
   };
   gallery: {
@@ -209,8 +211,10 @@ const id: UiTranslations = {
       label: "Camping Ground",
       subtitle:
         "Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
-      placeholder:
-        "Camping cards akan ditampilkan di sini — menunggu data dan foto.",
+      introText:
+        "Apakah kamu lebih suka berkemah di bawah hutan yang rindang atau bangun pagi dengan pemandangan pegunungan yang luas.",
+      perfectFor: "Cocok Untuk",
+      priceSuffix: "/ malam",
     },
   },
 
@@ -366,8 +370,10 @@ const en: UiTranslations = {
       label: "Camping Ground",
       subtitle:
         "Two different camping experiences — choose the one that suits your adventurous spirit.",
-      placeholder:
-        "Camping cards will be displayed here — waiting for data and photos.",
+      introText:
+        "Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
+      perfectFor: "Perfect For",
+      priceSuffix: "/ night",
     },
   },
 
