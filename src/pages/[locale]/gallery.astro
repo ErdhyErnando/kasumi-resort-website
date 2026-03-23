@@ -1,8 +1,9 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import SectionHeader from "@/components/ui/SectionHeader.astro";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
+import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { SOCIAL_LINKS } from "@/lib/constants";
 
 export function getStaticPaths() {
     return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
@@ -10,21 +11,251 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
+
+const reserveUrl = getWhatsAppUrl(t.gallery.reserveWhatsappMessage);
+
+/** Placeholder pools — replace with real assets when ready. */
+const momentsPool = [
+    "/images/gallery/p1.svg",
+    "/images/gallery/p2.svg",
+    "/images/gallery/p3.svg",
+    "/images/gallery/p4.svg",
+];
+const campingPool = [
+    "/images/gallery/camping-1.webp",
+    "/images/gallery/p4.svg",
+    "/images/gallery/p1.svg",
+    "/images/gallery/p3.svg",
+    "/images/gallery/p4.svg",
+];
+
+const momentsAlts = t.gallery.momentsImageAlts;
+const campingAlts = t.gallery.campingImageAlts;
 ---
 
-<BaseLayout title={t.gallery.title}>
-    <section class="px-6 pt-32 pb-20">
-        <div class="mx-auto max-w-6xl">
-            <SectionHeader
-                label={t.gallery.label}
-                title={t.gallery.title}
-                subtitle={t.gallery.subtitle}
+<BaseLayout title={t.gallery.title} class="bg-highlight">
+    <!-- Section 1: Moments -->
+    <section
+        class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-12 md:pt-32"
+    >
+        <div
+            class="relative mx-auto h-[min(72vh,640px)] w-full max-w-5xl md:h-[min(70vh,560px)]"
+            data-gallery-rotate="moments"
+            data-animate="stagger"
+        >
+            <h2
+                class="font-heading absolute left-1/2 top-1/2 z-10 max-w-[16ch] -translate-x-1/2 -translate-y-1/2 px-3 text-center text-[clamp(1.35rem,4.5vw,2rem)] font-normal leading-snug text-dark"
+            >
+                {t.gallery.momentsHeading}
+            </h2>
+
+            <img
+                data-slot
+                src={momentsPool[0]}
+                alt={momentsAlts[0]}
+                class="absolute top-[2%] left-[1%] z-0 h-auto w-[clamp(4.75rem,26vw,7.5rem)] rounded-2xl object-cover shadow-md md:left-[4%] md:w-[10.5rem] md:max-w-[28%]"
+                style="aspect-ratio: 2/3;"
+                loading="lazy"
+                decoding="async"
             />
-            <div class="flex flex-wrap justify-center gap-4">
-                <p class="text-dark/50">
-                    {t.gallery.placeholder}
-                </p>
-            </div>
+            <img
+                data-slot
+                src={momentsPool[1]}
+                alt={momentsAlts[1]}
+                class="absolute top-[4%] right-[0%] z-0 h-auto w-[clamp(7rem,42vw,13rem)] rounded-2xl object-cover shadow-md md:right-[2%] md:max-w-[52%]"
+                style="aspect-ratio: 16/9;"
+                loading="lazy"
+                decoding="async"
+            />
+            <img
+                data-slot
+                src={momentsPool[2]}
+                alt={momentsAlts[2]}
+                class="absolute bottom-[18%] left-[4%] z-0 h-auto w-[clamp(6rem,36vw,11rem)] rounded-2xl object-cover shadow-md md:bottom-[14%] md:left-[6%] md:max-w-[38%]"
+                style="aspect-ratio: 16/9;"
+                loading="lazy"
+                decoding="async"
+            />
+            <img
+                data-slot
+                src={momentsPool[3]}
+                alt={momentsAlts[3]}
+                class="absolute right-[2%] bottom-[8%] z-0 h-auto w-[clamp(4.25rem,22vw,6.75rem)] rounded-2xl object-cover shadow-md md:bottom-[10%] md:right-[5%] md:max-w-[24%]"
+                style="aspect-ratio: 2/3;"
+                loading="lazy"
+                decoding="async"
+            />
         </div>
     </section>
+
+    <!-- Section 2: Camping & Community -->
+    <section
+        class="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 py-12"
+    >
+        <div class="flex w-full max-w-5xl flex-col items-center gap-10">
+            <div
+                class="relative mx-auto h-[min(68vh,620px)] w-full md:h-[min(68vh,580px)]"
+                data-gallery-rotate="camping"
+                data-animate="stagger"
+            >
+                <h2
+                    class="font-heading absolute left-1/2 top-[42%] z-10 max-w-[18ch] -translate-x-1/2 -translate-y-1/2 px-3 text-center text-[clamp(1.25rem,4.2vw,2rem)] font-normal leading-snug text-dark md:top-1/2"
+                >
+                    {t.gallery.campingHeading}
+                </h2>
+
+                <img
+                    data-slot
+                    src={campingPool[0]}
+                    alt={campingAlts[0]}
+                    class="absolute top-[0%] left-[0%] z-0 h-auto w-[clamp(7.5rem,48vw,14rem)] rounded-2xl object-cover shadow-md md:left-[2%] md:max-w-[48%]"
+                    style="aspect-ratio: 16/9;"
+                    loading="lazy"
+                    decoding="async"
+                />
+                <img
+                    data-slot
+                    src={campingPool[1]}
+                    alt={campingAlts[1]}
+                    class="absolute top-[6%] right-[4%] z-0 h-auto w-[clamp(3.5rem,20vw,5rem)] rounded-2xl object-cover shadow-md md:right-[6%]"
+                    style="aspect-ratio: 1/1;"
+                    loading="lazy"
+                    decoding="async"
+                />
+                <div
+                    class="absolute bottom-[20%] left-[4%] z-0 flex flex-col gap-2 md:bottom-[16%] md:left-[6%]"
+                >
+                    <img
+                        data-slot
+                        src={campingPool[2]}
+                        alt={campingAlts[2]}
+                        class="h-auto w-[clamp(3.25rem,18vw,4.5rem)] rounded-2xl object-cover shadow-md"
+                        style="aspect-ratio: 1/1;"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <img
+                        data-slot
+                        src={campingPool[3]}
+                        alt={campingAlts[3]}
+                        class="h-auto w-[clamp(6.5rem,40vw,11rem)] rounded-2xl object-cover shadow-md"
+                        style="aspect-ratio: 16/9;"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </div>
+                <img
+                    data-slot
+                    src={campingPool[4]}
+                    alt={campingAlts[4]}
+                    class="absolute right-[0%] bottom-[6%] z-0 h-auto w-[clamp(4.5rem,24vw,7rem)] rounded-2xl object-cover shadow-md md:bottom-[8%] md:right-[3%] md:max-w-[26%]"
+                    style="aspect-ratio: 2/3;"
+                    loading="lazy"
+                    decoding="async"
+                />
+            </div>
+
+            <p
+                class="max-w-xl text-center font-body text-sm text-dark/70 md:text-base"
+                data-animate="fade-up"
+            >
+                <a
+                    href={SOCIAL_LINKS.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex flex-wrap items-center justify-center gap-1.5 underline decoration-dark/35 underline-offset-[5px] transition-colors hover:text-primary hover:decoration-primary"
+                    aria-label={t.gallery.followInstagramAria}
+                >
+                    <span>
+                        {t.gallery.followLineBefore}
+                        <span
+                            class="font-medium text-dark group-hover:text-primary"
+                            >{t.gallery.followHandle}</span
+                        >{t.gallery.followLineAfter}
+                    </span>
+                    <svg
+                        class="h-4 w-4 shrink-0 text-dark opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        ></path>
+                    </svg>
+                </a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 3: CTA -->
+    <section
+        class="flex min-h-[100svh] flex-col items-center justify-center px-6 py-20"
+    >
+        <div class="mx-auto max-w-3xl text-center" data-animate="fade-up">
+            <h2
+                class="font-heading text-[clamp(1.75rem,5vw,3.25rem)] font-bold leading-tight text-dark"
+            >
+                {t.gallery.ctaHeadline}
+            </h2>
+            <a
+                href={reserveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-8 inline-block font-body text-base lowercase tracking-wide underline decoration-dark/40 underline-offset-[6px] transition-colors hover:text-primary hover:decoration-primary md:text-lg"
+            >
+                {t.gallery.ctaReserveLabel}
+            </a>
+        </div>
+    </section>
+
+    <script
+        define:vars={{
+            momentsPool,
+            campingPool,
+            ROTATE_MS: 3500,
+        }}
+    >
+        /** @type {number[]} */
+        let galleryRotateIntervals = [];
+
+        function clearGalleryRotateIntervals() {
+            galleryRotateIntervals.forEach((id) => window.clearInterval(id));
+            galleryRotateIntervals = [];
+        }
+
+        function applyRotation(root, pool) {
+            const imgs = root.querySelectorAll("img[data-slot]");
+            if (!imgs.length || !pool.length) return;
+            let offset = 0;
+            function tick() {
+                imgs.forEach((img, i) => {
+                    const next = pool[(offset + i) % pool.length];
+                    img.setAttribute("src", next);
+                });
+                offset = (offset + 1) % pool.length;
+            }
+            tick();
+            galleryRotateIntervals.push(window.setInterval(tick, ROTATE_MS));
+        }
+
+        function initGalleryRotation() {
+            clearGalleryRotateIntervals();
+            const momentsRoot = document.querySelector(
+                '[data-gallery-rotate="moments"]',
+            );
+            const campingRoot = document.querySelector(
+                '[data-gallery-rotate="camping"]',
+            );
+            if (momentsRoot) applyRotation(momentsRoot, momentsPool);
+            if (campingRoot) applyRotation(campingRoot, campingPool);
+        }
+
+        initGalleryRotation();
+        document.addEventListener("astro:page-load", initGalleryRotation);
+        document.addEventListener(
+            "astro:before-preparation",
+            clearGalleryRotateIntervals,
+        );
+    </script>
 </BaseLayout>
