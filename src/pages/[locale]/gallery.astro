@@ -309,10 +309,9 @@ const guestVideoEmbeds = guestVideoLinksRaw
             if (campingRoot) applyRotation(campingRoot, campingPool);
         }
 
-        initGalleryRotation();
         document.addEventListener("astro:page-load", initGalleryRotation);
         document.addEventListener(
-            "astro:before-preparation",
+            "astro:before-swap",
             clearGalleryRotateIntervals,
         );
     </script>
