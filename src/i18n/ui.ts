@@ -65,9 +65,19 @@ export type UiTranslations = {
   };
   gallery: {
     title: string;
-    label: string;
-    subtitle: string;
-    placeholder: string;
+    momentsHeading: string;
+    campingHeading: string;
+    followLineBefore: string;
+    followHandle: string;
+    followLineAfter: string;
+    followInstagramAria: string;
+    ctaHeadline: string;
+    ctaReserveLabel: string;
+    reserveWhatsappMessage: string;
+    momentsImageAlts: [string, string, string, string];
+    campingImageAlts: [string, string, string, string, string];
+    guestVideosHeading: string;
+    guestVideoIframeTitle: string;
   };
   contact: {
     title: string;
@@ -240,10 +250,31 @@ const id: UiTranslations = {
 
   gallery: {
     title: "Galeri",
-    label: "Galeri",
-    subtitle: "Ikuti kami dan tag @kasumi_resort untuk ditampilkan!",
-    placeholder:
-      "Floating photo gallery akan ditampilkan di sini — menunggu foto dan aset.",
+    momentsHeading: "Momen di Kasumi Resort",
+    campingHeading: "Camping & Komunitas",
+    followLineBefore: "Ikuti dan tag kami ",
+    followHandle: "@kasumi_resort",
+    followLineAfter: " untuk bisa tampil di galeri kami!",
+    followInstagramAria: "Buka Instagram Kasumi Resort",
+    ctaHeadline: "Siap Menciptakan Momenmu Sendiri?",
+    ctaReserveLabel: "pesan sekarang",
+    reserveWhatsappMessage:
+      "Halo, saya ingin tahu lebih lanjut tentang menginap di Kasumi Resort.",
+    momentsImageAlts: [
+      "Galeri momen di Kasumi Resort",
+      "Galeri momen di Kasumi Resort",
+      "Galeri momen di Kasumi Resort",
+      "Galeri momen di Kasumi Resort",
+    ],
+    campingImageAlts: [
+      "Galeri camping dan komunitas Kasumi",
+      "Galeri camping dan komunitas Kasumi",
+      "Galeri camping dan komunitas Kasumi",
+      "Galeri camping dan komunitas Kasumi",
+      "Galeri camping dan komunitas Kasumi",
+    ],
+    guestVideosHeading: "Video Tamu Kami",
+    guestVideoIframeTitle: "Video YouTube tamu Kasumi Resort",
   },
 
   contact: {
@@ -421,10 +452,31 @@ const en: UiTranslations = {
 
   gallery: {
     title: "Gallery",
-    label: "Gallery",
-    subtitle: "Follow us and tag @kasumi_resort to be featured!",
-    placeholder:
-      "Floating photo gallery will be displayed here — waiting for photos and assets.",
+    momentsHeading: "Moments at Kasumi Resort",
+    campingHeading: "Camping & Community",
+    followLineBefore: "Follow and tag us ",
+    followHandle: "@kasumi_resort",
+    followLineAfter: " to be featured!",
+    followInstagramAria: "Open Kasumi Resort on Instagram",
+    ctaHeadline: "Ready to Create Your Own Moments?",
+    ctaReserveLabel: "reserve today",
+    reserveWhatsappMessage:
+      "Hello, I'd like to know more about staying at Kasumi Resort.",
+    momentsImageAlts: [
+      "Kasumi Resort gallery moment",
+      "Kasumi Resort gallery moment",
+      "Kasumi Resort gallery moment",
+      "Kasumi Resort gallery moment",
+    ],
+    campingImageAlts: [
+      "Kasumi Resort camping and community",
+      "Kasumi Resort camping and community",
+      "Kasumi Resort camping and community",
+      "Kasumi Resort camping and community",
+      "Kasumi Resort camping and community",
+    ],
+    guestVideosHeading: "Our guests' videos",
+    guestVideoIframeTitle: "Kasumi Resort guest YouTube video",
   },
 
   contact: {
