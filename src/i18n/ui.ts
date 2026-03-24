@@ -76,6 +76,8 @@ export type UiTranslations = {
     reserveWhatsappMessage: string;
     momentsImageAlts: [string, string, string, string];
     campingImageAlts: [string, string, string, string, string];
+    guestVideosHeading: string;
+    guestVideoIframeTitle: string;
   };
   contact: {
     title: string;
@@ -271,6 +273,8 @@ const id: UiTranslations = {
       "Galeri camping dan komunitas Kasumi",
       "Galeri camping dan komunitas Kasumi",
     ],
+    guestVideosHeading: "Video Tamu Kami",
+    guestVideoIframeTitle: "Video YouTube tamu Kasumi Resort",
   },
 
   contact: {
@@ -471,6 +475,8 @@ const en: UiTranslations = {
       "Kasumi Resort camping and community",
       "Kasumi Resort camping and community",
     ],
+    guestVideosHeading: "Our guests' videos",
+    guestVideoIframeTitle: "Kasumi Resort guest YouTube video",
   },
 
   contact: {

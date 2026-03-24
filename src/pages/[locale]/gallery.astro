@@ -4,6 +4,7 @@ import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { SOCIAL_LINKS } from "@/lib/constants";
+import { toYouTubeEmbedUrl } from "@/lib/youtube";
 
 export function getStaticPaths() {
     return [{ params: { locale: "id" } }, { params: { locale: "en" } }];
@@ -31,6 +32,18 @@ const campingPool = [
 
 const momentsAlts = t.gallery.momentsImageAlts;
 const campingAlts = t.gallery.campingImageAlts;
+
+/** Paste watch, embed, Shorts, or youtu.be links — normalized to embed URLs. */
+const guestVideoLinksRaw = [
+    "https://www.youtube.com/embed/e0-KttvAzVc?si=Rq8RI4XGx6h-wKh_",
+    "https://youtu.be/NG6_iZ2QRFk?si=TUaPTjU76tsWiGq5",
+    "https://youtu.be/rUy9qZVcw2Q?si=ysm2kAsezrLctX_a",
+    "https://youtu.be/FOffrWcPagM?si=m9-9mvNnZSqOy0Uq",
+];
+const guestVideoEmbeds = guestVideoLinksRaw
+    .map(toYouTubeEmbedUrl)
+    .filter((url) => url.length > 0)
+    .slice(0, 4);
 ---
 
 <BaseLayout title={t.gallery.title} class="bg-highlight">
@@ -39,7 +52,7 @@ const campingAlts = t.gallery.campingImageAlts;
         class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 pt-28 pb-12 md:pt-32"
     >
         <div
-            class="relative mx-auto h-[min(72vh,640px)] w-full max-w-5xl md:h-[min(70vh,560px)]"
+            class="relative mx-auto h-[min(72vh,748px)] w-full max-w-4xl md:h-[min(70vh,560px)]"
             data-gallery-rotate="moments"
             data-animate="stagger"
         >
@@ -53,7 +66,7 @@ const campingAlts = t.gallery.campingImageAlts;
                 data-slot
                 src={momentsPool[0]}
                 alt={momentsAlts[0]}
-                class="absolute top-[2%] left-[1%] z-0 h-auto w-[clamp(4.75rem,26vw,7.5rem)] rounded-2xl object-cover shadow-md md:left-[4%] md:w-[10.5rem] md:max-w-[28%]"
+                class="absolute top-[2%] left-[1%] z-0 h-auto w-[clamp(4.75rem,26vw,9rem)] rounded-2xl object-cover shadow-md md:left-[4%] md:w-[10.5rem] md:max-w-[28%]"
                 style="aspect-ratio: 2/3;"
                 loading="lazy"
                 decoding="async"
@@ -62,7 +75,7 @@ const campingAlts = t.gallery.campingImageAlts;
                 data-slot
                 src={momentsPool[1]}
                 alt={momentsAlts[1]}
-                class="absolute top-[4%] right-[0%] z-0 h-auto w-[clamp(7rem,42vw,13rem)] rounded-2xl object-cover shadow-md md:right-[2%] md:max-w-[52%]"
+                class="absolute top-[4%] right-[0%] z-0 h-auto w-[clamp(7rem,42vw,15rem)] rounded-2xl object-cover shadow-md md:right-[2%] md:max-w-[52%]"
                 style="aspect-ratio: 16/9;"
                 loading="lazy"
                 decoding="async"
@@ -71,7 +84,7 @@ const campingAlts = t.gallery.campingImageAlts;
                 data-slot
                 src={momentsPool[2]}
                 alt={momentsAlts[2]}
-                class="absolute bottom-[18%] left-[4%] z-0 h-auto w-[clamp(6rem,36vw,11rem)] rounded-2xl object-cover shadow-md md:bottom-[14%] md:left-[6%] md:max-w-[38%]"
+                class="absolute bottom-[18%] left-[4%] z-0 h-auto w-[clamp(6rem,36vw,13rem)] rounded-2xl object-cover shadow-md md:bottom-[14%] md:left-[6%] md:max-w-[38%]"
                 style="aspect-ratio: 16/9;"
                 loading="lazy"
                 decoding="async"
@@ -80,7 +93,7 @@ const campingAlts = t.gallery.campingImageAlts;
                 data-slot
                 src={momentsPool[3]}
                 alt={momentsAlts[3]}
-                class="absolute right-[2%] bottom-[8%] z-0 h-auto w-[clamp(4.25rem,22vw,6.75rem)] rounded-2xl object-cover shadow-md md:bottom-[10%] md:right-[5%] md:max-w-[24%]"
+                class="absolute right-[2%] bottom-[8%] z-0 h-auto w-[clamp(4.25rem,22vw,8rem)] rounded-2xl object-cover shadow-md md:bottom-[10%] md:right-[5%] md:max-w-[24%]"
                 style="aspect-ratio: 2/3;"
                 loading="lazy"
                 decoding="async"
@@ -90,9 +103,9 @@ const campingAlts = t.gallery.campingImageAlts;
 
     <!-- Section 2: Camping & Community -->
     <section
-        class="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 py-12"
+        class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-4 py-12"
     >
-        <div class="flex w-full max-w-5xl flex-col items-center gap-10">
+        <div class="flex w-full max-w-4xl flex-col items-center gap-10">
             <div
                 class="relative mx-auto h-[min(68vh,620px)] w-full md:h-[min(68vh,580px)]"
                 data-gallery-rotate="camping"
@@ -108,7 +121,7 @@ const campingAlts = t.gallery.campingImageAlts;
                     data-slot
                     src={campingPool[0]}
                     alt={campingAlts[0]}
-                    class="absolute top-[0%] left-[0%] z-0 h-auto w-[clamp(7.5rem,48vw,14rem)] rounded-2xl object-cover shadow-md md:left-[2%] md:max-w-[48%]"
+                    class="absolute top-[0%] left-[0%] z-0 h-auto w-[clamp(7.5rem,48vw,16rem)] rounded-2xl object-cover shadow-md md:left-[2%] md:max-w-[48%]"
                     style="aspect-ratio: 16/9;"
                     loading="lazy"
                     decoding="async"
@@ -117,7 +130,7 @@ const campingAlts = t.gallery.campingImageAlts;
                     data-slot
                     src={campingPool[1]}
                     alt={campingAlts[1]}
-                    class="absolute top-[6%] right-[4%] z-0 h-auto w-[clamp(3.5rem,20vw,5rem)] rounded-2xl object-cover shadow-md md:right-[6%]"
+                    class="absolute top-[6%] right-[4%] z-0 h-auto w-[clamp(3.5rem,20vw,8rem)] rounded-2xl object-cover shadow-md md:right-[6%]"
                     style="aspect-ratio: 1/1;"
                     loading="lazy"
                     decoding="async"
@@ -129,7 +142,7 @@ const campingAlts = t.gallery.campingImageAlts;
                         data-slot
                         src={campingPool[2]}
                         alt={campingAlts[2]}
-                        class="h-auto w-[clamp(3.25rem,18vw,4.5rem)] rounded-2xl object-cover shadow-md"
+                        class="h-auto w-[clamp(3.25rem,18vw,6rem)] rounded-2xl object-cover shadow-md"
                         style="aspect-ratio: 1/1;"
                         loading="lazy"
                         decoding="async"
@@ -138,7 +151,7 @@ const campingAlts = t.gallery.campingImageAlts;
                         data-slot
                         src={campingPool[3]}
                         alt={campingAlts[3]}
-                        class="h-auto w-[clamp(6.5rem,40vw,11rem)] rounded-2xl object-cover shadow-md"
+                        class="h-auto w-[clamp(6.5rem,40vw,14rem)] rounded-2xl object-cover shadow-md"
                         style="aspect-ratio: 16/9;"
                         loading="lazy"
                         decoding="async"
@@ -148,7 +161,7 @@ const campingAlts = t.gallery.campingImageAlts;
                     data-slot
                     src={campingPool[4]}
                     alt={campingAlts[4]}
-                    class="absolute right-[0%] bottom-[6%] z-0 h-auto w-[clamp(4.5rem,24vw,7rem)] rounded-2xl object-cover shadow-md md:bottom-[8%] md:right-[3%] md:max-w-[26%]"
+                    class="absolute right-[0%] bottom-[6%] z-0 h-auto w-[clamp(4.5rem,24vw,9rem)] rounded-2xl object-cover shadow-md md:bottom-[8%] md:right-[3%] md:max-w-[26%]"
                     style="aspect-ratio: 2/3;"
                     loading="lazy"
                     decoding="async"
@@ -174,7 +187,7 @@ const campingAlts = t.gallery.campingImageAlts;
                         >{t.gallery.followLineAfter}
                     </span>
                     <svg
-                        class="h-4 w-4 shrink-0 text-dark opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+                        class="size-4 shrink-0 text-dark opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
                         viewBox="0 0 24 24"
                         fill="currentColor"
                         aria-hidden="true"
@@ -188,9 +201,54 @@ const campingAlts = t.gallery.campingImageAlts;
         </div>
     </section>
 
-    <!-- Section 3: CTA -->
+    <!-- Section 3: Guest videos (YouTube) -->
+    {
+        guestVideoEmbeds.length > 0 && (
+            <section class="overflow-hidden px-4 py-16 md:py-20">
+                <div
+                    class="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 md:gap-10"
+                    data-animate="stagger"
+                >
+                    <h2 class="font-heading max-w-[18ch] px-3 text-center text-[clamp(1.35rem,4.5vw,2rem)] font-normal leading-snug text-dark">
+                        {t.gallery.guestVideosHeading}
+                    </h2>
+
+                    <div
+                        class:list={[
+                            "grid w-full gap-3 sm:gap-4 md:gap-6",
+                            guestVideoEmbeds.length === 1
+                                ? "grid-cols-1"
+                                : "grid-cols-2",
+                        ]}
+                    >
+                        {guestVideoEmbeds.map((embedUrl) => (
+                            <div
+                                class:list={[
+                                    "overflow-hidden rounded-2xl shadow-md aspect-video",
+                                    guestVideoEmbeds.length === 1 &&
+                                        "mx-auto w-full max-w-3xl",
+                                ]}
+                            >
+                                <iframe
+                                    src={embedUrl}
+                                    title={t.gallery.guestVideoIframeTitle}
+                                    class="h-full w-full border-0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allowfullscreen
+                                    loading="lazy"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )
+    }
+
+    <!-- Section 4: CTA -->
     <section
-        class="flex min-h-[100svh] flex-col items-center justify-center px-6 py-20"
+        class="flex min-h-svh flex-col items-center justify-center px-6 py-20"
     >
         <div class="mx-auto max-w-3xl text-center" data-animate="fade-up">
             <h2
@@ -202,7 +260,7 @@ const campingAlts = t.gallery.campingImageAlts;
                 href={reserveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="mt-8 inline-block font-body text-base lowercase tracking-wide underline decoration-dark/40 underline-offset-[6px] transition-colors hover:text-primary hover:decoration-primary md:text-lg"
+                class="mt-8 inline-block font-body text-base lowercase tracking-wide underline! decoration-dark/40 underline-offset-[6px] transition-colors hover:text-primary! hover:decoration-primary! md:text-lg"
             >
                 {t.gallery.ctaReserveLabel}
             </a>
