@@ -242,7 +242,8 @@ const id: UiTranslations = {
       subtitle:
         "Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
       introText:
-        "Apakah kamu lebih suka berkemah di bawah hutan yang rindang atau bangun pagi dengan pemandangan pegunungan yang luas.",
+        "Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
+
       perfectFor: "Cocok Untuk",
       priceSuffix: "/ malam",
     },
