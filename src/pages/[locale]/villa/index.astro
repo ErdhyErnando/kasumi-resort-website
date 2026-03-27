@@ -16,17 +16,26 @@ const t = useTranslations(locale);
 <BaseLayout title={t.villa.index.title}>
     <section class="px-6 pt-32 pb-20">
         <div class="mx-auto max-w-6xl">
-            <SectionHeader
-                label={t.villa.index.label}
-                title={t.villa.index.title}
-                subtitle={t.villa.index.subtitle}
-            />
-            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+                class="mb-10 py-8 md:mb-16 md:py-10 lg:py-12"
+                data-animate="fade-up"
+            >
+                <SectionHeader
+                    class="mb-0"
+                    label={t.villa.index.label}
+                    title={t.villa.index.title}
+                    subtitle={t.villa.index.subtitle}
+                />
+            </div>
+            <div
+                class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
+                data-animate="stagger"
+            >
                 {
                     villas.map((villa) => (
                         <a
                             href={`/${locale}/villa/${villa.id}`}
-                            class="group overflow-hidden rounded-2xl border border-dark/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                            class="group overflow-hidden rounded-2xl border border-dark/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                         >
                             <img
                                 src={villa.heroImage}

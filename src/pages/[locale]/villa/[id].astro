@@ -48,7 +48,9 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                 href={`/${locale}/villa`}
                 class="inline-block text-sm font-medium text-dark/60 hover:text-dark"
             >
-                {t.villa.detail.breadcrumbHome} / {t.villa.detail.breadcrumbVilla} / {villa.name}
+                {t.villa.detail.breadcrumbHome} / {
+                    t.villa.detail.breadcrumbVilla
+                } / {villa.name}
             </a>
 
             <img
@@ -68,7 +70,9 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
 
                     <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
                         <div class="rounded-xl bg-highlight p-4">
-                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                            <p
+                                class="text-xs uppercase tracking-wide text-dark/60"
+                            >
                                 {t.villa.detail.capacity}
                             </p>
                             <p class="mt-1 text-xl font-semibold text-dark">
@@ -76,7 +80,9 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                             </p>
                         </div>
                         <div class="rounded-xl bg-highlight p-4">
-                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                            <p
+                                class="text-xs uppercase tracking-wide text-dark/60"
+                            >
                                 {t.villa.detail.bedrooms}
                             </p>
                             <p class="mt-1 text-xl font-semibold text-dark">
@@ -84,7 +90,9 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                             </p>
                         </div>
                         <div class="rounded-xl bg-highlight p-4">
-                            <p class="text-xs uppercase tracking-wide text-dark/60">
+                            <p
+                                class="text-xs uppercase tracking-wide text-dark/60"
+                            >
                                 {t.villa.detail.bathrooms}
                             </p>
                             <p class="mt-1 text-xl font-semibold text-dark">
@@ -109,8 +117,12 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                     </div>
                 </article>
 
-                <aside class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
-                    <p class="text-sm text-dark/60">{t.villa.detail.pricePerNight}</p>
+                <aside
+                    class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28"
+                >
+                    <p class="text-sm text-dark/60">
+                        {t.villa.detail.pricePerNight}
+                    </p>
                     <p class="mt-2 text-3xl font-bold text-primary">
                         Rp {formatVillaPrice(villa.price, locale)}
                     </p>
@@ -125,8 +137,12 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                 </aside>
             </div>
         </div>
-        <div class="mt-24 flex flex-col items-center justify-between">
-            <h2 class="text-2xl font-bold">{t.villa.detail.ctaHeadline}</h2>
+        <div
+            class="mt-32 flex flex-col items-center justify-between md:mt-44 lg:mt-52"
+        >
+            <h2 class="text-2xl font-bold text-balance text-center">
+                {t.villa.detail.ctaHeadline}
+            </h2>
             <a
                 href={getWhatsAppUrl(whatsappMsg)}
                 class="mt-4 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
