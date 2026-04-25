@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import { campings, formatCampingPrice } from "@/lib/camping";
@@ -25,10 +26,6 @@ const localizedCampings = campings.map((camping) => ({
 }));
 const initialCamping = localizedCampings[0];
 const campingsJson = JSON.stringify(localizedCampings);
-
-function getHeroBackgroundStyle(imagePath: string): string {
-    return `background-image: linear-gradient(135deg, rgba(151, 188, 98, 0.25), rgba(43, 43, 43, 0.18)), url('${imagePath}');`;
-}
 ---
 
 <BaseLayout title={t.camping.index.title}>
@@ -116,13 +113,33 @@ function getHeroBackgroundStyle(imagePath: string): string {
                     <div class="space-y-5">
                         <div
                             id="camping-hero-visual"
-                            class="aspect-16/10 w-full rounded-2xl border border-dark/5 bg-center bg-cover shadow-sm"
-                            style={getHeroBackgroundStyle(
-                                initialCamping.heroImage,
-                            )}
-                            role="img"
-                            aria-label={initialCamping.name}
+                            class="relative aspect-16/10 w-full overflow-hidden rounded-2xl border border-dark/5 shadow-sm"
                         >
+                            {
+                                localizedCampings.map((camping, index) => (
+                                    <div
+                                        data-camping-hero={camping.id}
+                                        class:list={[
+                                            "absolute inset-0 transition-opacity duration-300",
+                                            index === 0
+                                                ? "z-10 opacity-100"
+                                                : "pointer-events-none z-0 opacity-0",
+                                        ]}
+                                    >
+                                        <Image
+                                            src={camping.heroImage}
+                                            alt={camping.name}
+                                            width={720}
+                                            height={1280}
+                                            class="h-full w-full object-cover"
+                                        />
+                                    </div>
+                                ))
+                            }
+                            <div
+                                class="pointer-events-none absolute inset-0 z-20 rounded-2xl bg-gradient-to-br from-[rgba(151,188,98,0.25)] to-[rgba(43,43,43,0.18)]"
+                                aria-hidden="true"
+                            />
                         </div>
 
                         <div
@@ -269,10 +286,16 @@ function getHeroBackgroundStyle(imagePath: string): string {
             );
             const tabs = document.querySelectorAll("[data-camping-tab]");
 
-            if (heroVisual) {
-                heroVisual.style.backgroundImage = `linear-gradient(135deg, rgba(151, 188, 98, 0.25), rgba(43, 43, 43, 0.18)), url('${selected.heroImage}')`;
-                heroVisual.setAttribute("aria-label", selected.name);
-            }
+            const heroImages = document.querySelectorAll("[data-camping-hero]");
+            heroImages.forEach((img) => {
+                const imgId = img.getAttribute("data-camping-hero");
+                const isActive = imgId === selected.id;
+                img.classList.toggle("z-10", isActive);
+                img.classList.toggle("opacity-100", isActive);
+                img.classList.toggle("z-0", !isActive);
+                img.classList.toggle("opacity-0", !isActive);
+                img.classList.toggle("pointer-events-none", !isActive);
+            });
             if (nameElement) nameElement.textContent = selected.name;
             if (priceElement) {
                 priceElement.textContent = `Rp ${currencyFormatter.format(selected.price)}${priceSuffix}`;
