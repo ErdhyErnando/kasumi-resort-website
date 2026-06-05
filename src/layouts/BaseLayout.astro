@@ -83,7 +83,10 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 
     <!-- GSAP initialization on every page transition -->
     <script>
-      import { initAnimations } from '../lib/gsap';
+      import { initAnimations, trackNavigationPath } from '../lib/gsap';
+      document.addEventListener('astro:before-swap', () => {
+        trackNavigationPath();
+      });
       document.addEventListener('astro:page-load', () => {
         initAnimations();
       });
