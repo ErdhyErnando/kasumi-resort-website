@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getVillaById, villas, formatVillaPrice } from "@/lib/villas";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
@@ -39,10 +40,11 @@ const whatsappMsg = formatMessage(t.villa.detail.whatsappMessage, {
 const capacityText = formatMessage(t.villa.detail.capacityValue, {
     count: villa.capacity.toString(),
 });
+const galleryRowImages = villa.images.slice(1);
 ---
 
-<BaseLayout title={villa.name}>
-    <section class="px-6 pt-32 pb-20">
+<BaseLayout title={villa.name} description={villa.shortDescription[locale]}>
+    <section class="px-6 pt-32 pb-20" transition:animate="fade">
         <div class="mx-auto max-w-6xl space-y-10">
             <a
                 href={`/${locale}/villa`}
@@ -53,9 +55,12 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                 } / {villa.name}
             </a>
 
-            <img
+            <Image
                 src={villa.heroImage}
                 alt={villa.name}
+                width={1920}
+                height={1080}
+                transition:name={`villa-${villa.id}-image`}
                 class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
             />
 
@@ -136,6 +141,23 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
                     </a>
                 </aside>
             </div>
+
+            {
+                galleryRowImages.length > 0 && (
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        {galleryRowImages.map((src, index) => (
+                            <Image
+                                src={src}
+                                alt={`${villa.name} — ${index + 2}`}
+                                width={600}
+                                height={800}
+                                loading="lazy"
+                                class="aspect-3/4 w-full rounded-xl object-cover"
+                            />
+                        ))}
+                    </div>
+                )
+            }
         </div>
         <div
             class="mt-32 flex flex-col items-center justify-between md:mt-44 lg:mt-52"

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
 import { villas, formatVillaPrice } from "@/lib/villas";
@@ -37,10 +38,13 @@ const t = useTranslations(locale);
                             href={`/${locale}/villa/${villa.id}`}
                             class="group overflow-hidden rounded-2xl border border-dark/10 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                         >
-                            <img
+                            <Image
                                 src={villa.heroImage}
                                 alt={villa.name}
+                                width={800}
+                                height={800}
                                 loading="lazy"
+                                transition:name={`villa-${villa.id}-image`}
                                 class="aspect-square object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                             <div class="space-y-3 p-5">

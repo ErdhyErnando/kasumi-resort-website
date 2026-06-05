@@ -14,6 +14,40 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export { gsap, ScrollTrigger, SplitText };
 
+/** Pathname before the current view-transition swap (in-memory, SPA only). */
+let previousPath = '';
+
+/**
+ * Record the outgoing pathname before Astro swaps page content.
+ * Called on `astro:before-swap` from BaseLayout.
+ */
+export function trackNavigationPath(): void {
+    previousPath = window.location.pathname;
+}
+
+function isVillaIndexPath(path: string): boolean {
+    return /^\/(id|en)\/villa\/?$/.test(path);
+}
+
+function isVillaDetailPath(path: string): boolean {
+    return /^\/(id|en)\/villa\/[^/]+\/?$/.test(path);
+}
+
+/** Skip entrance animations when returning to the listing from a villa detail page. */
+function isReturningToVillaIndex(): boolean {
+    const current = window.location.pathname;
+    return isVillaIndexPath(current) && isVillaDetailPath(previousPath);
+}
+
+function revealImmediately(targets: Element | Element[] | HTMLCollection): void {
+    const elements = Array.isArray(targets)
+        ? targets
+        : targets instanceof HTMLCollection
+          ? Array.from(targets)
+          : [targets];
+    gsap.set(elements, { opacity: 1, y: 0, clearProps: 'transform' });
+}
+
 /**
  * Kill all ScrollTrigger instances and re-initialize page animations.
  * Called on `astro:page-load` from BaseLayout.
@@ -23,9 +57,16 @@ export function initAnimations(): void {
     ScrollTrigger.getAll().forEach((t) => t.kill());
     ScrollTrigger.refresh();
 
+    const skipEntrance = isReturningToVillaIndex();
+
     // ── Fade-up on scroll ──────────────────────────────────────────────
     const fadeUpElements = document.querySelectorAll('[data-animate="fade-up"]');
     fadeUpElements.forEach((el) => {
+        if (skipEntrance) {
+            revealImmediately(el);
+            return;
+        }
+
         gsap.fromTo(
             el,
             { opacity: 0, y: 40 },
@@ -46,6 +87,11 @@ export function initAnimations(): void {
     // ── Stagger fade-in for card grids ─────────────────────────────────
     const staggerGroups = document.querySelectorAll('[data-animate="stagger"]');
     staggerGroups.forEach((group) => {
+        if (skipEntrance) {
+            revealImmediately(group.children);
+            return;
+        }
+
         const children = group.children;
         gsap.fromTo(
             children,
