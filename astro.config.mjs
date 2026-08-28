@@ -8,7 +8,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://kasumiresorts.com',
+	site: 'https://kasumiresort.com',
 	integrations: [mdx(), sitemap(), react()],
 	i18n: {
 		defaultLocale: 'id',

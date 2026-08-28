@@ -1,14 +1,14 @@
 // ─── Site Configuration ───────────────────────────────────────────────
 export const SITE_NAME = 'Kasumi Resort';
 export const SITE_TAGLINE = 'Enjoy Living';
-export const SITE_URL = 'https://kasumiresorts.com';
+export const SITE_URL = 'https://kasumiresort.com';
 export const SITE_DESCRIPTION =
     'Villa dan camping ground di kawasan Taman Nasional Gunung Halimun Salak (TNGHS), Cidahu, Sukabumi, Jawa Barat.';
 export const SITE_DESCRIPTION_EN =
     'Villa and camping ground within Gunung Halimun Salak National Park (TNGHS) area in Cidahu, Sukabumi, West Java, Indonesia.';
 
 // ─── Contact ──────────────────────────────────────────────────────────
-export const CONTACT_EMAIL = 'info@kasumiresorts.com';
+export const CONTACT_EMAIL = 'info@kasumiresort.com';
 export const WHATSAPP_NUMBER = '6285591189388';
 export const WHATSAPP_DISPLAY = '+62 855-9118-9388';
 export const ADDRESS = 'TNGHS Cidahu, Sukabumi, Jawa Barat 43358';
