@@ -80,9 +80,9 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
     </div>
     <Footer />
 
-    <!-- GSAP initialization on every page transition -->
+    <!-- Load animation code only on pages that use animation hooks -->
     <script>
-      import { initAnimations, trackNavigationPath } from '../lib/gsap';
+      import { initAnimations, trackNavigationPath } from '../lib/animations';
       document.addEventListener('astro:before-swap', () => {
         trackNavigationPath();
       });
