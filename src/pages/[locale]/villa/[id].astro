@@ -58,8 +58,10 @@ const galleryRowImages = villa.images.slice(1);
             <Image
                 src={villa.heroImage}
                 alt={villa.name}
-                width={1920}
-                height={1080}
+                widths={[640, 768, 1024]}
+                sizes="100vw"
+                loading="eager"
+                fetchpriority="high"
                 transition:name={`villa-${villa.id}-image`}
                 class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
             />
@@ -149,8 +151,8 @@ const galleryRowImages = villa.images.slice(1);
                             <Image
                                 src={src}
                                 alt={`${villa.name} — ${index + 2}`}
-                                width={600}
-                                height={800}
+                                widths={[300, 600]}
+                                sizes="(max-width: 640px) 50vw, 25vw"
                                 loading="lazy"
                                 class="aspect-3/4 w-full rounded-xl object-cover"
                             />
