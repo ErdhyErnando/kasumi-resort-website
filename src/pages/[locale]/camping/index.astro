@@ -25,7 +25,9 @@ const localizedCampings = campings.map((camping) => ({
     perfectFor: camping.perfectFor.map((item) => item[locale]),
 }));
 const initialCamping = localizedCampings[0];
-const campingsJson = JSON.stringify(localizedCampings);
+const campingsJson = JSON.stringify(
+    localizedCampings.map(({ heroImage, gallery, ...camping }) => camping),
+);
 ---
 
 <BaseLayout title={t.camping.index.title}>
@@ -129,8 +131,9 @@ const campingsJson = JSON.stringify(localizedCampings);
                                         <Image
                                             src={camping.heroImage}
                                             alt={camping.name}
-                                            width={720}
-                                            height={1280}
+                                            widths={[480, 720, 1024]}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            loading={index === 0 ? "eager" : "lazy"}
                                             class="h-full w-full object-cover"
                                         />
                                     </div>

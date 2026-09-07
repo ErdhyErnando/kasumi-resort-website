@@ -1,3 +1,6 @@
+import type { ImageMetadata } from 'astro';
+import campingPlaceholder from '../assets/camping-placeholder.webp';
+
 export type Locale = "id" | "en";
 
 type LocalizedValue = {
@@ -12,15 +15,16 @@ export interface CampingContent {
   tagline: LocalizedValue;
   description: LocalizedValue;
   /** Placeholder art until real camping photos are available — swap paths when assets land. */
-  heroImage: string;
-  gallery: string[];
+  /** Imported image metadata keeps camping media in Astro's asset pipeline. */
+  heroImage: ImageMetadata;
+  gallery: ImageMetadata[];
   price: number;
   amenities: LocalizedValue[];
   perfectFor: LocalizedValue[];
 }
 
 /** Interim hero/gallery art while spot photos are pending (see audit issue #10). */
-const CAMPING_PLACEHOLDER = "/images/camping-placeholder.webp";
+const CAMPING_PLACEHOLDER = campingPlaceholder;
 
 /**
  * Shared camping data source for ID/EN pages.
