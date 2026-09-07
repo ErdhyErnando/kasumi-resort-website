@@ -1,5 +1,12 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
+import '@fontsource/dm-sans/600.css';
+import '@fontsource/dm-sans/700.css';
+import '@fontsource/libre-baskerville/400.css';
+import '@fontsource/libre-baskerville/400-italic.css';
+import '@fontsource/libre-baskerville/700.css';
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../lib/constants';
@@ -40,14 +47,6 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
       href={new URL('rss.xml', Astro.site)}
     />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- Fonts: Libre Baskerville (heading) + DM Sans (body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
 
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
