@@ -3,7 +3,6 @@
  * React island component, loaded with client:visible.
  * Stub — will be fully implemented when photos are provided.
  */
-import { useState } from 'react';
 
 interface CarouselProps {
     images?: { src: string; alt: string }[];

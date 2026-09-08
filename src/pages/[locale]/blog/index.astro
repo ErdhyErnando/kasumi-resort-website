@@ -188,7 +188,7 @@ const chipActive = "bg-secondary text-dark";
         </div>
     </section>
 
-    <script define:vars={{ chipInactive, chipActive }}>
+    <script is:inline define:vars={{ chipInactive, chipActive }}>
         function setChipStyles(btn, active) {
             btn.setAttribute("aria-pressed", active ? "true" : "false");
             btn.classList.remove(chipInactive, chipActive);
