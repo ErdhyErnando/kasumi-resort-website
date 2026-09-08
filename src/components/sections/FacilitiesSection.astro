@@ -3,12 +3,20 @@
  * FacilitiesSection — Reassures guests about comfort and amenities.
  * Headline + subtitle, then 3-column image-focused card grid.
  */
+import { Image } from 'astro:assets';
+// Placeholder art until real facility photos are available (replace files in src/assets/facilities/)
+import facilityImage1 from '../../assets/facilities/facility-1.webp';
+import facilityImage2 from '../../assets/facilities/facility-2.webp';
+import facilityImage3 from '../../assets/facilities/facility-3.webp';
 import { useTranslations } from '../../i18n/ui';
 import type { Locale } from '../../i18n/utils';
 
 const locale = (Astro.currentLocale ?? 'id') as Locale;
 const t = useTranslations(locale);
-const facilities = t.facilities.items;
+const facilities = t.facilities.items.map((facility, i) => ({
+  ...facility,
+  image: [facilityImage1, facilityImage2, facilityImage3][i]!,
+}));
 ---
 
 <section class="bg-highlight px-6 py-28 md:py-32">
@@ -28,16 +36,19 @@ const facilities = t.facilities.items;
       {facilities.map((facility) => (
         <div class="group overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
           <!-- Image area — tall aspect ratio -->
-          <div class="aspect-[3/4] overflow-hidden">
-            <div
-              class="h-full w-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-              style={`background-image: url('${facility.image}'); background-color: #e8e0d0;`}
-            >
-              <div class="flex h-full w-full items-end bg-gradient-to-t from-dark/30 to-transparent p-5">
-                <div>
-                  <h3 class="font-heading text-lg font-bold text-highlight">{facility.name}</h3>
-                  <p class="mt-1 text-sm text-highlight/80">{facility.description}</p>
-                </div>
+          <div class="relative aspect-[3/4] overflow-hidden">
+            <Image
+              src={facility.image}
+              alt={facility.name}
+              widths={[300, 600]}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-dark/30 to-transparent p-5">
+              <div>
+                <h3 class="font-heading text-lg font-bold text-highlight">{facility.name}</h3>
+                <p class="mt-1 text-sm text-highlight/80">{facility.description}</p>
               </div>
             </div>
           </div>

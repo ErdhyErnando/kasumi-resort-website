@@ -13,7 +13,7 @@ export type UiTranslations = {
   facilities: {
     headline: string;
     subtitle: string;
-    items: { name: string; description: string; image: string }[];
+    items: { name: string; description: string }[];
   };
   location: {
     line1: string;
@@ -168,19 +168,16 @@ const id: UiTranslations = {
         name: "Kamar Mandi Bersih & Air Panas",
         description:
           "Kamar mandi bersih dengan air panas tersedia di setiap vila dan area camping.",
-        image: "/images/facility-bathroom.webp",
       },
       {
         name: "Listrik 24 Jam",
         description:
           "Listrik stabil 24 jam untuk kenyamanan Anda selama menginap.",
-        image: "/images/facility-electricity.webp",
       },
       {
         name: "Akses Wi-Fi",
         description:
           "Akses Wi-Fi tersedia untuk tetap terhubung meskipun di tengah hutan.",
-        image: "/images/facility-wifi.webp",
       },
     ],
   },
@@ -371,19 +368,16 @@ const en: UiTranslations = {
         name: "Clean Bathrooms & Hot Water",
         description:
           "Clean bathrooms with hot water available in every villa and camping area.",
-        image: "/images/facility-bathroom.webp",
       },
       {
         name: "Reliable Electricity 24hr",
         description:
           "Stable 24-hour electricity for your comfort throughout your stay.",
-        image: "/images/facility-electricity.webp",
       },
       {
         name: "Wi-Fi Access",
         description:
           "Wi-Fi access available to stay connected even in the middle of the forest.",
-        image: "/images/facility-wifi.webp",
       },
     ],
   },

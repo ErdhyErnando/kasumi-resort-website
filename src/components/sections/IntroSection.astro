@@ -4,13 +4,17 @@
  * + horizontal scrolling 3-photo image carousel.
  * bg: --color-highlight. Text above, carousel below.
  */
+import { Image } from 'astro:assets';
+import intro1 from '../../assets/intro-1.webp';
+import intro2 from '../../assets/intro-2.webp';
+import intro3 from '../../assets/intro-3.webp';
 import { useTranslations } from '../../i18n/ui';
 import type { Locale } from '../../i18n/utils';
 
 const locale = (Astro.currentLocale ?? 'id') as Locale;
 const t = useTranslations(locale);
 
-const imageSrcs = ["/images/intro-1.webp", "/images/intro-2.webp", "/images/intro-3.webp"];
+const imageSrcs = [intro1, intro2, intro3];
 const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
 ---
 
@@ -39,16 +43,14 @@ const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
           class="relative flex-shrink-0 snap-center overflow-hidden rounded-2xl"
           style={`width: clamp(480px, 70vw, 740px); aspect-ratio: 3/2;`}
         >
-          <!-- Image placeholder with gradient bg -->
-          <div
-            class="h-full w-full bg-cover bg-center"
-            style={`background-image: url('${img.src}'); background-color: #d4c9a8;`}
-          >
-            <!-- Fallback when image not loaded -->
-            <div class="flex h-full w-full items-center justify-center bg-secondary/15 text-dark/25">
-              <span class="text-sm font-medium">Photo {i + 1}</span>
-            </div>
-          </div>
+          <Image
+            src={img.src}
+            alt={img.alt}
+            widths={[480, 740, 1000]}
+            sizes="(max-width: 768px) 70vw, 740px"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            class="h-full w-full object-cover"
+          />
         </div>
       ))}
     </div>
