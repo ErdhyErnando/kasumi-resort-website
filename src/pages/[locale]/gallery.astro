@@ -56,11 +56,11 @@ const guestVideoEmbeds = guestVideoLinksRaw
             data-gallery-rotate="moments"
             data-animate="stagger"
         >
-            <h2
+            <h1
                 class="font-heading absolute left-1/2 top-1/2 z-10 max-w-[16ch] -translate-x-1/2 -translate-y-1/2 px-3 text-center text-[clamp(1.35rem,4.5vw,2rem)] font-normal leading-snug text-dark"
             >
                 {t.gallery.momentsHeading}
-            </h2>
+            </h1>
 
             <img
                 data-slot
@@ -316,7 +316,13 @@ const guestVideoEmbeds = guestVideoLinksRaw
                 offset = (offset + 1) % pool.length;
             }
             tick();
-            galleryRotateIntervals.push(window.setInterval(tick, rotateMs));
+            // No auto-rotation for reduced-motion users (issue #18, WCAG 2.2.2)
+            if (
+                !window.matchMedia("(prefers-reduced-motion: reduce)")
+                    .matches
+            ) {
+                galleryRotateIntervals.push(window.setInterval(tick, rotateMs));
+            }
         }
 
         function initGalleryRotation(): void {

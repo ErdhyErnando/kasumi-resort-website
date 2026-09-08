@@ -79,6 +79,13 @@ const t = useTranslations(locale);
     import { gsap } from "../../lib/gsap";
 
     document.addEventListener("astro:page-load", () => {
+        // Skip all motion for reduced-motion users (issue #18) — the
+        // headline is visible by default; only GSAP would hide it.
+        if (
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        )
+            return;
+
         const heroBg = document.getElementById("hero-bg");
         const headline = document.getElementById("hero-headline");
 

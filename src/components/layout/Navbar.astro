@@ -75,6 +75,8 @@ const alternateLabel = locale === "id" ? "EN" : "ID";
                 id="mobile-menu-btn"
                 class="flex items-center justify-center md:hidden text-highlight"
                 aria-label="Toggle menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
                 type="button"
             >
                 <svg
@@ -99,6 +101,9 @@ const alternateLabel = locale === "id" ? "EN" : "ID";
     <!-- Mobile Menu Overlay -->
     <div
         id="mobile-menu"
+        role="dialog"
+        aria-modal="false"
+        aria-label={locale === "id" ? "Menu navigasi" : "Navigation menu"}
         class="fixed inset-0 z-40 hidden flex-col items-center justify-center gap-8 bg-primary/95 backdrop-blur-sm"
     >
         <button
@@ -212,16 +217,33 @@ const alternateLabel = locale === "id" ? "EN" : "ID";
         function openMenu() {
             mobileMenu?.classList.remove("hidden");
             mobileMenu?.classList.add("flex");
+            menuBtn?.setAttribute("aria-expanded", "true");
             document.body.style.overflow = "hidden";
+            // Move focus into the dialog (issue #17)
+            mobileMenu?.querySelector("a")?.focus();
         }
         function closeMenu() {
             mobileMenu?.classList.add("hidden");
             mobileMenu?.classList.remove("flex");
+            menuBtn?.setAttribute("aria-expanded", "false");
             document.body.style.overflow = "";
+            // Return focus to the trigger (issue #17)
+            menuBtn?.focus();
         }
 
         menuBtn?.addEventListener("click", openMenu);
         menuClose?.addEventListener("click", closeMenu);
+
+        // Escape-to-close (issue #17)
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                mobileMenu &&
+                !mobileMenu.classList.contains("hidden")
+            ) {
+                closeMenu();
+            }
+        });
 
         // Close mobile menu on link click
         mobileMenu?.querySelectorAll("a").forEach((link) => {

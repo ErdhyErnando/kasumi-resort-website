@@ -23,6 +23,7 @@ const t = useTranslations(locale);
             >
                 <SectionHeader
                     class="mb-0"
+                    as="h1"
                     label={t.villa.index.label}
                     title={t.villa.index.title}
                     subtitle={t.villa.index.subtitle}
@@ -59,7 +60,7 @@ const t = useTranslations(locale);
                                     {formatVillaPrice(villa.price, locale)}
                                     {t.villa.index.night}
                                 </p>
-                                <span class="inline-block text-sm font-semibold text-secondary">
+                                <span class="inline-block text-sm font-semibold text-primary">
                                     {t.villa.index.viewDetail}
                                 </span>
                             </div>

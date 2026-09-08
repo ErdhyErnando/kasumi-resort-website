@@ -103,10 +103,16 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
     <ClientRouter />
   </head>
   <body class="min-h-screen flex flex-col">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:bg-highlight focus:px-4 focus:py-2 focus:text-dark"
+    >
+      {currentLocale === 'id' ? 'Lewati ke konten' : 'Skip to content'}
+    </a>
     <Navbar />
-    <div class="page-content flex-1" class:list={[className]}>
+    <main id="main-content" class="page-content flex-1" class:list={[className]}>
       <slot />
-    </div>
+    </main>
     <Footer />
 
     <!-- Load animation code only on pages that use animation hooks -->

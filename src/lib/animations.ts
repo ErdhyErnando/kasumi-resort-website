@@ -47,6 +47,21 @@ function pageNeedsAnimations(): boolean {
 export async function initAnimations(): Promise<void> {
     if (!pageNeedsAnimations()) return;
 
+    // Honor prefers-reduced-motion (issue #18): reveal everything
+    // immediately WITHOUT downloading the GSAP bundle. This also covers
+    // #hero-headline, which GSAP's fromTo would otherwise hide inline.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document
+            .querySelectorAll<HTMLElement>(
+                '[data-animate="fade-up"], [data-animate="stagger"], [data-animate="stagger"] > *, #hero-headline, #hero-headline span',
+            )
+            .forEach((el) => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        return;
+    }
+
     const { gsap, ScrollTrigger } = await import('./gsap');
 
     // Kill all existing ScrollTrigger instances from previous page

@@ -6,6 +6,8 @@ interface Props {
     align?: "left" | "center";
     dark?: boolean;
     class?: string;
+    /** Heading level for the title — pass "h1" when this is the page title (#16). */
+    as?: "h1" | "h2";
 }
 
 const {
@@ -15,7 +17,8 @@ const {
     align = "center",
     dark = false,
     class: className,
-} = Astro.props;
+    as: Tag = "h2",
+} = Astro.props as Props;
 
 const alignClasses = align === "center" ? "text-center mx-auto" : "text-left";
 const colorClasses = dark ? "text-highlight" : "text-dark";
@@ -27,21 +30,21 @@ const colorClasses = dark ? "text-highlight" : "text-dark";
             <span
                 class:list={[
                     "mb-3 block text-sm font-semibold uppercase tracking-widest",
-                    dark ? "text-accent" : "text-secondary",
+                    dark ? "text-accent" : "text-primary",
                 ]}
             >
                 {label}
             </span>
         )
     }
-    <h2
+    <Tag
         class:list={[
             "font-heading text-3xl font-bold md:text-4xl lg:text-5xl",
             colorClasses,
         ]}
     >
         {title}
-    </h2>
+    </Tag>
     {
         subtitle && (
             <p
