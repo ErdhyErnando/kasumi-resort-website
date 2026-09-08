@@ -11,12 +11,16 @@ export interface CampingContent {
   name: LocalizedValue;
   tagline: LocalizedValue;
   description: LocalizedValue;
+  /** Placeholder art until real camping photos are available — swap paths when assets land. */
   heroImage: string;
   gallery: string[];
   price: number;
   amenities: LocalizedValue[];
   perfectFor: LocalizedValue[];
 }
+
+/** Interim hero/gallery art while spot photos are pending (see audit issue #10). */
+const CAMPING_PLACEHOLDER = "/images/camping-placeholder.webp";
 
 /**
  * Shared camping data source for ID/EN pages.
@@ -34,14 +38,8 @@ export const campings: CampingContent[] = [
       id: "Area camping yang tenang untuk menikmati suara alam, api unggun, dan udara hutan yang sejuk sepanjang malam.",
       en: "A calm camping area to enjoy nature sounds, campfire moments, and cool forest air through the night.",
     },
-    heroImage: "/images/camping/forest-riverside-1.webp",
-    gallery: [
-      "/images/camping/forest-riverside-1.webp",
-      "/images/camping/forest-riverside-2.webp",
-      "/images/camping/forest-riverside-3.webp",
-      "/images/camping/forest-riverside-4.webp",
-      "/images/camping/forest-riverside-5.webp",
-    ],
+    heroImage: CAMPING_PLACEHOLDER,
+    gallery: [CAMPING_PLACEHOLDER],
     price: 2000000,
     amenities: [
       { id: "api unggun", en: "campfire area" },
@@ -69,14 +67,8 @@ export const campings: CampingContent[] = [
       id: "Spot favorit untuk golden hour, kumpul bareng rombongan, dan menikmati langit malam dengan pemandangan lembah.",
       en: "A favorite spot for golden hour views, group camp moments, and stargazing over the valley.",
     },
-    heroImage: "/images/camping/mountain-view-1.webp",
-    gallery: [
-      "/images/camping/mountain-view-1.webp",
-      "/images/camping/mountain-view-2.webp",
-      "/images/camping/mountain-view-3.webp",
-      "/images/camping/mountain-view-4.webp",
-      "/images/camping/mountain-view-5.webp",
-    ],
+    heroImage: CAMPING_PLACEHOLDER,
+    gallery: [CAMPING_PLACEHOLDER],
     price: 2200000,
     amenities: [
       { id: "view pegunungan", en: "mountain panorama" },
@@ -104,14 +96,8 @@ export const campings: CampingContent[] = [
       id: "Area lapang dengan tanah yang rata, cocok untuk tenda besar dan aktivitas kelompok di siang hari.",
       en: "A level clearing that fits larger tents and group activities through the afternoon.",
     },
-    heroImage: "/images/camping/spot-cemara-1.webp",
-    gallery: [
-      "/images/camping/spot-cemara-1.webp",
-      "/images/camping/spot-cemara-2.webp",
-      "/images/camping/spot-cemara-3.webp",
-      "/images/camping/spot-cemara-4.webp",
-      "/images/camping/spot-cemara-5.webp",
-    ],
+    heroImage: CAMPING_PLACEHOLDER,
+    gallery: [CAMPING_PLACEHOLDER],
     price: 2050000,
     amenities: [
       { id: "naungan pepohonan", en: "tree shade" },
@@ -139,14 +125,8 @@ export const campings: CampingContent[] = [
       id: "Spot yang lebih privat untuk beristirahat, bercerita api unggun, dan tidur nyenyak di malam hari.",
       en: "A slightly more private pitch for campfire stories and a restful night outdoors.",
     },
-    heroImage: "/images/camping/spot-cendana-1.webp",
-    gallery: [
-      "/images/camping/spot-cendana-1.webp",
-      "/images/camping/spot-cendana-2.webp",
-      "/images/camping/spot-cendana-3.webp",
-      "/images/camping/spot-cendana-4.webp",
-      "/images/camping/spot-cendana-5.webp",
-    ],
+    heroImage: CAMPING_PLACEHOLDER,
+    gallery: [CAMPING_PLACEHOLDER],
     price: 2100000,
     amenities: [
       { id: "privasi lebih", en: "extra privacy" },
@@ -174,14 +154,8 @@ export const campings: CampingContent[] = [
       id: "Cocok untuk rombongan yang ingin ruang bermain anak, workshop ringan, atau area makan bersama.",
       en: "Ideal for groups who want space for kids to play, light workshops, or shared meals.",
     },
-    heroImage: "/images/camping/spot-damar-1.webp",
-    gallery: [
-      "/images/camping/spot-damar-1.webp",
-      "/images/camping/spot-damar-2.webp",
-      "/images/camping/spot-damar-3.webp",
-      "/images/camping/spot-damar-4.webp",
-      "/images/camping/spot-damar-5.webp",
-    ],
+    heroImage: CAMPING_PLACEHOLDER,
+    gallery: [CAMPING_PLACEHOLDER],
     price: 2150000,
     amenities: [
       { id: "area luas", en: "spacious ground" },
