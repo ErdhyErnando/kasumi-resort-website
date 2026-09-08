@@ -1,7 +1,7 @@
 # Astro v7 Migration Roadmap — Kasumi Resort Website
 
-> **Status:** Draft readiness report (audit date: 2026-09-07)
-> **Current:** Astro `5.18.0` · **Target:** Astro `7.3.x` (latest line)
+> **Status:** Phase 1 merged (`fix/astro-6-upgrade` → `main` as PR #40, Astro `6.4.8`); Phase 2 in review on `fix/astro-7-upgrade` (audit: 2026-09-07, updated: 2026-09-08)
+> **Current:** Astro `7.3.1` (branch) · **Target:** Astro `7.3.x` ✅ reached
 > **Migration path:** v5 → v6 → v7 (two major hops — see [official guidance](https://docs.astro.build/en/upgrade-astro/))
 
 ---
@@ -10,14 +10,14 @@
 
 | Package | Installed | Target for v7 | Action |
 | --- | --- | --- | --- |
-| `astro` | 5.18.0 | ^7.3.1 | Upgrade via `@astrojs/upgrade` |
-| `@astrojs/mdx` | 4.3.13 | ^8.0.0 | Major bump (peer: `astro ^7.2.6`) |
-| `@astrojs/react` | 4.4.2 | ^6.0.5 | Major bump — **or remove entirely** (see §5.4) |
-| `@astrojs/sitemap` | 3.7.0 | ^3.7.4 | Minor bump, no Astro peer dep |
-| `@astrojs/rss` | 4.0.15 | ^4.0.19 | Minor bump |
-| `@tailwindcss/vite` | 4.2.1 | ^4.3.3 | **Required for Vite 8** (4.2.1 peers: `vite ^5.2 || ^6 || ^7` only) |
-| `tailwindcss` | 4.2.1 | ^4.3.3 | Bump alongside the Vite plugin |
-| `@astrojs/check` | (just added) | ^0.9.10 | Keep; pins `typescript ^5 || ^6` |
+| `astro` | ^7.3.1 ✅ | ^7.3.1 | Done via `@astrojs/upgrade astro@7` (Phase 2) |
+| `@astrojs/mdx` | ^8.0.0 ✅ | ^8.0.0 | Done via `@astrojs/upgrade` |
+| `@astrojs/react` | — (removed, PR #37) | n/a | Removed — 0 islands in use (see §5.4) |
+| `@astrojs/sitemap` | ^3.7.4 ✅ | ^3.7.4 | Done (Phase 1) |
+| `@astrojs/rss` | ^4.0.19 ✅ | ^4.0.19 | Done (Phase 1) |
+| `@tailwindcss/vite` | ^4.3.3 ✅ | ^4.3.3 | Done via `pnpm up` (Phase 2; required for Vite 8) |
+| `tailwindcss` | ^4.3.3 ✅ | ^4.3.3 | Done alongside the Vite plugin (Phase 2) |
+| `@astrojs/check` | ^0.9.10 ✅ | ^0.9.10 | Keep; pins TS 6 (see §5.6) |
 | `typescript` | 6.x (just added) | 6.x | **Do not install TS 7** — `astro check` needs TS's JS API (see §5.5) |
 | Node.js (dev) | v24.18.0 | ≥ 22.12.0 | ✅ Already compliant |
 
@@ -31,7 +31,7 @@
 - Local dev machine runs **Node v24.18.0** — compliant.
 - Astro only supports **even-numbered** Node versions; v24 is fine.
 
-**TODO before upgrading — pin the runtime for CI/teammates:**
+**TODO before upgrading — pin the runtime for CI/teammates:** ✅ Done (PR #39: `.nvmrc` = `24`, `engines` set)
 
 ```bash
 # 1. Add .nvmrc
@@ -52,7 +52,7 @@ Scanned the full `src/` tree for legacy patterns. **The codebase is already larg
 | `Astro.glob()` | ✅ Not used (uses `getCollection()` + Content Layer `glob()` loader) | None |
 | `<ViewTransitions />` | ✅ Not used (`<ClientRouter />` in `BaseLayout.astro:75`) | None — removed in v6 |
 | Legacy collections (`type: 'content'`, `entry.render()`, `entry.slug`) | ✅ Not used (`render(post)` imported from `astro:content`) | None — removed in v6 |
-| `z` imported from `astro:content` | ⚠️ **Found** — `src/content.config.ts:1` | Deprecated in v6 → must move to `astro/zod` (§5.1) |
+| `z` imported from `astro:content` | ✅ Fixed — `src/content.config.ts` now imports `z` from `astro/zod` (Phase 1) | Fixed in v6, required for v7 (§5.1) |
 | `legacy.collections` flag | ✅ Not used | None |
 | `astro:transitions` internals (`createAnimationScope`, `TRANSITION_*` consts, `isTransition*Event`) | ✅ Not used (only string event names `astro:page-load` / `astro:before-swap`, which remain valid) | None — removed in v7 |
 | `Astro` object inside `getStaticPaths()` | ✅ Not used | Deprecated in v6 |
@@ -130,43 +130,44 @@ Known spots to eyeball in this repo:
 
 ## 6. Step-by-Step Roadmap
 
-### Phase 0 — Pre-migration cleanup (do on v5, before any bump)
+### Phase 0 — Pre-migration cleanup ✅ Done (on v5, before any bump)
 
-1. Fix the fresh-clone build failure (`pnpm-workspace.yaml` `allowBuilds` stubs) — already applied in the working tree, needs commit.
-2. Resolve the 9 `astro check` errors + unused imports in `src/pages/[locale]/camping/index.astro` (type the inline script or move it to a `.ts` file).
-3. Decide the React stack: remove it (recommended — 0 islands in use) or implement the planned Carousel/MobileNav islands.
-4. Resolve the empty `villas`/`camping` content collections vs. hardcoded `lib/villas.ts` / `lib/camping.ts` (either fill the collections — which also unlocks `image()` optimization — or delete them to silence the build warnings).
-5. Add `.nvmrc` + `engines` (§2).
+1. ✅ Fresh-clone build failure fixed (`pnpm-workspace.yaml` `allowBuilds`).
+2. ✅ `astro check` green (0 errors/warnings/hints, PR #36).
+3. ✅ React stack removed (PR #37 — 0 islands in use).
+4. ✅ Empty `villas`/`camping` collections removed (PR #38).
+5. ✅ `.nvmrc` + `engines` pinned (PR #39).
 
-### Phase 1 — Upgrade to v6
+### Phase 1 — Upgrade to v6 ✅ Done (merged as PR #40)
 
 ```bash
-npx @astrojs/upgrade astro@6   # bumps astro + compatible official integrations
-# manual: pnpm up @astrojs/sitemap@^3.7 @astrojs/rss@^4
+npx @astrojs/upgrade astro@6   # bumped astro 5.18.0 → 6.4.8 + compatible official integrations
+pnpm up @astrojs/sitemap@^3.7 @astrojs/rss@^4
 pnpm install
 ```
 
-Then:
-- Apply the `astro/zod` import change (§5.1).
-- `pnpm build` + `pnpm exec astro check` → expect 0 errors.
-- `pnpm preview` → smoke-test all routes (/, /id/, /en/, villa index + detail, camping index, gallery, contact, blog index + post, 404).
-- Commit + deploy to staging.
+- ✅ Applied the `astro/zod` import change (§5.1).
+- ✅ `pnpm build` + `astro check` → 0 errors.
+- ✅ `pnpm preview` → smoke-tested all routes.
+- ✅ Committed + merged to `main`.
 
-### Phase 2 — Upgrade to v7
+### Phase 2 — Upgrade to v7 ✅ Done on `fix/astro-7-upgrade` (in review, not pushed)
 
 ```bash
-npx @astrojs/upgrade astro@7   # astro ^7.3, @astrojs/mdx ^8, @astrojs/react ^6 (if kept)
-pnpm up @tailwindcss/vite@^4.3.3 tailwindcss@^4.3.3
+printf '\n' | npx -y @astrojs/upgrade astro@7   # astro 6.4.8 → 7.3.1, @astrojs/mdx 5.0.6 → 8.0.0
+pnpm up @tailwindcss/vite@^4.3.3 tailwindcss@^4.3.3   # 4.2.1 → 4.3.3 (Vite 8)
 pnpm install
 ```
 
-Then:
-- Set `compressHTML: true` in `astro.config.mjs` (§5.5).
-- `pnpm build` — watch for Rust-compiler strictness errors (§5.2).
-- Verify `dist/` output: sitemap, rss.xml, client JS bundles.
-- Full visual QA pass (all pages, both locales, mobile + desktop) — especially inline-text spacing and blog prose.
-- Re-run Lighthouse (mobile + desktop) and compare against the audit baseline (`/id/` mobile: Perf 75 / LCP 7.7 s before fixes).
-- Commit + deploy to staging.
+- ✅ Set `compressHTML: true` in `astro.config.mjs` (§5.5).
+- ✅ `pnpm build` — 44 pages, no Rust-compiler strictness errors (§5.2).
+- ✅ `pnpm check` — 0 errors, 0 warnings, 0 hints.
+- ✅ `dist/` verified: sitemap-index.xml + sitemap-0.xml + rss.xml (all HTTP 200), 4 client JS bundles.
+- ✅ Smoke-test: 44/44 routes HTTP 200 via `pnpm preview` (both locales).
+- ✅ Blog prose identical v6 → v7 on sample post (h2 x5, ul x1, links x23, img x1; §5.3).
+- ✅ Whitespace diff v6 → v7: blog card meta, footer credit, price lines byte-identical; only deltas are generator version, `data-astro-*` id churn, JS bundle hashes, and view-transitions meta spacing (head-only, no visual impact).
+- ⬜ Full visual QA pass (all pages, both locales, mobile + desktop) — for reviewers.
+- ⬜ Lighthouse re-run vs baseline — deferred, out of scope for this branch.
 
 ### Phase 3 — Post-migration hardening
 
@@ -181,7 +182,7 @@ Then:
 
 | Check | Command / method | Pass criteria |
 | --- | --- | --- |
-| Build | `pnpm build` | 43 pages, no compiler errors |
+| Build | `pnpm build` | 44 pages, no compiler errors (v7: ✅ 44 pages) |
 | Types | `pnpm exec astro check` | 0 errors (warnings: 0 after cleanup) |
 | Routes | `pnpm preview` + click-through both locales | All nav links + language toggle work |
 | View transitions | Navigate villa index ↔ detail | `transition:name` image morph persists |
