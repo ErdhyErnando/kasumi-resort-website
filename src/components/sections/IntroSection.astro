@@ -4,14 +4,14 @@
  * + horizontal scrolling 3-photo image carousel.
  * bg: --color-highlight. Text above, carousel below.
  */
-import { Image } from 'astro:assets';
-import intro1 from '../../assets/intro-1.webp';
-import intro2 from '../../assets/intro-2.webp';
-import intro3 from '../../assets/intro-3.webp';
-import { useTranslations } from '../../i18n/ui';
-import type { Locale } from '../../i18n/utils';
+import { Image } from "astro:assets";
+import intro1 from "../../assets/intro-1.webp";
+import intro2 from "../../assets/intro-2.webp";
+import intro3 from "../../assets/intro-3.webp";
+import { useTranslations } from "../../i18n/ui";
+import type { Locale } from "../../i18n/utils";
 
-const locale = (Astro.currentLocale ?? 'id') as Locale;
+const locale = (Astro.currentLocale ?? "id") as Locale;
 const t = useTranslations(locale);
 
 const imageSrcs = [intro1, intro2, intro3];
@@ -19,51 +19,57 @@ const images = imageSrcs.map((src, i) => ({ src, alt: t.intro.images[i].alt }));
 ---
 
 <section class="bg-highlight py-32 md:py-28 lg:py-32">
-  <div class="mx-auto max-w-5xl">
-    <!-- Intro Text -->
-    <div class="mb-16 text-center" data-animate="fade-up">
-      <p class="mx-auto max-w-2xl font-body text-xl leading-relaxed text-dark/80 md:text-2xl">
-        {t.intro.text.split('\n').map((line, i) => (
-          <>
-            {i > 0 && <br class="hidden sm:inline" />}
-            {line}
-          </>
-        ))}
-      </p>
-    </div>
-  </div>
+	<div class="mx-auto max-w-5xl">
+		<!-- Intro Text -->
+		<div class="mb-16 text-center" data-animate="fade-up">
+			<p
+				class="mx-auto max-w-2xl font-body text-xl leading-relaxed text-dark/80 md:text-2xl"
+			>
+				{
+					t.intro.text.split("\n").map((line, i) => (
+						<>
+							{i > 0 && <br class="hidden sm:inline" />}
+							{line}
+						</>
+					))
+				}
+			</p>
+		</div>
+	</div>
 
-  <!-- Image Carousel — overflows container edges for editorial feel -->
-  <div class="relative" data-animate="fade-up">
-    <div
-      class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 px-2 md:px-0 scrollbar-hide md:gap-6 lg:justify-center"
-    >
-      {images.map((img, i) => (
-        <div
-          class="relative flex-shrink-0 snap-center overflow-hidden rounded-2xl"
-          style={`width: clamp(480px, 70vw, 740px); aspect-ratio: 3/2;`}
-        >
-          <Image
-            src={img.src}
-            alt={img.alt}
-            widths={[480, 740, 1000]}
-            sizes="(max-width: 768px) 70vw, 740px"
-            loading={i === 0 ? 'eager' : 'lazy'}
-            class="h-full w-full object-cover"
-          />
-        </div>
-      ))}
-    </div>
-  </div>
+	<!-- Image Carousel — overflows container edges for editorial feel -->
+	<div class="relative" data-animate="fade-up">
+		<div
+			class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 px-2 md:px-0 scrollbar-hide md:gap-6 lg:justify-center"
+		>
+			{
+				images.map((img, i) => (
+					<div
+						class="relative flex-shrink-0 snap-center overflow-hidden rounded-2xl"
+						style={`width: clamp(480px, 70vw, 740px); aspect-ratio: 3/2;`}
+					>
+						<Image
+							src={img.src}
+							alt={img.alt}
+							widths={[480, 740, 1000]}
+							sizes="(max-width: 768px) 70vw, 740px"
+							loading={i === 0 ? "eager" : "lazy"}
+							class="h-full w-full object-cover"
+						/>
+					</div>
+				))
+			}
+		</div>
+	</div>
 </section>
 
 <style>
-  /* Hide scrollbar for the carousel strip */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+	/* Hide scrollbar for the carousel strip */
+	.scrollbar-hide {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
 </style>

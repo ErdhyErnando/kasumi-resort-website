@@ -14,108 +14,105 @@ const t = useTranslations(locale);
 ---
 
 <section
-    id="hero"
-    class="relative flex h-svh items-end justify-center overflow-hidden pb-24 md:items-center md:justify-end md:pb-0"
+	id="hero"
+	class="relative flex h-svh items-end justify-center overflow-hidden pb-24 md:items-center md:justify-end md:pb-0"
 >
-    <!-- Background Image (optimized, priority-loaded — this is the LCP element) -->
-    <Image
-        id="hero-bg"
-        src={heroImage}
-        alt=""
-        widths={[640, 1024, 1376]}
-        sizes="100vw"
-        loading="eager"
-        fetchpriority="high"
-        class="absolute inset-0 h-full w-full object-cover"
-    />
-    <!-- Gradient overlay — stronger at bottom for readability -->
-    <div
-        class="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/60 via-dark/20 to-dark/10"
-    >
-    </div>
+	<!-- Background Image (optimized, priority-loaded — this is the LCP element) -->
+	<Image
+		id="hero-bg"
+		src={heroImage}
+		alt=""
+		widths={[640, 1024, 1376]}
+		sizes="100vw"
+		loading="eager"
+		fetchpriority="high"
+		class="absolute inset-0 h-full w-full object-cover"
+	/>
+	<!-- Gradient overlay — stronger at bottom for readability -->
+	<div
+		class="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark/60 via-dark/20 to-dark/10"
+	>
+	</div>
 
-    <!-- Headline Content -->
-    <div
-        class="relative z-10 max-w-5xl px-6 text-center md:mr-16 md:text-right lg:mr-28"
-    >
-        <h1
-            id="hero-headline"
-            class="font-heading italic font-bold leading-[1.1] text-highlight! shadow-md"
-            style="font-size: clamp(2.2rem, 4vw, 6rem);"
-        >
-            <span class="block border-none">{t.hero.line1}</span>
-            <span class="block border-none">{t.hero.line2}</span>
-        </h1>
-    </div>
+	<!-- Headline Content -->
+	<div
+		class="relative z-10 max-w-5xl px-6 text-center md:mr-16 md:text-right lg:mr-28"
+	>
+		<h1
+			id="hero-headline"
+			class="font-heading italic font-bold leading-[1.1] text-highlight! shadow-md"
+			style="font-size: clamp(2.2rem, 4vw, 6rem);"
+		>
+			<span class="block border-none">{t.hero.line1}</span>
+			<span class="block border-none">{t.hero.line2}</span>
+		</h1>
+	</div>
 
-    <!-- Scroll indicator -->
-    <div
-        class="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-highlight/50"
-    >
-        <div class="flex flex-col items-center gap-2">
-            <span class="text-xs font-medium uppercase tracking-widest"
-                >{t.hero.scrollLabel}</span
-            >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="animate-bounce"
-            >
-                <path d="m7 13 5 5 5-5"></path>
-                <path d="m7 6 5 5 5-5"></path>
-            </svg>
-        </div>
-    </div>
+	<!-- Scroll indicator -->
+	<div
+		class="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-highlight/50"
+	>
+		<div class="flex flex-col items-center gap-2">
+			<span class="text-xs font-medium uppercase tracking-widest"
+				>{t.hero.scrollLabel}</span
+			>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="20"
+				height="20"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="1.5"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="animate-bounce"
+			>
+				<path d="m7 13 5 5 5-5"></path>
+				<path d="m7 6 5 5 5-5"></path>
+			</svg>
+		</div>
+	</div>
 </section>
 
 <script>
-    import { gsap } from "../../lib/gsap";
+	import { gsap } from "../../lib/gsap";
 
-    document.addEventListener("astro:page-load", () => {
-        // Skip all motion for reduced-motion users (issue #18) — the
-        // headline is visible by default; only GSAP would hide it.
-        if (
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        )
-            return;
+	document.addEventListener("astro:page-load", () => {
+		// Skip all motion for reduced-motion users (issue #18) — the
+		// headline is visible by default; only GSAP would hide it.
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-        const heroBg = document.getElementById("hero-bg");
-        const headline = document.getElementById("hero-headline");
+		const heroBg = document.getElementById("hero-bg");
+		const headline = document.getElementById("hero-headline");
 
-        if (!heroBg || !headline) return;
+		if (!heroBg || !headline) return;
 
-        // Parallax on hero background
-        gsap.to(heroBg, {
-            yPercent: 20,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#hero",
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
-            },
-        });
+		// Parallax on hero background
+		gsap.to(heroBg, {
+			yPercent: 20,
+			ease: "none",
+			scrollTrigger: {
+				trigger: "#hero",
+				start: "top top",
+				end: "bottom top",
+				scrub: true,
+			},
+		});
 
-        // Headline staggered reveal on load
-        const lines = headline.querySelectorAll("span");
-        gsap.fromTo(
-            lines,
-            { opacity: 0, y: 60 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1.2,
-                stagger: 0.25,
-                ease: "power3.out",
-                delay: 0.3,
-            },
-        );
-    });
+		// Headline staggered reveal on load
+		const lines = headline.querySelectorAll("span");
+		gsap.fromTo(
+			lines,
+			{ opacity: 0, y: 60 },
+			{
+				opacity: 1,
+				y: 0,
+				duration: 1.2,
+				stagger: 0.25,
+				ease: "power3.out",
+				delay: 0.3,
+			},
+		);
+	});
 </script>

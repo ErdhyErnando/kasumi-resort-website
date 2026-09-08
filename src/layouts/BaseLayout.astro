@@ -1,129 +1,135 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import '@fontsource/dm-sans/400.css';
-import '@fontsource/dm-sans/500.css';
-import '@fontsource/dm-sans/600.css';
-import '@fontsource/dm-sans/700.css';
-import '@fontsource/libre-baskerville/400.css';
-import '@fontsource/libre-baskerville/400-italic.css';
-import '@fontsource/libre-baskerville/700.css';
-import Navbar from '../components/layout/Navbar.astro';
-import Footer from '../components/layout/Footer.astro';
-import { SITE_NAME, SITE_DESCRIPTION } from '../lib/constants';
-import { getLocalizedPath, type Locale } from '../i18n/utils';
-import '../styles/global.css';
-import '../styles/animations.css';
+import { ClientRouter } from "astro:transitions";
+import "@fontsource/dm-sans/400.css";
+import "@fontsource/dm-sans/500.css";
+import "@fontsource/dm-sans/600.css";
+import "@fontsource/dm-sans/700.css";
+import "@fontsource/libre-baskerville/400.css";
+import "@fontsource/libre-baskerville/400-italic.css";
+import "@fontsource/libre-baskerville/700.css";
+import Navbar from "../components/layout/Navbar.astro";
+import Footer from "../components/layout/Footer.astro";
+import { SITE_NAME, SITE_DESCRIPTION } from "../lib/constants";
+import { getLocalizedPath, type Locale } from "../i18n/utils";
+import "../styles/global.css";
+import "../styles/animations.css";
 
 interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  class?: string;
+	title?: string;
+	description?: string;
+	image?: string;
+	class?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 // i18n alternates (issue #21) — only for localized routes; /404 and the
 // root redirect page have no locale counterparts, so they are exempt.
-const currentLocale = (Astro.currentLocale ?? 'id') as Locale;
+const currentLocale = (Astro.currentLocale ?? "id") as Locale;
 const isLocalizedPage = /^\/(id|en)(\/|$)/.test(Astro.url.pathname);
-const idURL = new URL(getLocalizedPath(Astro.url.pathname, 'id'), Astro.site);
-const enURL = new URL(getLocalizedPath(Astro.url.pathname, 'en'), Astro.site);
+const idURL = new URL(getLocalizedPath(Astro.url.pathname, "id"), Astro.site);
+const enURL = new URL(getLocalizedPath(Astro.url.pathname, "en"), Astro.site);
 
 const {
-  title = SITE_NAME,
-  description = SITE_DESCRIPTION,
-  image = '/og-image.jpg',
-  class: className,
+	title = SITE_NAME,
+	description = SITE_DESCRIPTION,
+	image = "/og-image.jpg",
+	class: className,
 } = Astro.props;
 
 const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 ---
 
 <!doctype html>
-<html lang={Astro.currentLocale ?? 'id'}>
-  <head>
-    <!-- Global Metadata -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Icons -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <link
-      rel="alternate"
-      type="application/rss+xml"
-      title={SITE_NAME}
-      href={new URL('rss.xml', Astro.site)}
-    />
-    <meta name="generator" content={Astro.generator} />
+<html lang={Astro.currentLocale ?? "id"}>
+	<head>
+		<!-- Global Metadata -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!-- Icons -->
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+		<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title={SITE_NAME}
+			href={new URL("rss.xml", Astro.site)}
+		/>
+		<meta name="generator" content={Astro.generator} />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href={canonicalURL} />
+		<!-- Canonical URL -->
+		<link rel="canonical" href={canonicalURL} />
 
-    {isLocalizedPage && (
-      <>
-        <!-- hreflang alternates (issue #21) -->
-        <link rel="alternate" hreflang="id" href={idURL} />
-        <link rel="alternate" hreflang="en" href={enURL} />
-        <link rel="alternate" hreflang="x-default" href={idURL} />
-      </>
-    )}
+		{
+			isLocalizedPage && (
+				<>
+					{/* hreflang alternates (issue #21) */}
+					<link rel="alternate" hreflang="id" href={idURL} />
+					<link rel="alternate" hreflang="en" href={enURL} />
+					<link rel="alternate" hreflang="x-default" href={idURL} />
+				</>
+			)
+		}
 
-    <!-- Primary Meta Tags -->
-    <title>{pageTitle}</title>
-    <meta name="title" content={pageTitle} />
-    <meta name="description" content={description} />
+		<!-- Primary Meta Tags -->
+		<title>{pageTitle}</title>
+		<meta name="title" content={pageTitle} />
+		<meta name="description" content={description} />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
-    <meta
-      property="og:locale"
-      content={currentLocale === 'id' ? 'id_ID' : 'en_US'}
-    />
-    <meta
-      property="og:locale:alternate"
-      content={currentLocale === 'id' ? 'en_US' : 'id_ID'}
-    />
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={new URL(image, Astro.url)} />
+		<meta
+			property="og:locale"
+			content={currentLocale === "id" ? "id_ID" : "en_US"}
+		/>
+		<meta
+			property="og:locale:alternate"
+			content={currentLocale === "id" ? "en_US" : "id_ID"}
+		/>
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={Astro.url} />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, Astro.url)} />
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content={Astro.url} />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL(image, Astro.url)} />
 
-    <!-- Astro View Transitions -->
-    <ClientRouter />
-  </head>
-  <body class="min-h-screen flex flex-col">
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:bg-highlight focus:px-4 focus:py-2 focus:text-dark"
-    >
-      {currentLocale === 'id' ? 'Lewati ke konten' : 'Skip to content'}
-    </a>
-    <Navbar />
-    <main id="main-content" class="page-content flex-1" class:list={[className]}>
-      <slot />
-    </main>
-    <Footer />
+		<!-- Astro View Transitions -->
+		<ClientRouter />
+	</head>
+	<body class="min-h-screen flex flex-col">
+		<a
+			href="#main-content"
+			class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded focus:bg-highlight focus:px-4 focus:py-2 focus:text-dark"
+		>
+			{currentLocale === "id" ? "Lewati ke konten" : "Skip to content"}
+		</a>
+		<Navbar />
+		<main
+			id="main-content"
+			class="page-content flex-1"
+			class:list={[className]}
+		>
+			<slot />
+		</main>
+		<Footer />
 
-    <!-- Load animation code only on pages that use animation hooks -->
-    <script>
-      import { initAnimations, trackNavigationPath } from '../lib/animations';
-      document.addEventListener('astro:before-swap', () => {
-        trackNavigationPath();
-      });
-      document.addEventListener('astro:page-load', () => {
-        initAnimations();
-      });
-    </script>
-  </body>
+		<!-- Load animation code only on pages that use animation hooks -->
+		<script>
+			import { initAnimations, trackNavigationPath } from "../lib/animations";
+			document.addEventListener("astro:before-swap", () => {
+				trackNavigationPath();
+			});
+			document.addEventListener("astro:page-load", () => {
+				initAnimations();
+			});
+		</script>
+	</body>
 </html>

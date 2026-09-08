@@ -1,519 +1,519 @@
 import type { Locale } from "./utils";
 
 export type UiTranslations = {
-  hero: { line1: string; line2: string; scrollLabel: string };
-  intro: { text: string; images: { alt: string }[] };
-  activity: {
-    headingLine1: string;
-    headingLine2: string;
-    headingLine3: string;
-    bookingLabel: string;
-    items: { name: string; description: string; waMessage: string }[];
-  };
-  facilities: {
-    headline: string;
-    subtitle: string;
-    items: { name: string; description: string }[];
-  };
-  location: {
-    line1: string;
-    line2: string;
-    distanceJakarta: string;
-    distanceBogor: string;
-  };
-  cta: { headline: string; buttonLabel: string };
-  navbar: { bookNow: string };
-  footer: {
-    contactLabel: string;
-    followLabel: string;
-    privacyPolicy: string;
-    credit: string;
-  };
-  villa: {
-    index: {
-      title: string;
-      label: string;
-      subtitle: string;
-      from: string;
-      night: string;
-      viewDetail: string;
-    };
-    detail: {
-      breadcrumbHome: string;
-      breadcrumbVilla: string;
-      capacity: string;
-      capacityValue: string;
-      bedrooms: string;
-      bathrooms: string;
-      amenities: string;
-      pricePerNight: string;
-      bookingButton: string;
-      ctaHeadline: string;
-      ctaButton: string;
-      whatsappMessage: string;
-    };
-  };
-  camping: {
-    index: {
-      title: string;
-      label: string;
-      subtitle: string;
-      introText: string;
-      perfectFor: string;
-      priceSuffix: string;
-    };
-  };
-  gallery: {
-    title: string;
-    momentsHeading: string;
-    campingHeading: string;
-    followLineBefore: string;
-    followHandle: string;
-    followLineAfter: string;
-    followInstagramAria: string;
-    ctaHeadline: string;
-    ctaReserveLabel: string;
-    reserveWhatsappMessage: string;
-    momentsImageAlts: [string, string, string, string];
-    campingImageAlts: [string, string, string, string, string];
-    guestVideosHeading: string;
-    guestVideoIframeTitle: string;
-  };
-  contact: {
-    title: string;
-    headline: string;
-    subheadline: string;
-    addressLabel: string;
-    emailLabel: string;
-    whatsappLabel: string;
-    socialLabel: string;
-    directionsTitle: string;
-    fromJakarta: string;
-    fromBogor: string;
-    mapTitle: string;
-  };
-  blog: {
-    index: {
-      title: string;
-      label: string;
-      subtitle: string;
-      filterAll: string;
-      filterCampingTips: string;
-      filterWisata: string;
-      filterResort: string;
-      filterNature: string;
-      readTime: string;
-      noImage: string;
-      filterToolbarAria: string;
-      noPostsForFilter: string;
-    };
-    post: {
-      breadcrumbAria: string;
-      breadcrumbBlog: string;
-    };
-  };
+	hero: { line1: string; line2: string; scrollLabel: string };
+	intro: { text: string; images: { alt: string }[] };
+	activity: {
+		headingLine1: string;
+		headingLine2: string;
+		headingLine3: string;
+		bookingLabel: string;
+		items: { name: string; description: string; waMessage: string }[];
+	};
+	facilities: {
+		headline: string;
+		subtitle: string;
+		items: { name: string; description: string }[];
+	};
+	location: {
+		line1: string;
+		line2: string;
+		distanceJakarta: string;
+		distanceBogor: string;
+	};
+	cta: { headline: string; buttonLabel: string };
+	navbar: { bookNow: string };
+	footer: {
+		contactLabel: string;
+		followLabel: string;
+		privacyPolicy: string;
+		credit: string;
+	};
+	villa: {
+		index: {
+			title: string;
+			label: string;
+			subtitle: string;
+			from: string;
+			night: string;
+			viewDetail: string;
+		};
+		detail: {
+			breadcrumbHome: string;
+			breadcrumbVilla: string;
+			capacity: string;
+			capacityValue: string;
+			bedrooms: string;
+			bathrooms: string;
+			amenities: string;
+			pricePerNight: string;
+			bookingButton: string;
+			ctaHeadline: string;
+			ctaButton: string;
+			whatsappMessage: string;
+		};
+	};
+	camping: {
+		index: {
+			title: string;
+			label: string;
+			subtitle: string;
+			introText: string;
+			perfectFor: string;
+			priceSuffix: string;
+		};
+	};
+	gallery: {
+		title: string;
+		momentsHeading: string;
+		campingHeading: string;
+		followLineBefore: string;
+		followHandle: string;
+		followLineAfter: string;
+		followInstagramAria: string;
+		ctaHeadline: string;
+		ctaReserveLabel: string;
+		reserveWhatsappMessage: string;
+		momentsImageAlts: [string, string, string, string];
+		campingImageAlts: [string, string, string, string, string];
+		guestVideosHeading: string;
+		guestVideoIframeTitle: string;
+	};
+	contact: {
+		title: string;
+		headline: string;
+		subheadline: string;
+		addressLabel: string;
+		emailLabel: string;
+		whatsappLabel: string;
+		socialLabel: string;
+		directionsTitle: string;
+		fromJakarta: string;
+		fromBogor: string;
+		mapTitle: string;
+	};
+	blog: {
+		index: {
+			title: string;
+			label: string;
+			subtitle: string;
+			filterAll: string;
+			filterCampingTips: string;
+			filterWisata: string;
+			filterResort: string;
+			filterNature: string;
+			readTime: string;
+			noImage: string;
+			filterToolbarAria: string;
+			noPostsForFilter: string;
+		};
+		post: {
+			breadcrumbAria: string;
+			breadcrumbBlog: string;
+		};
+	};
 };
 
 const id: UiTranslations = {
-  hero: {
-    line1: "Tinggalkan kota",
-    line2: "Bangun di tengah kabut",
-    scrollLabel: "Scroll",
-  },
+	hero: {
+		line1: "Tinggalkan kota",
+		line2: "Bangun di tengah kabut",
+		scrollLabel: "Scroll",
+	},
 
-  intro: {
-    text: "villa di tengah hutan, camping ground\ndengan pemandangan pegunungan sukabumi",
-    images: [
-      { alt: "Villa di tengah hutan Kasumi Resort" },
-      { alt: "Camping ground dengan pemandangan gunung" },
-      { alt: "Suasana alam Kasumi Resort" },
-    ],
-  },
+	intro: {
+		text: "villa di tengah hutan, camping ground\ndengan pemandangan pegunungan sukabumi",
+		images: [
+			{ alt: "Villa di tengah hutan Kasumi Resort" },
+			{ alt: "Camping ground dengan pemandangan gunung" },
+			{ alt: "Suasana alam Kasumi Resort" },
+		],
+	},
 
-  activity: {
-    headingLine1: "Aktivitas Seru",
-    headingLine2: "untuk kamu",
-    headingLine3: "dan Keluarga",
-    bookingLabel: "booking",
-    items: [
-      {
-        name: "ATV",
-        description:
-          "Jelajahi trek hutan dengan ATV — pengalaman memacu adrenalin di tengah alam Halimun Salak.",
-        waMessage: "Halo, saya tertarik dengan aktivitas ATV di Kasumi Resort.",
-      },
-      {
-        name: "Api Unggun",
-        description:
-          "Malam yang hangat bersama keluarga dan teman dengan api unggun di bawah langit berbintang.",
-        waMessage:
-          "Halo, saya tertarik dengan aktivitas Api Unggun di Kasumi Resort.",
-      },
-      {
-        name: "Trekking",
-        description:
-          "Telusuri jalur trekking di kawasan Taman Nasional Gunung Halimun Salak.",
-        waMessage:
-          "Halo, saya tertarik dengan aktivitas Trekking di Kasumi Resort.",
-      },
-    ],
-  },
+	activity: {
+		headingLine1: "Aktivitas Seru",
+		headingLine2: "untuk kamu",
+		headingLine3: "dan Keluarga",
+		bookingLabel: "booking",
+		items: [
+			{
+				name: "ATV",
+				description:
+					"Jelajahi trek hutan dengan ATV — pengalaman memacu adrenalin di tengah alam Halimun Salak.",
+				waMessage: "Halo, saya tertarik dengan aktivitas ATV di Kasumi Resort.",
+			},
+			{
+				name: "Api Unggun",
+				description:
+					"Malam yang hangat bersama keluarga dan teman dengan api unggun di bawah langit berbintang.",
+				waMessage:
+					"Halo, saya tertarik dengan aktivitas Api Unggun di Kasumi Resort.",
+			},
+			{
+				name: "Trekking",
+				description:
+					"Telusuri jalur trekking di kawasan Taman Nasional Gunung Halimun Salak.",
+				waMessage:
+					"Halo, saya tertarik dengan aktivitas Trekking di Kasumi Resort.",
+			},
+		],
+	},
 
-  facilities: {
-    headline: "Alam di Luar. Nyaman di Dalam.",
-    subtitle:
-      "Dikelilingi hutan dan udara pegunungan yang segar bukan berarti kamu harus meninggalkan kenyamanan. Kasumi Resort menyediakan kamar mandi bersih, listrik yang andal, dan akses Wi-Fi.",
-    items: [
-      {
-        name: "Kamar Mandi Bersih & Air Panas",
-        description:
-          "Kamar mandi bersih dengan air panas tersedia di setiap vila dan area camping.",
-      },
-      {
-        name: "Listrik 24 Jam",
-        description:
-          "Listrik stabil 24 jam untuk kenyamanan Anda selama menginap.",
-      },
-      {
-        name: "Akses Wi-Fi",
-        description:
-          "Akses Wi-Fi tersedia untuk tetap terhubung meskipun di tengah hutan.",
-      },
-    ],
-  },
+	facilities: {
+		headline: "Alam di Luar. Nyaman di Dalam.",
+		subtitle:
+			"Dikelilingi hutan dan udara pegunungan yang segar bukan berarti kamu harus meninggalkan kenyamanan. Kasumi Resort menyediakan kamar mandi bersih, listrik yang andal, dan akses Wi-Fi.",
+		items: [
+			{
+				name: "Kamar Mandi Bersih & Air Panas",
+				description:
+					"Kamar mandi bersih dengan air panas tersedia di setiap vila dan area camping.",
+			},
+			{
+				name: "Listrik 24 Jam",
+				description:
+					"Listrik stabil 24 jam untuk kenyamanan Anda selama menginap.",
+			},
+			{
+				name: "Akses Wi-Fi",
+				description:
+					"Akses Wi-Fi tersedia untuk tetap terhubung meskipun di tengah hutan.",
+			},
+		],
+	},
 
-  location: {
-    line1: "Dekat dari kota",
-    line2: "Jauh dari kebisingan",
-    distanceJakarta: "2 jam dari Jakarta",
-    distanceBogor: "1,5 jam dari Bogor",
-  },
+	location: {
+		line1: "Dekat dari kota",
+		line2: "Jauh dari kebisingan",
+		distanceJakarta: "2 jam dari Jakarta",
+		distanceBogor: "1,5 jam dari Bogor",
+	},
 
-  cta: {
-    headline: "Siap Meninggalkan Kota?",
-    buttonLabel: "Booking",
-  },
+	cta: {
+		headline: "Siap Meninggalkan Kota?",
+		buttonLabel: "Booking",
+	},
 
-  navbar: {
-    bookNow: "Pesan Sekarang",
-  },
+	navbar: {
+		bookNow: "Pesan Sekarang",
+	},
 
-  footer: {
-    contactLabel: "kontak",
-    followLabel: "ikuti",
-    privacyPolicy: "kebijakan privasi",
-    credit: "kredit",
-  },
+	footer: {
+		contactLabel: "kontak",
+		followLabel: "ikuti",
+		privacyPolicy: "kebijakan privasi",
+		credit: "kredit",
+	},
 
-  villa: {
-    index: {
-      title: "Villa Kami",
-      label: "Akomodasi",
-      subtitle:
-        "10 villa di tengah hutan, masing-masing dengan pemandangan dan pengalaman unik.",
-      from: "Mulai Rp",
-      night: "/malam",
-      viewDetail: "Lihat Detail",
-    },
-    detail: {
-      breadcrumbHome: "Beranda",
-      breadcrumbVilla: "Villa",
-      capacity: "Kapasitas",
-      capacityValue: "hingga {count} orang",
-      bedrooms: "Kamar Tidur",
-      bathrooms: "Kamar Mandi",
-      amenities: "Fasilitas",
-      pricePerNight: "Harga per malam",
-      bookingButton: "Booking via WhatsApp",
-      ctaHeadline: "Bayangkan akhir pekan di sini",
-      ctaButton: "Reserve now",
-      whatsappMessage:
-        "Halo, saya tertarik untuk booking {villaName}. Bisa info ketersediaan dan harganya?",
-    },
-  },
+	villa: {
+		index: {
+			title: "Villa Kami",
+			label: "Akomodasi",
+			subtitle:
+				"10 villa di tengah hutan, masing-masing dengan pemandangan dan pengalaman unik.",
+			from: "Mulai Rp",
+			night: "/malam",
+			viewDetail: "Lihat Detail",
+		},
+		detail: {
+			breadcrumbHome: "Beranda",
+			breadcrumbVilla: "Villa",
+			capacity: "Kapasitas",
+			capacityValue: "hingga {count} orang",
+			bedrooms: "Kamar Tidur",
+			bathrooms: "Kamar Mandi",
+			amenities: "Fasilitas",
+			pricePerNight: "Harga per malam",
+			bookingButton: "Booking via WhatsApp",
+			ctaHeadline: "Bayangkan akhir pekan di sini",
+			ctaButton: "Reserve now",
+			whatsappMessage:
+				"Halo, saya tertarik untuk booking {villaName}. Bisa info ketersediaan dan harganya?",
+		},
+	},
 
-  camping: {
-    index: {
-      title: "Camping di Kasumi",
-      label: "Camping Ground",
-      subtitle:
-        "Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
-      introText:
-        "Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
+	camping: {
+		index: {
+			title: "Camping di Kasumi",
+			label: "Camping Ground",
+			subtitle:
+				"Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
+			introText:
+				"Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
 
-      perfectFor: "Cocok Untuk",
-      priceSuffix: "/ malam",
-    },
-  },
+			perfectFor: "Cocok Untuk",
+			priceSuffix: "/ malam",
+		},
+	},
 
-  gallery: {
-    title: "Galeri",
-    momentsHeading: "Momen di Kasumi Resort",
-    campingHeading: "Camping & Komunitas",
-    followLineBefore: "Ikuti dan tag kami ",
-    followHandle: "@kasumi_resort",
-    followLineAfter: " untuk bisa tampil di galeri kami!",
-    followInstagramAria: "Buka Instagram Kasumi Resort",
-    ctaHeadline: "Siap Menciptakan Momenmu Sendiri?",
-    ctaReserveLabel: "pesan sekarang",
-    reserveWhatsappMessage:
-      "Halo, saya ingin tahu lebih lanjut tentang menginap di Kasumi Resort.",
-    momentsImageAlts: [
-      "Galeri momen di Kasumi Resort",
-      "Galeri momen di Kasumi Resort",
-      "Galeri momen di Kasumi Resort",
-      "Galeri momen di Kasumi Resort",
-    ],
-    campingImageAlts: [
-      "Galeri camping dan komunitas Kasumi",
-      "Galeri camping dan komunitas Kasumi",
-      "Galeri camping dan komunitas Kasumi",
-      "Galeri camping dan komunitas Kasumi",
-      "Galeri camping dan komunitas Kasumi",
-    ],
-    guestVideosHeading: "Video Tamu Kami",
-    guestVideoIframeTitle: "Video YouTube tamu Kasumi Resort",
-  },
+	gallery: {
+		title: "Galeri",
+		momentsHeading: "Momen di Kasumi Resort",
+		campingHeading: "Camping & Komunitas",
+		followLineBefore: "Ikuti dan tag kami ",
+		followHandle: "@kasumi_resort",
+		followLineAfter: " untuk bisa tampil di galeri kami!",
+		followInstagramAria: "Buka Instagram Kasumi Resort",
+		ctaHeadline: "Siap Menciptakan Momenmu Sendiri?",
+		ctaReserveLabel: "pesan sekarang",
+		reserveWhatsappMessage:
+			"Halo, saya ingin tahu lebih lanjut tentang menginap di Kasumi Resort.",
+		momentsImageAlts: [
+			"Galeri momen di Kasumi Resort",
+			"Galeri momen di Kasumi Resort",
+			"Galeri momen di Kasumi Resort",
+			"Galeri momen di Kasumi Resort",
+		],
+		campingImageAlts: [
+			"Galeri camping dan komunitas Kasumi",
+			"Galeri camping dan komunitas Kasumi",
+			"Galeri camping dan komunitas Kasumi",
+			"Galeri camping dan komunitas Kasumi",
+			"Galeri camping dan komunitas Kasumi",
+		],
+		guestVideosHeading: "Video Tamu Kami",
+		guestVideoIframeTitle: "Video YouTube tamu Kasumi Resort",
+	},
 
-  contact: {
-    title: "Kontak",
-    headline: "Mari Rencanakan Penginapan Anda",
-    subheadline:
-      "Punya pertanyaan tentang villa, area camping, atau ketersediaan? Kami siap membantu!",
-    addressLabel: "Alamat",
-    emailLabel: "Email",
-    whatsappLabel: "WhatsApp",
-    socialLabel: "Sosial Media",
-    directionsTitle: "Cara ke Kasumi",
-    fromJakarta: "Dari Jakarta: ~2 jam via Tol Jagorawi → Bogor → Cidahu",
-    fromBogor: "Dari Bogor: ~1.5 jam via Jl. Raya Sukabumi → Cidahu",
-    mapTitle: "Lokasi Kasumi Resort",
-  },
+	contact: {
+		title: "Kontak",
+		headline: "Mari Rencanakan Penginapan Anda",
+		subheadline:
+			"Punya pertanyaan tentang villa, area camping, atau ketersediaan? Kami siap membantu!",
+		addressLabel: "Alamat",
+		emailLabel: "Email",
+		whatsappLabel: "WhatsApp",
+		socialLabel: "Sosial Media",
+		directionsTitle: "Cara ke Kasumi",
+		fromJakarta: "Dari Jakarta: ~2 jam via Tol Jagorawi → Bogor → Cidahu",
+		fromBogor: "Dari Bogor: ~1.5 jam via Jl. Raya Sukabumi → Cidahu",
+		mapTitle: "Lokasi Kasumi Resort",
+	},
 
-  blog: {
-    index: {
-      title: "Blog Kasumi",
-      label: "Cerita & tips",
-      subtitle:
-        "Cerita perjalanan, ide wisata sekitar Cidahu, dan tips menikmati alam.",
-      filterAll: "Semua",
-      filterCampingTips: "Tips Berkemah",
-      filterWisata: "Wisata Sukabumi",
-      filterResort: "Update Resort",
-      filterNature: "Nature Info",
-      readTime: "{n} menit baca",
-      noImage: "Tanpa gambar",
-      filterToolbarAria: "Saring artikel berdasarkan topik",
-      noPostsForFilter: "Belum ada artikel untuk topik ini.",
-    },
-    post: {
-      breadcrumbAria: "Jejak navigasi artikel",
-      breadcrumbBlog: "Blog",
-    },
-  },
+	blog: {
+		index: {
+			title: "Blog Kasumi",
+			label: "Cerita & tips",
+			subtitle:
+				"Cerita perjalanan, ide wisata sekitar Cidahu, dan tips menikmati alam.",
+			filterAll: "Semua",
+			filterCampingTips: "Tips Berkemah",
+			filterWisata: "Wisata Sukabumi",
+			filterResort: "Update Resort",
+			filterNature: "Nature Info",
+			readTime: "{n} menit baca",
+			noImage: "Tanpa gambar",
+			filterToolbarAria: "Saring artikel berdasarkan topik",
+			noPostsForFilter: "Belum ada artikel untuk topik ini.",
+		},
+		post: {
+			breadcrumbAria: "Jejak navigasi artikel",
+			breadcrumbBlog: "Blog",
+		},
+	},
 };
 
 const en: UiTranslations = {
-  hero: {
-    line1: "Leave the city",
-    line2: "Wake up in the mist",
-    scrollLabel: "Scroll",
-  },
+	hero: {
+		line1: "Leave the city",
+		line2: "Wake up in the mist",
+		scrollLabel: "Scroll",
+	},
 
-  intro: {
-    text: "a villa in the heart of the forest,\ncamping ground with mountain views in sukabumi",
-    images: [
-      { alt: "Kasumi Resort villa in the forest" },
-      { alt: "Camping ground with mountain views" },
-      { alt: "Nature scenery at Kasumi Resort" },
-    ],
-  },
+	intro: {
+		text: "a villa in the heart of the forest,\ncamping ground with mountain views in sukabumi",
+		images: [
+			{ alt: "Kasumi Resort villa in the forest" },
+			{ alt: "Camping ground with mountain views" },
+			{ alt: "Nature scenery at Kasumi Resort" },
+		],
+	},
 
-  activity: {
-    headingLine1: "Exciting Activities",
-    headingLine2: "for You",
-    headingLine3: "and Family",
-    bookingLabel: "book now",
-    items: [
-      {
-        name: "ATV",
-        description:
-          "Explore forest trails on an ATV — an adrenaline-pumping adventure in the heart of Halimun Salak.",
-        waMessage:
-          "Hello, I am interested in the ATV activity at Kasumi Resort.",
-      },
-      {
-        name: "Campfire",
-        description:
-          "A warm evening with family and friends around a campfire under a sky full of stars.",
-        waMessage:
-          "Hello, I am interested in the Campfire activity at Kasumi Resort.",
-      },
-      {
-        name: "Trekking",
-        description:
-          "Explore trekking trails within Gunung Halimun Salak National Park.",
-        waMessage:
-          "Hello, I am interested in the Trekking activity at Kasumi Resort.",
-      },
-    ],
-  },
+	activity: {
+		headingLine1: "Exciting Activities",
+		headingLine2: "for You",
+		headingLine3: "and Family",
+		bookingLabel: "book now",
+		items: [
+			{
+				name: "ATV",
+				description:
+					"Explore forest trails on an ATV — an adrenaline-pumping adventure in the heart of Halimun Salak.",
+				waMessage:
+					"Hello, I am interested in the ATV activity at Kasumi Resort.",
+			},
+			{
+				name: "Campfire",
+				description:
+					"A warm evening with family and friends around a campfire under a sky full of stars.",
+				waMessage:
+					"Hello, I am interested in the Campfire activity at Kasumi Resort.",
+			},
+			{
+				name: "Trekking",
+				description:
+					"Explore trekking trails within Gunung Halimun Salak National Park.",
+				waMessage:
+					"Hello, I am interested in the Trekking activity at Kasumi Resort.",
+			},
+		],
+	},
 
-  facilities: {
-    headline: "Nature Outside. Comfort Inside.",
-    subtitle:
-      "Just because you're surrounded by forest and fresh mountain air doesn't mean you leave comfort behind. Kasumi Resort offers clean bathrooms, reliable electricity, and Wi-Fi access.",
-    items: [
-      {
-        name: "Clean Bathrooms & Hot Water",
-        description:
-          "Clean bathrooms with hot water available in every villa and camping area.",
-      },
-      {
-        name: "Reliable Electricity 24hr",
-        description:
-          "Stable 24-hour electricity for your comfort throughout your stay.",
-      },
-      {
-        name: "Wi-Fi Access",
-        description:
-          "Wi-Fi access available to stay connected even in the middle of the forest.",
-      },
-    ],
-  },
+	facilities: {
+		headline: "Nature Outside. Comfort Inside.",
+		subtitle:
+			"Just because you're surrounded by forest and fresh mountain air doesn't mean you leave comfort behind. Kasumi Resort offers clean bathrooms, reliable electricity, and Wi-Fi access.",
+		items: [
+			{
+				name: "Clean Bathrooms & Hot Water",
+				description:
+					"Clean bathrooms with hot water available in every villa and camping area.",
+			},
+			{
+				name: "Reliable Electricity 24hr",
+				description:
+					"Stable 24-hour electricity for your comfort throughout your stay.",
+			},
+			{
+				name: "Wi-Fi Access",
+				description:
+					"Wi-Fi access available to stay connected even in the middle of the forest.",
+			},
+		],
+	},
 
-  location: {
-    line1: "Close to the city",
-    line2: "Far from noise",
-    distanceJakarta: "2 hours from Jakarta",
-    distanceBogor: "1.5 hours from Bogor",
-  },
+	location: {
+		line1: "Close to the city",
+		line2: "Far from noise",
+		distanceJakarta: "2 hours from Jakarta",
+		distanceBogor: "1.5 hours from Bogor",
+	},
 
-  cta: {
-    headline: "Ready To Leave The City Behind?",
-    buttonLabel: "Book Now",
-  },
+	cta: {
+		headline: "Ready To Leave The City Behind?",
+		buttonLabel: "Book Now",
+	},
 
-  navbar: {
-    bookNow: "Book Now",
-  },
+	navbar: {
+		bookNow: "Book Now",
+	},
 
-  footer: {
-    contactLabel: "contact",
-    followLabel: "follow",
-    privacyPolicy: "privacy policy",
-    credit: "credit",
-  },
+	footer: {
+		contactLabel: "contact",
+		followLabel: "follow",
+		privacyPolicy: "privacy policy",
+		credit: "credit",
+	},
 
-  villa: {
-    index: {
-      title: "Our Villas",
-      label: "Accommodation",
-      subtitle:
-        "10 villas in the heart of the forest, each with a unique view and experience.",
-      from: "Starts from Rp",
-      night: "/night",
-      viewDetail: "View Details",
-    },
-    detail: {
-      breadcrumbHome: "Home",
-      breadcrumbVilla: "Villa",
-      capacity: "Capacity",
-      capacityValue: "up to {count} people",
-      bedrooms: "Bedrooms",
-      bathrooms: "Bathrooms",
-      amenities: "Amenities",
-      pricePerNight: "Price per night",
-      bookingButton: "Book via WhatsApp",
-      ctaHeadline: "Imagine You're next weekend here",
-      ctaButton: "Reserve now",
-      whatsappMessage:
-        "Hello, I am interested in booking {villaName}. Can I get availability and pricing details?",
-    },
-  },
+	villa: {
+		index: {
+			title: "Our Villas",
+			label: "Accommodation",
+			subtitle:
+				"10 villas in the heart of the forest, each with a unique view and experience.",
+			from: "Starts from Rp",
+			night: "/night",
+			viewDetail: "View Details",
+		},
+		detail: {
+			breadcrumbHome: "Home",
+			breadcrumbVilla: "Villa",
+			capacity: "Capacity",
+			capacityValue: "up to {count} people",
+			bedrooms: "Bedrooms",
+			bathrooms: "Bathrooms",
+			amenities: "Amenities",
+			pricePerNight: "Price per night",
+			bookingButton: "Book via WhatsApp",
+			ctaHeadline: "Imagine You're next weekend here",
+			ctaButton: "Reserve now",
+			whatsappMessage:
+				"Hello, I am interested in booking {villaName}. Can I get availability and pricing details?",
+		},
+	},
 
-  camping: {
-    index: {
-      title: "Camping at Kasumi",
-      label: "Camping Ground",
-      subtitle:
-        "Two different camping experiences — choose the one that suits your adventurous spirit.",
-      introText:
-        "Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
-      perfectFor: "Perfect For",
-      priceSuffix: "/ night",
-    },
-  },
+	camping: {
+		index: {
+			title: "Camping at Kasumi",
+			label: "Camping Ground",
+			subtitle:
+				"Two different camping experiences — choose the one that suits your adventurous spirit.",
+			introText:
+				"Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
+			perfectFor: "Perfect For",
+			priceSuffix: "/ night",
+		},
+	},
 
-  gallery: {
-    title: "Gallery",
-    momentsHeading: "Moments at Kasumi Resort",
-    campingHeading: "Camping & Community",
-    followLineBefore: "Follow and tag us ",
-    followHandle: "@kasumi_resort",
-    followLineAfter: " to be featured!",
-    followInstagramAria: "Open Kasumi Resort on Instagram",
-    ctaHeadline: "Ready to Create Your Own Moments?",
-    ctaReserveLabel: "reserve today",
-    reserveWhatsappMessage:
-      "Hello, I'd like to know more about staying at Kasumi Resort.",
-    momentsImageAlts: [
-      "Kasumi Resort gallery moment",
-      "Kasumi Resort gallery moment",
-      "Kasumi Resort gallery moment",
-      "Kasumi Resort gallery moment",
-    ],
-    campingImageAlts: [
-      "Kasumi Resort camping and community",
-      "Kasumi Resort camping and community",
-      "Kasumi Resort camping and community",
-      "Kasumi Resort camping and community",
-      "Kasumi Resort camping and community",
-    ],
-    guestVideosHeading: "Our guests' videos",
-    guestVideoIframeTitle: "Kasumi Resort guest YouTube video",
-  },
+	gallery: {
+		title: "Gallery",
+		momentsHeading: "Moments at Kasumi Resort",
+		campingHeading: "Camping & Community",
+		followLineBefore: "Follow and tag us ",
+		followHandle: "@kasumi_resort",
+		followLineAfter: " to be featured!",
+		followInstagramAria: "Open Kasumi Resort on Instagram",
+		ctaHeadline: "Ready to Create Your Own Moments?",
+		ctaReserveLabel: "reserve today",
+		reserveWhatsappMessage:
+			"Hello, I'd like to know more about staying at Kasumi Resort.",
+		momentsImageAlts: [
+			"Kasumi Resort gallery moment",
+			"Kasumi Resort gallery moment",
+			"Kasumi Resort gallery moment",
+			"Kasumi Resort gallery moment",
+		],
+		campingImageAlts: [
+			"Kasumi Resort camping and community",
+			"Kasumi Resort camping and community",
+			"Kasumi Resort camping and community",
+			"Kasumi Resort camping and community",
+			"Kasumi Resort camping and community",
+		],
+		guestVideosHeading: "Our guests' videos",
+		guestVideoIframeTitle: "Kasumi Resort guest YouTube video",
+	},
 
-  contact: {
-    title: "Contact",
-    headline: "Let's Plan Your Stay",
-    subheadline:
-      "Have questions about villa, camping area, or availability? We're here to help!",
-    addressLabel: "Address",
-    emailLabel: "Email",
-    whatsappLabel: "WhatsApp",
-    socialLabel: "Social",
-    directionsTitle: "How to Get Here",
-    fromJakarta: "From Jakarta: ~2 hours via Jagorawi Toll → Bogor → Cidahu",
-    fromBogor: "From Bogor: ~1.5 hours via Sukabumi Road → Cidahu",
-    mapTitle: "Kasumi Resort Location",
-  },
+	contact: {
+		title: "Contact",
+		headline: "Let's Plan Your Stay",
+		subheadline:
+			"Have questions about villa, camping area, or availability? We're here to help!",
+		addressLabel: "Address",
+		emailLabel: "Email",
+		whatsappLabel: "WhatsApp",
+		socialLabel: "Social",
+		directionsTitle: "How to Get Here",
+		fromJakarta: "From Jakarta: ~2 hours via Jagorawi Toll → Bogor → Cidahu",
+		fromBogor: "From Bogor: ~1.5 hours via Sukabumi Road → Cidahu",
+		mapTitle: "Kasumi Resort Location",
+	},
 
-  blog: {
-    index: {
-      title: "Kasumi Blog",
-      label: "Stories & tips",
-      subtitle:
-        "Trip ideas around Cidahu, Sukabumi highlights, and tips for enjoying nature.",
-      filterAll: "All",
-      filterCampingTips: "Camping tips",
-      filterWisata: "Sukabumi travel",
-      filterResort: "Resort updates",
-      filterNature: "Nature info",
-      readTime: "{n} min read",
-      noImage: "No image",
-      filterToolbarAria: "Filter posts by topic",
-      noPostsForFilter: "No posts for this topic yet.",
-    },
-    post: {
-      breadcrumbAria: "Article breadcrumbs",
-      breadcrumbBlog: "Blog",
-    },
-  },
+	blog: {
+		index: {
+			title: "Kasumi Blog",
+			label: "Stories & tips",
+			subtitle:
+				"Trip ideas around Cidahu, Sukabumi highlights, and tips for enjoying nature.",
+			filterAll: "All",
+			filterCampingTips: "Camping tips",
+			filterWisata: "Sukabumi travel",
+			filterResort: "Resort updates",
+			filterNature: "Nature info",
+			readTime: "{n} min read",
+			noImage: "No image",
+			filterToolbarAria: "Filter posts by topic",
+			noPostsForFilter: "No posts for this topic yet.",
+		},
+		post: {
+			breadcrumbAria: "Article breadcrumbs",
+			breadcrumbBlog: "Blog",
+		},
+	},
 };
 
 const translations: Record<Locale, UiTranslations> = { id, en };
 
 export function useTranslations(locale: Locale): UiTranslations {
-  return translations[locale] ?? translations.id;
+	return translations[locale] ?? translations.id;
 }
