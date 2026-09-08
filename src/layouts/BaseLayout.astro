@@ -10,6 +10,7 @@ import '@fontsource/libre-baskerville/700.css';
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import { SITE_NAME, SITE_DESCRIPTION } from '../lib/constants';
+import { getLocalizedPath, type Locale } from '../i18n/utils';
 import '../styles/global.css';
 import '../styles/animations.css';
 
@@ -21,6 +22,13 @@ interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// i18n alternates (issue #21) — only for localized routes; /404 and the
+// root redirect page have no locale counterparts, so they are exempt.
+const currentLocale = (Astro.currentLocale ?? 'id') as Locale;
+const isLocalizedPage = /^\/(id|en)(\/|$)/.test(Astro.url.pathname);
+const idURL = new URL(getLocalizedPath(Astro.url.pathname, 'id'), Astro.site);
+const enURL = new URL(getLocalizedPath(Astro.url.pathname, 'en'), Astro.site);
 
 const {
   title = SITE_NAME,
@@ -55,6 +63,15 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
 
+    {isLocalizedPage && (
+      <>
+        <!-- hreflang alternates (issue #21) -->
+        <link rel="alternate" hreflang="id" href={idURL} />
+        <link rel="alternate" hreflang="en" href={enURL} />
+        <link rel="alternate" hreflang="x-default" href={idURL} />
+      </>
+    )}
+
     <!-- Primary Meta Tags -->
     <title>{pageTitle}</title>
     <meta name="title" content={pageTitle} />
@@ -66,13 +83,21 @@ const pageTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta
+      property="og:locale"
+      content={currentLocale === 'id' ? 'id_ID' : 'en_US'}
+    />
+    <meta
+      property="og:locale:alternate"
+      content={currentLocale === 'id' ? 'en_US' : 'id_ID'}
+    />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={pageTitle} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={Astro.url} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.url)} />
 
     <!-- Astro View Transitions -->
     <ClientRouter />

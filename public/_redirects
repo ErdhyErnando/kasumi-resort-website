@@ -1,0 +1,4 @@
+# Production edge redirect: site root → default locale (issue #22).
+# Served by Cloudflare Workers Static Assets; Astro's src/pages/index.astro
+# remains as an instant-redirect fallback for preview and other hosts.
+/ /id/ 308

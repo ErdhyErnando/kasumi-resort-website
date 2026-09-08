@@ -26,7 +26,7 @@ const t = useTranslations(locale);
 const readLabel = t.blog.index.readTime.replace('{n}', String(readMins));
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} image={heroImage}>
   <article class="pt-24 pb-20">
     <div class="mx-auto max-w-4xl px-6">
       <nav aria-label={t.blog.post.breadcrumbAria} class="mb-8">
