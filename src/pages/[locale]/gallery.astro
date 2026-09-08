@@ -268,25 +268,47 @@ const guestVideoEmbeds = guestVideoLinksRaw
     </section>
 
     <script
-        define:vars={{
-            momentsPool,
-            campingPool,
-            ROTATE_MS: 3500,
-        }}
-    >
-        /** @type {number[]} */
-        let galleryRotateIntervals = [];
+        is:inline
+        id="gallery-rotation-data"
+        type="application/json"
+        set:html={JSON.stringify({ momentsPool, campingPool, rotateMs: 3500 })}
+    />
+    <script>
+        interface GalleryRotationData {
+            momentsPool: string[];
+            campingPool: string[];
+            rotateMs: number;
+        }
 
-        function clearGalleryRotateIntervals() {
+        let galleryRotateIntervals: number[] = [];
+
+        function clearGalleryRotateIntervals(): void {
             galleryRotateIntervals.forEach((id) => window.clearInterval(id));
             galleryRotateIntervals = [];
         }
 
-        function applyRotation(root, pool) {
+        function parseRotationData(): GalleryRotationData | null {
+            const dataElement = document.getElementById(
+                "gallery-rotation-data",
+            );
+            const raw = dataElement?.textContent?.trim();
+            if (!raw) return null;
+            try {
+                return JSON.parse(raw) as GalleryRotationData;
+            } catch {
+                return null;
+            }
+        }
+
+        function applyRotation(
+            root: Element,
+            pool: string[],
+            rotateMs: number,
+        ): void {
             const imgs = root.querySelectorAll("img[data-slot]");
             if (!imgs.length || !pool.length) return;
             let offset = 0;
-            function tick() {
+            function tick(): void {
                 imgs.forEach((img, i) => {
                     const next = pool[(offset + i) % pool.length];
                     img.setAttribute("src", next);
@@ -294,19 +316,23 @@ const guestVideoEmbeds = guestVideoLinksRaw
                 offset = (offset + 1) % pool.length;
             }
             tick();
-            galleryRotateIntervals.push(window.setInterval(tick, ROTATE_MS));
+            galleryRotateIntervals.push(window.setInterval(tick, rotateMs));
         }
 
-        function initGalleryRotation() {
+        function initGalleryRotation(): void {
             clearGalleryRotateIntervals();
+            const data = parseRotationData();
+            if (!data) return;
             const momentsRoot = document.querySelector(
                 '[data-gallery-rotate="moments"]',
             );
             const campingRoot = document.querySelector(
                 '[data-gallery-rotate="camping"]',
             );
-            if (momentsRoot) applyRotation(momentsRoot, momentsPool);
-            if (campingRoot) applyRotation(campingRoot, campingPool);
+            if (momentsRoot)
+                applyRotation(momentsRoot, data.momentsPool, data.rotateMs);
+            if (campingRoot)
+                applyRotation(campingRoot, data.campingPool, data.rotateMs);
         }
 
         document.addEventListener("astro:page-load", initGalleryRotation);

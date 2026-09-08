@@ -225,6 +225,7 @@ const campingsJson = JSON.stringify(
     </section>
 
     <script
+        is:inline
         id="camping-data"
         type="application/json"
         data-locale={locale}
@@ -232,7 +233,25 @@ const campingsJson = JSON.stringify(
         set:html={campingsJson}
     />
     <script>
-        function escapeHtml(text) {
+        interface CampingJson {
+            id: string;
+            tabLabel: string;
+            name: string;
+            tagline: string;
+            description: string;
+            price: number;
+            amenities: string[];
+            perfectFor: string[];
+        }
+
+        type CampingWindow = Window & {
+            __campingTabClickBound?: boolean;
+            __campingPageLoadBound?: boolean;
+        };
+
+        const campingWindow = window as CampingWindow;
+
+        function escapeHtml(text: string): string {
             return text
                 .replace(/&/g, "&amp;")
                 .replace(/</g, "&lt;")
@@ -240,12 +259,12 @@ const campingsJson = JSON.stringify(
                 .replace(/"/g, "&quot;");
         }
 
-        function parseCampings() {
+        function parseCampings(): CampingJson[] | null {
             const dataElement = document.getElementById("camping-data");
             const raw = dataElement?.textContent?.trim();
             if (!raw) return null;
             try {
-                const parsed = JSON.parse(raw);
+                const parsed = JSON.parse(raw) as CampingJson[];
                 return Array.isArray(parsed) && parsed.length > 0
                     ? parsed
                     : null;
@@ -261,7 +280,7 @@ const campingsJson = JSON.stringify(
             return { loc, priceSuffix };
         }
 
-        function renderCamping(id) {
+        function renderCamping(id: string): void {
             const campings = parseCampings();
             if (!campings) return;
 
@@ -274,7 +293,6 @@ const campingsJson = JSON.stringify(
                 campings.find((item) => item.id === id) ?? campings[0];
             if (!selected) return;
 
-            const heroVisual = document.getElementById("camping-hero-visual");
             const nameElement = document.getElementById("camping-name");
             const priceElement = document.getElementById("camping-price");
             const taglineElement = document.getElementById("camping-tagline");
@@ -334,12 +352,14 @@ const campingsJson = JSON.stringify(
             });
         }
 
-        function onCampingTabClick(event) {
+        function onCampingTabClick(event: MouseEvent): void {
             const rawTarget = event.target;
             const el =
                 rawTarget instanceof Element
                     ? rawTarget
-                    : rawTarget.parentElement;
+                    : rawTarget instanceof Node
+                      ? rawTarget.parentElement
+                      : null;
             const tab = el?.closest("[data-camping-tab]");
             if (!tab || !document.getElementById("camping-hero-visual")) return;
 
@@ -350,13 +370,13 @@ const campingsJson = JSON.stringify(
             renderCamping(id);
         }
 
-        if (!window.__campingTabClickBound) {
-            window.__campingTabClickBound = true;
+        if (!campingWindow.__campingTabClickBound) {
+            campingWindow.__campingTabClickBound = true;
             document.addEventListener("click", onCampingTabClick);
         }
 
-        if (!window.__campingPageLoadBound) {
-            window.__campingPageLoadBound = true;
+        if (!campingWindow.__campingPageLoadBound) {
+            campingWindow.__campingPageLoadBound = true;
             document.addEventListener("astro:page-load", () => {
                 if (!document.getElementById("camping-hero-visual")) return;
                 const campings = parseCampings();
