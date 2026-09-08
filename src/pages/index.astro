@@ -1,8 +1,23 @@
 ---
 /**
- * Root index — redirects to /id/ (default locale).
- * With prefixDefaultLocale: true, we need a redirect at /.
+ * Root index — instant redirect fallback to /id/ (default locale).
+ * Production serves an edge 308 via `public/_redirects`; this page covers
+ * `astro preview` and other hosts. Excluded from the sitemap (see
+ * `astro.config.mjs`) and marked noindex since it carries no content.
  */
-return Astro.redirect('/id/');
 ---
 
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8" />
+        <title>Kasumi Resort</title>
+        <link rel="canonical" href="https://kasumiresort.com/id/" />
+        <meta name="robots" content="noindex" />
+        <meta http-equiv="refresh" content="0;url=/id/" />
+        <script>
+            location.replace('/id/');
+        </script>
+    </head>
+    <body></body>
+</html>

@@ -43,7 +43,7 @@ const capacityText = formatMessage(t.villa.detail.capacityValue, {
 const galleryRowImages = villa.images.slice(1);
 ---
 
-<BaseLayout title={villa.name} description={villa.shortDescription[locale]}>
+<BaseLayout title={villa.name} description={villa.shortDescription[locale]} image={villa.heroImage.src}>
     <section class="px-6 pt-32 pb-20" transition:animate="fade">
         <div class="mx-auto max-w-6xl space-y-10">
             <a
