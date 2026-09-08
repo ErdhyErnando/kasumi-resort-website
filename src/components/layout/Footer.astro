@@ -130,8 +130,11 @@ const alternatePath = getLocalizedPath(
         <div
             class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-highlight/10 pt-8 text-xs text-highlight/35 sm:flex-row"
         >
-            <!-- TODO: link to a privacy page once it exists (issue #19) -->
-            <span class="text-highlight/35">{t.footer.privacyPolicy}</span>
+            <a
+                href={`/${locale}/privacy`}
+                class="transition-colors hover:text-highlight/60"
+                >{t.footer.privacyPolicy}</a
+            >
             <span>&copy; {new Date().getFullYear()} {SITE_NAME}</span>
             <div class="flex items-center gap-4">
                 <span class="cursor-pointer transition-colors">
