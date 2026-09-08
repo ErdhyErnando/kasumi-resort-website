@@ -5,8 +5,8 @@
  * lazy-loads this module so pages without animated elements never
  * download the GSAP bundle.
  */
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register plugins once
 gsap.registerPlugin(ScrollTrigger);

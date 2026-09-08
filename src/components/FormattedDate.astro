@@ -1,5 +1,5 @@
 ---
-import type { Locale } from '../i18n/utils';
+import type { Locale } from "../i18n/utils";
 
 interface Props {
 	date: Date;
@@ -8,15 +8,15 @@ interface Props {
 const { date } = Astro.props;
 // Localize month names to the page locale (issue #19) — Indonesian pages
 // previously always rendered English months ("Mar 22, 2026").
-const locale = (Astro.currentLocale ?? 'id') as Locale;
+const locale = (Astro.currentLocale ?? "id") as Locale;
 ---
 
 <time datetime={date.toISOString()}>
 	{
-		date.toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
+		date.toLocaleDateString(locale === "id" ? "id-ID" : "en-US", {
+			year: "numeric",
+			month: "short",
+			day: "numeric",
 		})
 	}
 </time>

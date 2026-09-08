@@ -1,0 +1,5 @@
+# Prettier only formats .astro (invoked with an explicit glob); everything
+# else is owned by Biome. Belt-and-suspenders excludes:
+dist/
+node_modules/
+pnpm-lock.yaml

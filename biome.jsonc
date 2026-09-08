@@ -1,0 +1,52 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended"
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
+	// Tailwind v4 directives (@theme, @utility, @apply) need the opt-in
+	// CSS parser flag, otherwise global.css fails to parse (issue #28).
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true
+	},
+	"overrides": [
+		{
+			// Biome 2.5 cannot resolve frontmatter <-> template references
+			// (unused-import/var false positives), so auto-fix would delete
+			// live code. Keep FORMATTER on, but let `astro check` own .astro
+			// correctness; re-enable when upstream reference resolution lands.
+			"includes": ["**/*.astro"],
+			"linter": { "enabled": false },
+			"assist": { "enabled": false }
+		}
+	]
+}
