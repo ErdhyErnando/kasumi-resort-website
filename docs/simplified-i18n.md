@@ -193,7 +193,7 @@ const t = useTranslations(locale);
                             <p class="font-semibold text-primary">
                                 {t.villa.index.from} {formatVillaPrice(villa.price, locale)}{t.villa.index.night}
                             </p>
-                            <span class="inline-block text-sm font-semibold text-secondary">
+                            <span class="inline-block text-sm font-semibold text-primary">
                                 {t.villa.index.viewDetail}
                             </span>
                         </div>
