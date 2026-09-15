@@ -102,7 +102,9 @@ const campingsJson = JSON.stringify(
 			<div
 				class="sticky top-20 z-30 rounded-xl bg-dark px-2 py-2 shadow-lg md:rounded-full"
 			>
-				<div class="flex items-center gap-2 overflow-x-auto px-1">
+				<div
+					class="flex items-center justify-center-safe gap-2 overflow-x-auto px-1"
+				>
 					{
 						localizedCampings.map((camping, index) => (
 							<button

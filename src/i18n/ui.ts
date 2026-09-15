@@ -255,7 +255,7 @@ const id: UiTranslations = {
 			subtitle:
 				"79 spot camping dalam 5 kategori — Riverside, Campervan Land, Deck, Valley, dan Sengon.",
 			introText:
-				"Nama area dan spot sama persis dengan daftar unit di availability.kasumiresort.com — cek ketersediaan lalu pesan via WhatsApp.",
+				"Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
 
 			perfectFor: "Cocok Untuk",
 			exploreLabel: "Lihat Detail Kategori",
@@ -472,7 +472,7 @@ const en: UiTranslations = {
 			subtitle:
 				"79 camping pitches across 5 categories — Riverside, Campervan Land, Deck, Valley, and Sengon.",
 			introText:
-				"Area and pitch names match the unit list on availability.kasumiresort.com exactly — check availability, then book via WhatsApp.",
+				"Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
 			perfectFor: "Perfect For",
 			exploreLabel: "View category details",
 			spotsValue: "{count} pitches",
