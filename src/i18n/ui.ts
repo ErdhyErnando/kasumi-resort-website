@@ -63,10 +63,12 @@ export type UiTranslations = {
 			exploreLabel: string;
 			spotsValue: string;
 			pricingNoteTitle: string;
+			areasLabel: string;
 		};
 		detail: {
 			breadcrumbHome: string;
 			breadcrumbCamping: string;
+			areasLabel: string;
 			spots: string;
 			amenities: string;
 			perfectFor: string;
@@ -251,18 +253,20 @@ const id: UiTranslations = {
 			title: "Camping di Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"25 zona camping dengan 79 spot — pilih yang sesuai dengan jiwa petualangmu.",
+				"79 spot camping dalam 5 kategori — Riverside, Campervan Land, Deck, Valley, dan Sengon.",
 			introText:
-				"Dari tepi sungai Kisampang sampai dek kayu menghadap lembah — semua spot bisa dicek ketersediaannya dan dipesan via WhatsApp.",
+				"Nama area dan spot sama persis dengan daftar unit di availability.kasumiresort.com — cek ketersediaan lalu pesan via WhatsApp.",
 
 			perfectFor: "Cocok Untuk",
-			exploreLabel: "Lihat Detail Zona",
+			exploreLabel: "Lihat Detail Kategori",
 			spotsValue: "{count} spot",
 			pricingNoteTitle: "Harga dinamis — tanya via WhatsApp",
+			areasLabel: "Area di kategori ini",
 		},
 		detail: {
 			breadcrumbHome: "Beranda",
 			breadcrumbCamping: "Camping",
+			areasLabel: "Area di kategori ini",
 			spots: "Spot di zona ini",
 			amenities: "Fasilitas",
 			perfectFor: "Cocok Untuk",
@@ -466,17 +470,19 @@ const en: UiTranslations = {
 			title: "Camping at Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"25 camping zones with 79 pitches — choose the one that suits your adventurous spirit.",
+				"79 camping pitches across 5 categories — Riverside, Campervan Land, Deck, Valley, and Sengon.",
 			introText:
-				"From the Kisampang riverside to wooden decks facing the valley — every pitch can be availability-checked and booked via WhatsApp.",
+				"Area and pitch names match the unit list on availability.kasumiresort.com exactly — check availability, then book via WhatsApp.",
 			perfectFor: "Perfect For",
-			exploreLabel: "View zone details",
+			exploreLabel: "View category details",
 			spotsValue: "{count} pitches",
 			pricingNoteTitle: "Dynamic pricing — ask via WhatsApp",
+			areasLabel: "Areas in this category",
 		},
 		detail: {
 			breadcrumbHome: "Home",
 			breadcrumbCamping: "Camping",
+			areasLabel: "Areas in this category",
 			spots: "Pitches in this zone",
 			amenities: "Amenities",
 			perfectFor: "Perfect For",

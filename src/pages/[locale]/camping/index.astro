@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
-import { campings } from "@/lib/camping";
+import { campings, campingSpotsCount } from "@/lib/camping";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 
@@ -24,11 +24,16 @@ const localizedCampings = campings.map((camping) => ({
 	description: camping.description[locale],
 	heroImage: camping.heroImage,
 	gallery: camping.gallery,
-	spots: camping.spots,
 	spotsLabel: formatSpotsValue(
 		t.camping.index.spotsValue,
-		camping.spots.length,
+		campingSpotsCount(camping),
 	),
+	areas: camping.areas.map((area) => ({
+		id: area.id,
+		name: area.name,
+		spotsLabel: formatSpotsValue(t.camping.index.spotsValue, area.spots.length),
+		href: `/${locale}/camping/${camping.id}#${area.id}`,
+	})),
 	pricingNote: camping.pricingNote[locale],
 	exploreHref: `/${locale}/camping/${camping.id}`,
 	amenities: camping.amenities.map((item) => item[locale]),
@@ -190,6 +195,30 @@ const campingsJson = JSON.stringify(
 						<p id="camping-description" class="leading-relaxed text-dark/70">
 							{initialCamping.description}
 						</p>
+						<div>
+							<h4
+								class="text-sm font-semibold tracking-wide text-dark/60 uppercase"
+							>
+								{t.camping.index.areasLabel}
+							</h4>
+							<ul id="camping-areas" class="mt-3 grid gap-2 sm:grid-cols-2">
+								{
+									initialCamping.areas.map((area) => (
+										<li>
+											<a
+												href={area.href}
+												class="flex items-center justify-between gap-2 rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/85 transition-colors hover:border-dark/25 hover:text-dark"
+											>
+												<span class="font-medium">{area.name}</span>
+												<span class="shrink-0 text-dark/60">
+													{area.spotsLabel}
+												</span>
+											</a>
+										</li>
+									))
+								}
+							</ul>
+						</div>
 						<p
 							id="camping-pricing-note"
 							class="rounded-xl bg-highlight p-4 text-sm leading-relaxed font-medium text-dark"
@@ -235,14 +264,21 @@ const campingsJson = JSON.stringify(
 		set:html={campingsJson}
 	/>
 	<script>
+		interface CampingAreaJson {
+			id: string;
+			name: string;
+			spotsLabel: string;
+			href: string;
+		}
+
 		interface CampingJson {
 			id: string;
 			tabLabel: string;
 			name: string;
 			tagline: string;
 			description: string;
-			spots: string[];
 			spotsLabel: string;
+			areas: CampingAreaJson[];
 			pricingNote: string;
 			exploreHref: string;
 			amenities: string[];
@@ -293,6 +329,7 @@ const campingsJson = JSON.stringify(
 			const exploreElement = document.getElementById(
 				"camping-explore",
 			) as HTMLAnchorElement | null;
+			const areasElement = document.getElementById("camping-areas");
 			const amenitiesDotsElement = document.getElementById(
 				"camping-amenities-dots",
 			);
@@ -318,6 +355,14 @@ const campingsJson = JSON.stringify(
 			if (taglineElement) taglineElement.textContent = selected.tagline;
 			if (descriptionElement)
 				descriptionElement.textContent = selected.description;
+			if (areasElement) {
+				areasElement.innerHTML = selected.areas
+					.map(
+						(area) =>
+							`<li><a href="${escapeHtml(area.href)}" class="flex items-center justify-between gap-2 rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/85 transition-colors hover:border-dark/25 hover:text-dark"><span class="font-medium">${escapeHtml(area.name)}</span><span class="shrink-0 text-dark/60">${escapeHtml(area.spotsLabel)}</span></a></li>`,
+					)
+					.join("");
+			}
 			if (amenitiesDotsElement) {
 				amenitiesDotsElement.innerHTML = selected.amenities
 					.map(

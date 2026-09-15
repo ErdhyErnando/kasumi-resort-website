@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { campings, getCampingById } from "@/lib/camping";
+import { campings, campingSpotsCount, getCampingById } from "@/lib/camping";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
@@ -33,10 +33,15 @@ function formatMessage(
 	return template.replace(/{(\w+)}/g, (_, key) => values[key] || "");
 }
 
+function formatSpotsValue(template: string, count: number): string {
+	return template.replace("{count}", count.toString());
+}
+
 const whatsappMsg = formatMessage(t.camping.detail.whatsappMessage, {
 	campingName: camping.name[locale],
 });
 const whatsappUrl = getWhatsAppUrl(whatsappMsg);
+const totalSpots = campingSpotsCount(camping);
 const galleryRowImages = camping.gallery.slice(1);
 ---
 
@@ -83,7 +88,7 @@ const galleryRowImages = camping.gallery.slice(1);
 								{t.camping.detail.spots}
 							</p>
 							<p class="mt-1 text-xl font-semibold text-dark">
-								{camping.spots.length}
+								{formatSpotsValue(t.camping.index.spotsValue, totalSpots)}
 							</p>
 						</div>
 						<div class="rounded-xl bg-highlight p-4">
@@ -98,17 +103,37 @@ const galleryRowImages = camping.gallery.slice(1);
 
 					<div>
 						<h2 class="font-heading text-2xl text-dark">
-							{t.camping.detail.spots}
+							{t.camping.detail.areasLabel}
 						</h2>
-						<ul class="mt-4 flex flex-wrap gap-2">
+						<div class="mt-4 space-y-5">
 							{
-								camping.spots.map((spot) => (
-									<li class="rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
-										{spot}
-									</li>
+								camping.areas.map((area) => (
+									<div
+										id={area.id}
+										class="scroll-mt-28 rounded-xl border border-dark/10 p-4"
+									>
+										<div class="flex flex-wrap items-baseline justify-between gap-2">
+											<h3 class="text-lg font-semibold text-dark">
+												{area.name}
+											</h3>
+											<p class="text-sm font-medium text-dark/60">
+												{formatSpotsValue(
+													t.camping.index.spotsValue,
+													area.spots.length,
+												)}
+											</p>
+										</div>
+										<ul class="mt-3 flex flex-wrap gap-2">
+											{area.spots.map((spot) => (
+												<li class="rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
+													{spot}
+												</li>
+											))}
+										</ul>
+									</div>
 								))
 							}
-						</ul>
+						</div>
 					</div>
 
 					<div>
