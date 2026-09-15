@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
-import { campings, formatCampingPrice } from "@/lib/camping";
+import { campings } from "@/lib/camping";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 
@@ -12,6 +12,10 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
+function formatSpotsValue(template: string, count: number): string {
+	return template.replace("{count}", count.toString());
+}
+
 const localizedCampings = campings.map((camping) => ({
 	id: camping.id,
 	tabLabel: camping.tabLabel[locale],
@@ -20,7 +24,13 @@ const localizedCampings = campings.map((camping) => ({
 	description: camping.description[locale],
 	heroImage: camping.heroImage,
 	gallery: camping.gallery,
-	price: camping.price,
+	spots: camping.spots,
+	spotsLabel: formatSpotsValue(
+		t.camping.index.spotsValue,
+		camping.spots.length,
+	),
+	pricingNote: camping.pricingNote[locale],
+	exploreHref: `/${locale}/camping/${camping.id}`,
 	amenities: camping.amenities.map((item) => item[locale]),
 	perfectFor: camping.perfectFor.map((item) => item[locale]),
 }));
@@ -166,10 +176,11 @@ const campingsJson = JSON.stringify(
 							>
 								{initialCamping.name}
 							</h3>
-							<p id="camping-price" class="text-lg font-semibold text-dark">
-								Rp {formatCampingPrice(initialCamping.price, locale)}{
-									t.camping.index.priceSuffix
-								}
+							<p
+								id="camping-spots"
+								class="rounded-full bg-dark/10 px-3 py-1.5 text-sm font-semibold text-dark"
+							>
+								{initialCamping.spotsLabel}
 							</p>
 						</div>
 
@@ -179,6 +190,19 @@ const campingsJson = JSON.stringify(
 						<p id="camping-description" class="leading-relaxed text-dark/70">
 							{initialCamping.description}
 						</p>
+						<p
+							id="camping-pricing-note"
+							class="rounded-xl bg-highlight p-4 text-sm leading-relaxed font-medium text-dark"
+						>
+							{initialCamping.pricingNote}
+						</p>
+						<a
+							id="camping-explore"
+							href={initialCamping.exploreHref}
+							class="inline-flex w-fit items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+						>
+							{t.camping.index.exploreLabel}
+						</a>
 					</div>
 				</div>
 
@@ -208,7 +232,6 @@ const campingsJson = JSON.stringify(
 		id="camping-data"
 		type="application/json"
 		data-locale={locale}
-		data-price-suffix={t.camping.index.priceSuffix}
 		set:html={campingsJson}
 	/>
 	<script>
@@ -218,7 +241,10 @@ const campingsJson = JSON.stringify(
 			name: string;
 			tagline: string;
 			description: string;
-			price: number;
+			spots: string[];
+			spotsLabel: string;
+			pricingNote: string;
+			exploreHref: string;
 			amenities: string[];
 			perfectFor: string[];
 		}
@@ -250,29 +276,23 @@ const campingsJson = JSON.stringify(
 			}
 		}
 
-		function getLocaleAndSuffix() {
-			const dataElement = document.getElementById("camping-data");
-			const loc = dataElement?.dataset.locale ?? "id";
-			const priceSuffix = dataElement?.dataset.priceSuffix ?? "";
-			return { loc, priceSuffix };
-		}
-
 		function renderCamping(id: string): void {
 			const campings = parseCampings();
 			if (!campings) return;
-
-			const { loc, priceSuffix } = getLocaleAndSuffix();
-			const currencyFormatter = new Intl.NumberFormat(
-				loc === "id" ? "id-ID" : "en-US",
-			);
 
 			const selected = campings.find((item) => item.id === id) ?? campings[0];
 			if (!selected) return;
 
 			const nameElement = document.getElementById("camping-name");
-			const priceElement = document.getElementById("camping-price");
+			const spotsElement = document.getElementById("camping-spots");
 			const taglineElement = document.getElementById("camping-tagline");
 			const descriptionElement = document.getElementById("camping-description");
+			const pricingNoteElement = document.getElementById(
+				"camping-pricing-note",
+			);
+			const exploreElement = document.getElementById(
+				"camping-explore",
+			) as HTMLAnchorElement | null;
 			const amenitiesDotsElement = document.getElementById(
 				"camping-amenities-dots",
 			);
@@ -290,9 +310,11 @@ const campingsJson = JSON.stringify(
 				img.classList.toggle("pointer-events-none", !isActive);
 			});
 			if (nameElement) nameElement.textContent = selected.name;
-			if (priceElement) {
-				priceElement.textContent = `Rp ${currencyFormatter.format(selected.price)}${priceSuffix}`;
-			}
+			if (spotsElement) spotsElement.textContent = selected.spotsLabel;
+			if (pricingNoteElement)
+				pricingNoteElement.textContent = selected.pricingNote;
+			if (exploreElement)
+				exploreElement.setAttribute("href", selected.exploreHref);
 			if (taglineElement) taglineElement.textContent = selected.tagline;
 			if (descriptionElement)
 				descriptionElement.textContent = selected.description;

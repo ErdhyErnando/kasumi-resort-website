@@ -22,6 +22,13 @@ export interface VillaContent {
 	amenities: LocalizedValue[];
 }
 
+// TODO(photos): replace villaFallback with real per-villa photos once they land:
+//   src/assets/villa/taki-1.webp … taki-5.webp
+//   src/assets/villa/mori-1.webp … mori-5.webp
+//   src/assets/villa/yama-1.webp … yama-5.webp
+// Until then Taki / Mori / Yama reuse the generic resort hero as a
+// clearly-temporary fallback (see IMAGE_GUIDE below).
+import villaFallback from "../assets/hero.webp";
 import gake1 from "../assets/villa/gake-1.webp";
 import gake2 from "../assets/villa/gake-2.webp";
 import gake3 from "../assets/villa/gake-3.webp";
@@ -61,6 +68,15 @@ import tani5 from "../assets/villa/tani-5.webp";
 /**
  * Shared villa data source for ID/EN pages.
  * Add the next villas by appending objects to this array.
+ *
+ * IMAGE_GUIDE for manually added photos:
+ * - Drop webp files in `src/assets/villa/` (NOT `public/` — villa images
+ *   go through Astro's `astro:assets` pipeline via ESM imports).
+ * - Naming: `<id>-1.webp` (hero) … `<id>-5.webp` (gallery), ~1600px wide.
+ * - Then replace the `villaFallback` imports below with real imports
+ *   (same pattern as oka/sora/tani) and point `heroImage` + `images` at them.
+ * - Fallback behavior: villas without real photos yet render the generic
+ *   resort hero image so index + detail pages never break or 404.
  */
 export const villas: VillaContent[] = [
 	{
@@ -239,6 +255,86 @@ export const villas: VillaContent[] = [
 			{ id: "1 kamar mandi", en: "1 bathroom" },
 			{ id: "Dapur", en: "Kitchen" },
 			{ id: "Lokasi strategis", en: "Strategic location" },
+		],
+	},
+	{
+		id: "taki",
+		name: "Villa Taki",
+		shortDescription: {
+			id: "2 kamar tidur, 2 kamar mandi, dapur, ruang keluarga, teras. Bisa sampai 8 orang dengan extra bed.",
+			en: "2 bedrooms, 2 bathrooms, kitchen, family room, terrace. Accommodates up to 8 with extra beds.",
+		},
+		description: {
+			id: "Villa Taki melengkapi jajaran villa besar Kasumi Resort untuk keluarga besar atau rombongan hingga 8 orang. Dengan 2 kamar tidur dan 2 kamar mandi, plus dapur fungsional, ruang keluarga yang nyaman, dan teras menghadap hijaunya hutan, villa ini memberi ruang berkumpul yang lega tanpa kehilangan privasi. Tambahan extra bed membuat kapasitasnya fleksibel mengikuti jumlah tamu. Pilihan tepat untuk liburan keluarga yang ramai namun tetap rapi.",
+			en: "Villa Taki completes Kasumi Resort's lineup of large villas for big families or groups of up to 8. With 2 bedrooms and 2 bathrooms, plus a functional kitchen, comfortable family room, and a terrace facing the green forest, it offers generous gathering space without losing privacy. Extra beds make capacity flexible to your guest count. A great pick for lively yet well-organized family holidays.",
+		},
+		// TODO(photos): swap villaFallback for taki-1…taki-5.webp when they land.
+		heroImage: villaFallback,
+		images: [villaFallback],
+		capacity: 8,
+		bedrooms: 2,
+		bathrooms: 2,
+		price: 2450000,
+		amenities: [
+			{ id: "2 kamar tidur", en: "2 bedrooms" },
+			{ id: "2 kamar mandi", en: "2 bathrooms" },
+			{ id: "Dapur", en: "Kitchen" },
+			{ id: "Ruang keluarga", en: "Family room" },
+			{ id: "Teras", en: "Terrace" },
+			{ id: "Extra bed tersedia", en: "Extra beds available" },
+		],
+	},
+	{
+		id: "mori",
+		name: "Villa Mori",
+		shortDescription: {
+			id: "1 kamar tidur, 1 kamar mandi, dapur. Akomodasi intim yang tenang untuk pasangan atau individu.",
+			en: "1 bedroom, 1 bathroom, kitchen. Quiet intimate stay for couples or individuals.",
+		},
+		description: {
+			id: "Villa Mori adalah akomodasi intim untuk pasangan atau traveler solo yang menginginkan ketenangan lebih. Dengan 1 kamar tidur, 1 kamar mandi, dan dapur, villa ini dirancang untuk istirahat berkualitas di tengah hutan Cidahu — bangun pagi dengan udara segar pegunungan dan nikmati sore yang tenang di teras. Cocok untuk honeymoon, liburan singkat berdua, atau perjalanan kerja yang butuh fokus dan privasi.",
+			en: "Villa Mori is an intimate hideaway for couples or solo travelers seeking extra quiet. With 1 bedroom, 1 bathroom, and a kitchen, it is designed for quality rest in the Cidahu forest — wake up to fresh mountain air and enjoy calm afternoons on the terrace. Ideal for honeymoons, short couple getaways, or work trips needing focus and privacy.",
+		},
+		// TODO(photos): swap villaFallback for mori-1…mori-5.webp when they land.
+		heroImage: villaFallback,
+		images: [villaFallback],
+		capacity: 2,
+		bedrooms: 1,
+		bathrooms: 1,
+		price: 1750000,
+		amenities: [
+			{ id: "1 kamar tidur", en: "1 bedroom" },
+			{ id: "1 kamar mandi", en: "1 bathroom" },
+			{ id: "Dapur", en: "Kitchen" },
+			{ id: "Teras", en: "Terrace" },
+			{ id: "Lokasi strategis", en: "Strategic location" },
+		],
+	},
+	{
+		id: "yama",
+		name: "Villa Yama",
+		shortDescription: {
+			id: "2 kamar tidur, 2 kamar mandi, dapur, ruang keluarga, teras. Bisa sampai 8 orang dengan extra bed.",
+			en: "2 bedrooms, 2 bathrooms, kitchen, family room, terrace. Accommodates up to 8 with extra beds.",
+		},
+		description: {
+			id: "Villa Yama adalah villa lapang untuk keluarga besar atau grup yang ingin menikmati Kasumi Resort bersama-sama. Dua kamar tidur dan dua kamar mandi memberi kenyamanan setara villa besar lainnya, dilengkapi dapur, ruang keluarga untuk berkumpul, dan teras dengan pemandangan alam. Dengan opsi extra bed hingga 8 orang, Yama fleksibel untuk keluarga extended, gathering teman, maupun retreat kecil yang butuh ruang dan privasi.",
+			en: "Villa Yama is a spacious villa for large families or groups wanting to enjoy Kasumi Resort together. Two bedrooms and two bathrooms match the comfort of our other large villas, complete with a kitchen, family room for gathering, and a terrace with nature views. With extra-bed options up to 8 guests, Yama flexes for extended families, friend gatherings, or small retreats needing space and privacy.",
+		},
+		// TODO(photos): swap villaFallback for yama-1…yama-5.webp when they land.
+		heroImage: villaFallback,
+		images: [villaFallback],
+		capacity: 8,
+		bedrooms: 2,
+		bathrooms: 2,
+		price: 2450000,
+		amenities: [
+			{ id: "2 kamar tidur", en: "2 bedrooms" },
+			{ id: "2 kamar mandi", en: "2 bathrooms" },
+			{ id: "Dapur", en: "Kitchen" },
+			{ id: "Ruang keluarga", en: "Family room" },
+			{ id: "Teras", en: "Terrace" },
+			{ id: "Extra bed tersedia", en: "Extra beds available" },
 		],
 	},
 ];

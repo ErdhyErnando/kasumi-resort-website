@@ -2,3 +2,16 @@
 # Served by Cloudflare Workers Static Assets; Astro's src/pages/index.astro
 # remains as an instant-redirect fallback for preview and other hosts.
 / /id/ 308
+
+# Retired camping stub slugs from issue #23 (5 placeholder areas → 25 real zones).
+# Keep close equivalents, send the rest back to the camping index.
+/id/camping/spot-cemara /id/camping/cemara 308
+/en/camping/spot-cemara /en/camping/cemara 308
+/id/camping/spot-damar /id/camping/damar 308
+/en/camping/spot-damar /en/camping/damar 308
+/id/camping/forest-riverside /id/camping/kisampang-riverside 308
+/en/camping/forest-riverside /en/camping/kisampang-riverside 308
+/id/camping/mountain-view /id/camping/ 308
+/en/camping/mountain-view /en/camping/ 308
+/id/camping/spot-cendana /id/camping/ 308
+/en/camping/spot-cendana /en/camping/ 308

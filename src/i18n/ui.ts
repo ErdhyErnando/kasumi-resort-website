@@ -60,7 +60,21 @@ export type UiTranslations = {
 			subtitle: string;
 			introText: string;
 			perfectFor: string;
-			priceSuffix: string;
+			exploreLabel: string;
+			spotsValue: string;
+			pricingNoteTitle: string;
+		};
+		detail: {
+			breadcrumbHome: string;
+			breadcrumbCamping: string;
+			spots: string;
+			amenities: string;
+			perfectFor: string;
+			pricing: string;
+			bookingButton: string;
+			ctaHeadline: string;
+			ctaButton: string;
+			whatsappMessage: string;
 		};
 	};
 	gallery: {
@@ -237,12 +251,27 @@ const id: UiTranslations = {
 			title: "Camping di Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
+				"25 zona camping dengan 79 spot — pilih yang sesuai dengan jiwa petualangmu.",
 			introText:
-				"Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
+				"Dari tepi sungai Kisampang sampai dek kayu menghadap lembah — semua spot bisa dicek ketersediaannya dan dipesan via WhatsApp.",
 
 			perfectFor: "Cocok Untuk",
-			priceSuffix: "/ malam",
+			exploreLabel: "Lihat Detail Zona",
+			spotsValue: "{count} spot",
+			pricingNoteTitle: "Harga dinamis — tanya via WhatsApp",
+		},
+		detail: {
+			breadcrumbHome: "Beranda",
+			breadcrumbCamping: "Camping",
+			spots: "Spot di zona ini",
+			amenities: "Fasilitas",
+			perfectFor: "Cocok Untuk",
+			pricing: "Harga",
+			bookingButton: "Booking via WhatsApp",
+			ctaHeadline: "Bayangkan malam api unggun di sini",
+			ctaButton: "Pesan sekarang",
+			whatsappMessage:
+				"Halo, saya tertarik untuk booking camping {campingName}. Bisa info ketersediaan dan harganya?",
 		},
 	},
 
@@ -437,11 +466,26 @@ const en: UiTranslations = {
 			title: "Camping at Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"Two different camping experiences — choose the one that suits your adventurous spirit.",
+				"25 camping zones with 79 pitches — choose the one that suits your adventurous spirit.",
 			introText:
-				"Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
+				"From the Kisampang riverside to wooden decks facing the valley — every pitch can be availability-checked and booked via WhatsApp.",
 			perfectFor: "Perfect For",
-			priceSuffix: "/ night",
+			exploreLabel: "View zone details",
+			spotsValue: "{count} pitches",
+			pricingNoteTitle: "Dynamic pricing — ask via WhatsApp",
+		},
+		detail: {
+			breadcrumbHome: "Home",
+			breadcrumbCamping: "Camping",
+			spots: "Pitches in this zone",
+			amenities: "Amenities",
+			perfectFor: "Perfect For",
+			pricing: "Pricing",
+			bookingButton: "Book via WhatsApp",
+			ctaHeadline: "Imagine a campfire night here",
+			ctaButton: "Reserve now",
+			whatsappMessage:
+				"Hello, I am interested in booking camping at {campingName}. Can I get availability and pricing details?",
 		},
 	},
 
