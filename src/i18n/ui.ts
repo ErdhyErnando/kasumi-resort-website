@@ -64,6 +64,9 @@ export type UiTranslations = {
 			spotsValue: string;
 			pricingNoteTitle: string;
 			areasLabel: string;
+			areaLinkLabel: string;
+			areasPrevLabel: string;
+			areasNextLabel: string;
 		};
 		detail: {
 			breadcrumbHome: string;
@@ -262,6 +265,9 @@ const id: UiTranslations = {
 			spotsValue: "{count} spot",
 			pricingNoteTitle: "Harga dinamis — tanya via WhatsApp",
 			areasLabel: "Area di kategori ini",
+			areaLinkLabel: "Lihat area",
+			areasPrevLabel: "Area sebelumnya",
+			areasNextLabel: "Area berikutnya",
 		},
 		detail: {
 			breadcrumbHome: "Beranda",
@@ -478,6 +484,9 @@ const en: UiTranslations = {
 			spotsValue: "{count} pitches",
 			pricingNoteTitle: "Dynamic pricing — ask via WhatsApp",
 			areasLabel: "Areas in this category",
+			areaLinkLabel: "View area",
+			areasPrevLabel: "Previous area",
+			areasNextLabel: "Next area",
 		},
 		detail: {
 			breadcrumbHome: "Home",
