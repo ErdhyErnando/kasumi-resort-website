@@ -194,10 +194,7 @@ const campingsJson = JSON.stringify(
 								>
 									{initialArea.name}
 								</h3>
-								<div
-									class="flex items-center gap-3"
-									aria-hidden="false"
-								>
+								<div class="flex items-center gap-3" aria-hidden="false">
 									<p
 										id="camping-counter"
 										class="text-sm font-semibold text-dark/50 tabular-nums"
@@ -215,9 +212,7 @@ const campingsJson = JSON.stringify(
 													data-camping-dot={dotIndex}
 													class:list={[
 														"h-1.5 rounded-full transition-all duration-300",
-														dotIndex === 0
-															? "w-6 bg-dark"
-															: "w-1.5 bg-dark/20",
+														dotIndex === 0 ? "w-6 bg-dark" : "w-1.5 bg-dark/20",
 													]}
 												/>
 											))

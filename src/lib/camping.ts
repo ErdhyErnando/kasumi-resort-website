@@ -413,7 +413,9 @@ export interface CampingAreaResult {
 }
 
 /** Find an individual area (e.g. `cemara-riverside`) across all categories. */
-export function getCampingAreaById(areaId: string): CampingAreaResult | undefined {
+export function getCampingAreaById(
+	areaId: string,
+): CampingAreaResult | undefined {
 	for (const camping of campings) {
 		const area = camping.areas.find((item) => item.id === areaId);
 		if (area) return { camping, area };
