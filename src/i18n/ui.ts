@@ -60,7 +60,28 @@ export type UiTranslations = {
 			subtitle: string;
 			introText: string;
 			perfectFor: string;
-			priceSuffix: string;
+			exploreLabel: string;
+			exploreAreaLabel: string;
+			partOfLabel: string;
+			spotsValue: string;
+			pricingNoteTitle: string;
+			areasLabel: string;
+			areaLinkLabel: string;
+			areasPrevLabel: string;
+			areasNextLabel: string;
+		};
+		detail: {
+			breadcrumbHome: string;
+			breadcrumbCamping: string;
+			areasLabel: string;
+			spots: string;
+			amenities: string;
+			perfectFor: string;
+			pricing: string;
+			bookingButton: string;
+			ctaHeadline: string;
+			ctaButton: string;
+			whatsappMessage: string;
 		};
 	};
 	gallery: {
@@ -237,12 +258,34 @@ const id: UiTranslations = {
 			title: "Camping di Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"Dua pengalaman camping berbeda — pilih yang sesuai dengan jiwa petualangmu.",
+				"79 spot camping dalam 5 kategori — Riverside, Campervan Land, Deck, Valley, dan Sengon.",
 			introText:
 				"Apakah kamu lebih suka berkemah di bawah hutan atau bangun dengan pemandangan pegunungan yang luas.",
 
 			perfectFor: "Cocok Untuk",
-			priceSuffix: "/ malam",
+			exploreLabel: "Lihat Detail Kategori",
+			exploreAreaLabel: "Lihat Detail Area",
+			partOfLabel: "Bagian dari {category}",
+			spotsValue: "{count} spot",
+			pricingNoteTitle: "Harga dinamis — tanya via WhatsApp",
+			areasLabel: "Area di kategori ini",
+			areaLinkLabel: "Lihat area",
+			areasPrevLabel: "Area sebelumnya",
+			areasNextLabel: "Area berikutnya",
+		},
+		detail: {
+			breadcrumbHome: "Beranda",
+			breadcrumbCamping: "Camping",
+			areasLabel: "Area di kategori ini",
+			spots: "Spot di zona ini",
+			amenities: "Fasilitas",
+			perfectFor: "Cocok Untuk",
+			pricing: "Harga",
+			bookingButton: "Booking via WhatsApp",
+			ctaHeadline: "Bayangkan malam api unggun di sini",
+			ctaButton: "Pesan sekarang",
+			whatsappMessage:
+				"Halo, saya tertarik untuk booking camping {campingName}. Bisa info ketersediaan dan harganya?",
 		},
 	},
 
@@ -437,11 +480,33 @@ const en: UiTranslations = {
 			title: "Camping at Kasumi",
 			label: "Camping Ground",
 			subtitle:
-				"Two different camping experiences — choose the one that suits your adventurous spirit.",
+				"79 camping pitches across 5 categories — Riverside, Campervan Land, Deck, Valley, and Sengon.",
 			introText:
 				"Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
 			perfectFor: "Perfect For",
-			priceSuffix: "/ night",
+			exploreLabel: "View category details",
+			exploreAreaLabel: "View area details",
+			partOfLabel: "Part of {category}",
+			spotsValue: "{count} pitches",
+			pricingNoteTitle: "Dynamic pricing — ask via WhatsApp",
+			areasLabel: "Areas in this category",
+			areaLinkLabel: "View area",
+			areasPrevLabel: "Previous area",
+			areasNextLabel: "Next area",
+		},
+		detail: {
+			breadcrumbHome: "Home",
+			breadcrumbCamping: "Camping",
+			areasLabel: "Areas in this category",
+			spots: "Pitches in this zone",
+			amenities: "Amenities",
+			perfectFor: "Perfect For",
+			pricing: "Pricing",
+			bookingButton: "Book via WhatsApp",
+			ctaHeadline: "Imagine a campfire night here",
+			ctaButton: "Reserve now",
+			whatsappMessage:
+				"Hello, I am interested in booking camping at {campingName}. Can I get availability and pricing details?",
 		},
 	},
 

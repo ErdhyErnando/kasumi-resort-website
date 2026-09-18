@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeader from "@/components/ui/SectionHeader.astro";
-import { campings, formatCampingPrice } from "@/lib/camping";
+import { campings, campingSpotsCount } from "@/lib/camping";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 
@@ -12,6 +12,13 @@ export function getStaticPaths() {
 
 const { locale } = Astro.params as { locale: Locale };
 const t = useTranslations(locale);
+function formatSpotsValue(template: string, count: number): string {
+	return template.replace("{count}", count.toString());
+}
+function formatPartOf(template: string, category: string): string {
+	return template.replace("{category}", category);
+}
+
 const localizedCampings = campings.map((camping) => ({
 	id: camping.id,
 	tabLabel: camping.tabLabel[locale],
@@ -20,11 +27,24 @@ const localizedCampings = campings.map((camping) => ({
 	description: camping.description[locale],
 	heroImage: camping.heroImage,
 	gallery: camping.gallery,
-	price: camping.price,
+	spotsLabel: formatSpotsValue(
+		t.camping.index.spotsValue,
+		campingSpotsCount(camping),
+	),
+	areas: camping.areas.map((area) => ({
+		id: area.id,
+		name: area.name,
+		spots: area.spots,
+		spotsLabel: formatSpotsValue(t.camping.index.spotsValue, area.spots.length),
+		href: `/${locale}/camping/${area.id}`,
+	})),
+	pricingNote: camping.pricingNote[locale],
+	exploreHref: `/${locale}/camping/${camping.id}`,
 	amenities: camping.amenities.map((item) => item[locale]),
 	perfectFor: camping.perfectFor.map((item) => item[locale]),
 }));
 const initialCamping = localizedCampings[0];
+const initialArea = initialCamping.areas[0];
 const campingsJson = JSON.stringify(
 	localizedCampings.map(({ heroImage, gallery, ...camping }) => camping),
 );
@@ -44,16 +64,13 @@ const campingsJson = JSON.stringify(
 	</section>
 
 	<section
-		class="flex min-h-[50vh] flex-col justify-center px-6 py-12 md:min-h-[58vh] md:py-16"
+		class="flex min-h-[50vh] flex-col justify-center overflow-x-clip py-12 md:min-h-[58vh] md:py-16"
 	>
-		<div
-			class="relative left-1/2 w-screen -translate-x-1/2"
-			data-animate="fade-up"
-		>
+		<div class="w-full">
 			<svg
 				aria-hidden="true"
 				viewBox="0 0 1200 120"
-				class="h-10 w-full fill-secondary"
+				class="-mb-px block h-10 w-full fill-secondary"
 				preserveAspectRatio="none"
 			>
 				<path
@@ -62,6 +79,7 @@ const campingsJson = JSON.stringify(
 			</svg>
 			<div class="bg-secondary px-6 py-10 text-center text-highlight md:px-20">
 				<p
+					data-animate="fade-up"
 					class="mx-auto max-w-2xl text-lg text-balance leading-relaxed md:text-3xl md:leading-relaxed"
 				>
 					{t.camping.index.introText}
@@ -70,7 +88,7 @@ const campingsJson = JSON.stringify(
 			<svg
 				aria-hidden="true"
 				viewBox="0 0 1200 120"
-				class="h-10 w-full fill-secondary"
+				class="-mt-px block h-10 w-full fill-secondary"
 				preserveAspectRatio="none"
 			>
 				<path
@@ -87,13 +105,15 @@ const campingsJson = JSON.stringify(
 			<div
 				class="sticky top-20 z-30 rounded-xl bg-dark px-2 py-2 shadow-lg md:rounded-full"
 			>
-				<div class="flex items-center gap-2 overflow-x-auto px-1">
+				<div
+					class="flex items-center justify-center-safe gap-2 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+				>
 					{
 						localizedCampings.map((camping, index) => (
 							<button
 								type="button"
 								class:list={[
-									"camping-tab min-w-max rounded-full px-4 py-2 text-sm font-medium transition-colors",
+									"camping-tab min-w-max rounded-full px-3 py-1.5 text-xs font-medium transition-colors sm:px-4 sm:py-2 sm:text-sm",
 									index === 0
 										? "bg-secondary text-dark"
 										: "text-highlight/85 hover:bg-white/10 hover:text-highlight",
@@ -159,18 +179,93 @@ const campingsJson = JSON.stringify(
 					</div>
 
 					<div class="space-y-5">
+						<p
+							id="camping-area-eyebrow"
+							data-part-of-template={t.camping.index.partOfLabel}
+							class="text-xs font-semibold tracking-widest text-dark/50 uppercase"
+						>
+							{formatPartOf(t.camping.index.partOfLabel, initialCamping.name)}
+						</p>
 						<div class="flex flex-wrap items-start justify-between gap-4">
-							<h3
-								id="camping-name"
-								class="font-heading text-3xl text-dark md:text-4xl"
-							>
-								{initialCamping.name}
-							</h3>
-							<p id="camping-price" class="text-lg font-semibold text-dark">
-								Rp {formatCampingPrice(initialCamping.price, locale)}{
-									t.camping.index.priceSuffix
-								}
-							</p>
+							<div class="min-w-0 flex-1 space-y-2">
+								<h3
+									id="camping-name"
+									class="font-heading text-3xl text-dark md:text-4xl"
+								>
+									{initialArea.name}
+								</h3>
+								<div class="flex items-center gap-3" aria-hidden="false">
+									<p
+										id="camping-counter"
+										class="text-sm font-semibold text-dark/50 tabular-nums"
+									>
+										1 / {initialCamping.areas.length}
+									</p>
+									<div
+										id="camping-dots"
+										class="flex items-center gap-1.5"
+										aria-hidden="true"
+									>
+										{
+											initialCamping.areas.map((_, dotIndex) => (
+												<span
+													data-camping-dot={dotIndex}
+													class:list={[
+														"h-1.5 rounded-full transition-all duration-300",
+														dotIndex === 0 ? "w-6 bg-dark" : "w-1.5 bg-dark/20",
+													]}
+												/>
+											))
+										}
+									</div>
+								</div>
+							</div>
+							<div class="flex shrink-0 items-center gap-2">
+								<p
+									id="camping-spots"
+									class="rounded-full bg-dark/10 px-3 py-1.5 text-sm font-semibold text-dark"
+								>
+									{initialArea.spotsLabel}
+								</p>
+								<button
+									type="button"
+									id="camping-areas-prev"
+									aria-label={t.camping.index.areasPrevLabel}
+									class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dark/15 text-dark transition-colors hover:bg-dark hover:text-highlight"
+								>
+									<svg
+										aria-hidden="true"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="h-5 w-5"
+									>
+										<path d="m15 18-6-6 6-6"></path>
+									</svg>
+								</button>
+								<button
+									type="button"
+									id="camping-areas-next"
+									aria-label={t.camping.index.areasNextLabel}
+									class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-dark/15 text-dark transition-colors hover:bg-dark hover:text-highlight"
+								>
+									<svg
+										aria-hidden="true"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										class="h-5 w-5"
+									>
+										<path d="m9 18 6-6-6-6"></path>
+									</svg>
+								</button>
+							</div>
 						</div>
 
 						<p id="camping-tagline" class="text-base text-dark/85 md:text-lg">
@@ -179,6 +274,50 @@ const campingsJson = JSON.stringify(
 						<p id="camping-description" class="leading-relaxed text-dark/70">
 							{initialCamping.description}
 						</p>
+						<ul id="camping-spots-list" class="flex flex-wrap gap-1.5">
+							{
+								initialArea.spots.map((spot) => (
+									<li class="rounded-full bg-dark/10 px-2.5 py-1 text-xs text-dark/90">
+										{spot}
+									</li>
+								))
+							}
+						</ul>
+						<p
+							id="camping-pricing-note"
+							class="rounded-xl bg-highlight p-4 text-sm leading-relaxed font-medium text-dark"
+						>
+							{initialCamping.pricingNote}
+						</p>
+						<div class="flex flex-wrap items-center gap-3">
+							<a
+								id="camping-explore"
+								href={initialArea.href}
+								class="inline-flex w-fit items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+							>
+								{t.camping.index.exploreAreaLabel}
+							</a>
+							<a
+								id="camping-category-link"
+								href={initialCamping.exploreHref}
+								class="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+							>
+								{t.camping.index.exploreLabel}
+								<svg
+									aria-hidden="true"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									class="h-4 w-4"
+								>
+									<path d="M5 12h14"></path>
+									<path d="m12 5 7 7-7 7"></path>
+								</svg>
+							</a>
+						</div>
 					</div>
 				</div>
 
@@ -208,17 +347,27 @@ const campingsJson = JSON.stringify(
 		id="camping-data"
 		type="application/json"
 		data-locale={locale}
-		data-price-suffix={t.camping.index.priceSuffix}
 		set:html={campingsJson}
 	/>
 	<script>
+		interface CampingAreaJson {
+			id: string;
+			name: string;
+			spots: string[];
+			spotsLabel: string;
+			href: string;
+		}
+
 		interface CampingJson {
 			id: string;
 			tabLabel: string;
 			name: string;
 			tagline: string;
 			description: string;
-			price: number;
+			spotsLabel: string;
+			areas: CampingAreaJson[];
+			pricingNote: string;
+			exploreHref: string;
 			amenities: string[];
 			perfectFor: string[];
 		}
@@ -226,6 +375,8 @@ const campingsJson = JSON.stringify(
 		type CampingWindow = Window & {
 			__campingTabClickBound?: boolean;
 			__campingPageLoadBound?: boolean;
+			__campingArrowsBound?: boolean;
+			__campingState?: { categoryId: string; areaIndex: number };
 		};
 
 		const campingWindow = window as CampingWindow;
@@ -250,29 +401,60 @@ const campingsJson = JSON.stringify(
 			}
 		}
 
-		function getLocaleAndSuffix() {
-			const dataElement = document.getElementById("camping-data");
-			const loc = dataElement?.dataset.locale ?? "id";
-			const priceSuffix = dataElement?.dataset.priceSuffix ?? "";
-			return { loc, priceSuffix };
+		function getState(campings: CampingJson[]): {
+			categoryId: string;
+			areaIndex: number;
+		} {
+			const fallback = { categoryId: campings[0].id, areaIndex: 0 };
+			const stored = campingWindow.__campingState;
+			if (!stored) return fallback;
+			const category = campings.find((item) => item.id === stored.categoryId);
+			if (!category) return fallback;
+			const areaIndex =
+				Number.isInteger(stored.areaIndex) &&
+				stored.areaIndex >= 0 &&
+				stored.areaIndex < category.areas.length
+					? stored.areaIndex
+					: 0;
+			return { categoryId: category.id, areaIndex };
 		}
 
-		function renderCamping(id: string): void {
+		function renderCamping(id: string, areaIndex = 0): void {
 			const campings = parseCampings();
 			if (!campings) return;
 
-			const { loc, priceSuffix } = getLocaleAndSuffix();
-			const currencyFormatter = new Intl.NumberFormat(
-				loc === "id" ? "id-ID" : "en-US",
-			);
-
 			const selected = campings.find((item) => item.id === id) ?? campings[0];
-			if (!selected) return;
+			if (!selected || selected.areas.length === 0) return;
 
+			const safeIndex =
+				Number.isInteger(areaIndex) &&
+				areaIndex >= 0 &&
+				areaIndex < selected.areas.length
+					? areaIndex
+					: 0;
+			const area = selected.areas[safeIndex];
+			campingWindow.__campingState = {
+				categoryId: selected.id,
+				areaIndex: safeIndex,
+			};
+
+			const eyebrowElement = document.getElementById("camping-area-eyebrow");
 			const nameElement = document.getElementById("camping-name");
-			const priceElement = document.getElementById("camping-price");
+			const spotsElement = document.getElementById("camping-spots");
+			const counterElement = document.getElementById("camping-counter");
+			const dotsElement = document.getElementById("camping-dots");
+			const spotsListElement = document.getElementById("camping-spots-list");
 			const taglineElement = document.getElementById("camping-tagline");
 			const descriptionElement = document.getElementById("camping-description");
+			const pricingNoteElement = document.getElementById(
+				"camping-pricing-note",
+			);
+			const exploreElement = document.getElementById(
+				"camping-explore",
+			) as HTMLAnchorElement | null;
+			const categoryLinkElement = document.getElementById(
+				"camping-category-link",
+			) as HTMLAnchorElement | null;
 			const amenitiesDotsElement = document.getElementById(
 				"camping-amenities-dots",
 			);
@@ -289,10 +471,40 @@ const campingsJson = JSON.stringify(
 				img.classList.toggle("opacity-0", !isActive);
 				img.classList.toggle("pointer-events-none", !isActive);
 			});
-			if (nameElement) nameElement.textContent = selected.name;
-			if (priceElement) {
-				priceElement.textContent = `Rp ${currencyFormatter.format(selected.price)}${priceSuffix}`;
+			if (eyebrowElement) {
+				const template =
+					eyebrowElement.getAttribute("data-part-of-template") ??
+					"Part of {category}";
+				eyebrowElement.textContent = template.replace(
+					"{category}",
+					selected.name,
+				);
 			}
+			if (nameElement) nameElement.textContent = area.name;
+			if (spotsElement) spotsElement.textContent = area.spotsLabel;
+			if (counterElement)
+				counterElement.textContent = `${safeIndex + 1} / ${selected.areas.length}`;
+			if (dotsElement) {
+				dotsElement.innerHTML = selected.areas
+					.map(
+						(_, dotIndex) =>
+							`<span data-camping-dot="${dotIndex}" class="h-1.5 rounded-full transition-all duration-300 ${dotIndex === safeIndex ? "w-6 bg-dark" : "w-1.5 bg-dark/20"}"></span>`,
+					)
+					.join("");
+			}
+			if (spotsListElement) {
+				spotsListElement.innerHTML = area.spots
+					.map(
+						(spot) =>
+							`<li class="rounded-full bg-dark/10 px-2.5 py-1 text-xs text-dark/90">${escapeHtml(spot)}</li>`,
+					)
+					.join("");
+			}
+			if (pricingNoteElement)
+				pricingNoteElement.textContent = selected.pricingNote;
+			if (exploreElement) exploreElement.setAttribute("href", area.href);
+			if (categoryLinkElement)
+				categoryLinkElement.setAttribute("href", selected.exploreHref);
 			if (taglineElement) taglineElement.textContent = selected.tagline;
 			if (descriptionElement)
 				descriptionElement.textContent = selected.description;
@@ -324,6 +536,19 @@ const campingsJson = JSON.stringify(
 			});
 		}
 
+		function stepArea(direction: 1 | -1): void {
+			const campings = parseCampings();
+			if (!campings) return;
+			const state = getState(campings);
+			const selected =
+				campings.find((item) => item.id === state.categoryId) ?? campings[0];
+			if (!selected) return;
+			const total = selected.areas.length;
+			if (total === 0) return;
+			const next = (state.areaIndex + direction + total) % total;
+			renderCamping(selected.id, next);
+		}
+
 		function onCampingTabClick(event: MouseEvent): void {
 			const rawTarget = event.target;
 			const el =
@@ -339,12 +564,34 @@ const campingsJson = JSON.stringify(
 			if (!id) return;
 
 			event.preventDefault();
-			renderCamping(id);
+			renderCamping(id, 0);
 		}
 
 		if (!campingWindow.__campingTabClickBound) {
 			campingWindow.__campingTabClickBound = true;
 			document.addEventListener("click", onCampingTabClick);
+		}
+
+		if (!campingWindow.__campingArrowsBound) {
+			campingWindow.__campingArrowsBound = true;
+			document.addEventListener("click", (event: MouseEvent) => {
+				const rawTarget = event.target;
+				const el =
+					rawTarget instanceof Element
+						? rawTarget
+						: rawTarget instanceof Node
+							? rawTarget.parentElement
+							: null;
+				const button = el?.closest("#camping-areas-prev, #camping-areas-next");
+				if (!button || !document.getElementById("camping-hero-visual")) return;
+				event.preventDefault();
+				stepArea(button.id === "camping-areas-next" ? 1 : -1);
+			});
+			document.addEventListener("keydown", (event: KeyboardEvent) => {
+				if (!document.getElementById("camping-hero-visual")) return;
+				if (event.key === "ArrowRight") stepArea(1);
+				if (event.key === "ArrowLeft") stepArea(-1);
+			});
 		}
 
 		if (!campingWindow.__campingPageLoadBound) {
@@ -353,7 +600,9 @@ const campingsJson = JSON.stringify(
 				if (!document.getElementById("camping-hero-visual")) return;
 				const campings = parseCampings();
 				if (!campings) return;
-				renderCamping(campings[0].id);
+				const state = campingWindow.__campingState;
+				if (state) renderCamping(state.categoryId, state.areaIndex);
+				else renderCamping(campings[0].id, 0);
 			});
 		}
 	</script>
