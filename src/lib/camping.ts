@@ -381,7 +381,7 @@ export const campings: CampingContent[] = [
 		gallery: [CAMPING_PLACEHOLDER],
 		areas: [
 			{
-				id: "sengon",
+				id: "spot-sengon",
 				name: "Spot Sengon",
 				spots: ["Spot Sengon"],
 			},
@@ -405,6 +405,27 @@ export const campings: CampingContent[] = [
 
 export function getCampingById(id: string): CampingContent | undefined {
 	return campings.find((camping) => camping.id === id);
+}
+
+export interface CampingAreaResult {
+	camping: CampingContent;
+	area: CampingArea;
+}
+
+/** Find an individual area (e.g. `cemara-riverside`) across all categories. */
+export function getCampingAreaById(areaId: string): CampingAreaResult | undefined {
+	for (const camping of campings) {
+		const area = camping.areas.find((item) => item.id === areaId);
+		if (area) return { camping, area };
+	}
+	return undefined;
+}
+
+/** Flat list of all individual areas with their parent category — used for index carousel + static paths. */
+export function getAllCampingAreas(): CampingAreaResult[] {
+	return campings.flatMap((camping) =>
+		camping.areas.map((area) => ({ camping, area })),
+	);
 }
 
 /** Total bookable spots inside a category (sum of its areas). */

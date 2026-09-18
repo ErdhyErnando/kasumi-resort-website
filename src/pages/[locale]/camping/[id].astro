@@ -1,18 +1,27 @@
 ---
 import { Image } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { campings, campingSpotsCount, getCampingById } from "@/lib/camping";
+import {
+	campings,
+	campingSpotsCount,
+	getAllCampingAreas,
+	getCampingAreaById,
+	getCampingById,
+} from "@/lib/camping";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 import { useTranslations } from "@/i18n/ui";
 import type { Locale } from "@/i18n/utils";
 
 export function getStaticPaths() {
 	const locales: Locale[] = ["id", "en"];
-	return locales.flatMap((locale) =>
-		campings.map((camping) => ({
+	return locales.flatMap((locale) => [
+		...campings.map((camping) => ({
 			params: { locale, id: camping.id },
 		})),
-	);
+		...getAllCampingAreas().map(({ area }) => ({
+			params: { locale, id: area.id },
+		})),
+	]);
 }
 
 const { locale } = Astro.params as { locale: Locale };
@@ -20,8 +29,9 @@ const t = useTranslations(locale);
 
 const { id } = Astro.params;
 const camping = getCampingById(id ?? "");
+const areaResult = camping ? undefined : getCampingAreaById(id ?? "");
 
-if (!camping) {
+if (!camping && !areaResult) {
 	return Astro.redirect(`/${locale}/camping`);
 }
 
@@ -36,186 +46,404 @@ function formatMessage(
 function formatSpotsValue(template: string, count: number): string {
 	return template.replace("{count}", count.toString());
 }
-
-const whatsappMsg = formatMessage(t.camping.detail.whatsappMessage, {
-	campingName: camping.name[locale],
-});
-const whatsappUrl = getWhatsAppUrl(whatsappMsg);
-const totalSpots = campingSpotsCount(camping);
-const galleryRowImages = camping.gallery.slice(1);
 ---
 
-<BaseLayout
-	title={camping.name[locale]}
-	description={camping.description[locale]}
-	image={camping.heroImage.src}
->
-	<section class="px-6 pt-32 pb-20" transition:animate="fade">
-		<div class="mx-auto max-w-6xl space-y-10">
-			<a
-				href={`/${locale}/camping`}
-				class="inline-block text-sm font-medium text-dark/60 hover:text-dark"
-			>
-				{t.camping.detail.breadcrumbHome} / {t.camping.detail.breadcrumbCamping} /
-				{camping.name[locale]}
-			</a>
+{
+	camping && (
+		<BaseLayout
+			title={camping.name[locale]}
+			description={camping.description[locale]}
+			image={camping.heroImage.src}
+		>
+			<section class="px-6 pt-32 pb-20" transition:animate="fade">
+				<div class="mx-auto max-w-6xl space-y-10">
+					<a
+						href={`/${locale}/camping`}
+						class="inline-block text-sm font-medium text-dark/60 hover:text-dark"
+					>
+						{t.camping.detail.breadcrumbHome} /{" "}
+						{t.camping.detail.breadcrumbCamping} / {camping.name[locale]}
+					</a>
 
-			<Image
-				src={camping.heroImage}
-				alt={camping.name[locale]}
-				widths={[640, 768, 1024]}
-				sizes="100vw"
-				loading="eager"
-				fetchpriority="high"
-				class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
-			/>
+					<Image
+						src={camping.heroImage}
+						alt={camping.name[locale]}
+						widths={[640, 768, 1024]}
+						sizes="100vw"
+						loading="eager"
+						fetchpriority="high"
+						class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
+					/>
 
-			<div class="grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
-				<article class="space-y-6">
-					<div>
-						<h1 class="font-heading text-4xl text-dark md:text-5xl">
-							{camping.name[locale]}
-						</h1>
-						<p class="mt-3 text-lg text-dark/85">{camping.tagline[locale]}</p>
-					</div>
-					<p class="leading-relaxed text-dark/75">
-						{camping.description[locale]}
-					</p>
+					<div class="grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
+						<article class="space-y-6">
+							<div>
+								<h1 class="font-heading text-4xl text-dark md:text-5xl">
+									{camping.name[locale]}
+								</h1>
+								<p class="mt-3 text-lg text-dark/85">{camping.tagline[locale]}</p>
+							</div>
+							<p class="leading-relaxed text-dark/75">
+								{camping.description[locale]}
+							</p>
 
-					<div class="grid grid-cols-2 gap-4">
-						<div class="rounded-xl bg-highlight p-4">
-							<p class="text-xs uppercase tracking-wide text-dark/60">
-								{t.camping.detail.spots}
-							</p>
-							<p class="mt-1 text-xl font-semibold text-dark">
-								{formatSpotsValue(t.camping.index.spotsValue, totalSpots)}
-							</p>
-						</div>
-						<div class="rounded-xl bg-highlight p-4">
-							<p class="text-xs uppercase tracking-wide text-dark/60">
-								{t.camping.detail.pricing}
-							</p>
-							<p class="mt-1 text-sm leading-relaxed font-medium text-dark">
+							<div class="grid grid-cols-2 gap-4">
+								<div class="rounded-xl bg-highlight p-4">
+									<p class="text-xs uppercase tracking-wide text-dark/60">
+										{t.camping.detail.spots}
+									</p>
+									<p class="mt-1 text-xl font-semibold text-dark">
+										{formatSpotsValue(
+											t.camping.index.spotsValue,
+											campingSpotsCount(camping),
+										)}
+									</p>
+								</div>
+								<div class="rounded-xl bg-highlight p-4">
+									<p class="text-xs uppercase tracking-wide text-dark/60">
+										{t.camping.detail.pricing}
+									</p>
+									<p class="mt-1 text-sm leading-relaxed font-medium text-dark">
+										{camping.pricingNote[locale]}
+									</p>
+								</div>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.areasLabel}
+								</h2>
+								<div class="mt-4 space-y-5">
+									{camping.areas.map((area) => (
+										<div
+											id={area.id}
+											class="scroll-mt-28 rounded-xl border border-dark/10 p-4"
+										>
+											<div class="flex flex-wrap items-baseline justify-between gap-2">
+												<h3 class="text-lg font-semibold text-dark">
+													{area.name}
+												</h3>
+												<p class="text-sm font-medium text-dark/60">
+													{formatSpotsValue(
+														t.camping.index.spotsValue,
+														area.spots.length,
+													)}
+												</p>
+											</div>
+											<ul class="mt-3 flex flex-wrap gap-2">
+												{area.spots.map((spot) => (
+													<li class="rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
+														{spot}
+													</li>
+												))}
+											</ul>
+											<a
+												href={`/${locale}/camping/${area.id}`}
+												class="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+											>
+												{t.camping.index.areaLinkLabel}
+												<svg
+													aria-hidden="true"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													stroke-width="2"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													class="h-4 w-4"
+												>
+													<path d="M5 12h14" />
+													<path d="m12 5 7 7-7 7" />
+												</svg>
+											</a>
+										</div>
+									))}
+								</div>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.amenities}
+								</h2>
+								<ul class="mt-4 grid gap-2 sm:grid-cols-2">
+									{camping.amenities.map((amenity) => (
+										<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
+											{amenity[locale]}
+										</li>
+									))}
+								</ul>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.perfectFor}
+								</h2>
+								<ul class="mt-4 grid gap-2 sm:grid-cols-2">
+									{camping.perfectFor.map((item) => (
+										<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
+											{item[locale]}
+										</li>
+									))}
+								</ul>
+							</div>
+						</article>
+
+						<aside class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
+							<p class="text-sm text-dark/60">{t.camping.detail.pricing}</p>
+							<p class="mt-2 leading-relaxed font-semibold text-dark">
 								{camping.pricingNote[locale]}
 							</p>
+							<a
+								href={getWhatsAppUrl(
+									formatMessage(t.camping.detail.whatsappMessage, {
+										campingName: camping.name[locale],
+									}),
+								)}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+							>
+								{t.camping.detail.bookingButton}
+							</a>
+						</aside>
+					</div>
+
+					{camping.gallery.slice(1).length > 0 && (
+						<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+							{camping.gallery.slice(1).map((src, index) => (
+								<Image
+									src={src}
+									alt={`${camping.name[locale]} — ${index + 2}`}
+									widths={[300, 600]}
+									sizes="(max-width: 640px) 50vw, 25vw"
+									loading="lazy"
+									class="aspect-3/4 w-full rounded-xl object-cover"
+								/>
+							))}
 						</div>
-					</div>
-
-					<div>
-						<h2 class="font-heading text-2xl text-dark">
-							{t.camping.detail.areasLabel}
-						</h2>
-						<div class="mt-4 space-y-5">
-							{
-								camping.areas.map((area) => (
-									<div
-										id={area.id}
-										class="scroll-mt-28 rounded-xl border border-dark/10 p-4"
-									>
-										<div class="flex flex-wrap items-baseline justify-between gap-2">
-											<h3 class="text-lg font-semibold text-dark">
-												{area.name}
-											</h3>
-											<p class="text-sm font-medium text-dark/60">
-												{formatSpotsValue(
-													t.camping.index.spotsValue,
-													area.spots.length,
-												)}
-											</p>
-										</div>
-										<ul class="mt-3 flex flex-wrap gap-2">
-											{area.spots.map((spot) => (
-												<li class="rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
-													{spot}
-												</li>
-											))}
-										</ul>
-									</div>
-								))
-							}
-						</div>
-					</div>
-
-					<div>
-						<h2 class="font-heading text-2xl text-dark">
-							{t.camping.detail.amenities}
-						</h2>
-						<ul class="mt-4 grid gap-2 sm:grid-cols-2">
-							{
-								camping.amenities.map((amenity) => (
-									<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
-										{amenity[locale]}
-									</li>
-								))
-							}
-						</ul>
-					</div>
-
-					<div>
-						<h2 class="font-heading text-2xl text-dark">
-							{t.camping.detail.perfectFor}
-						</h2>
-						<ul class="mt-4 grid gap-2 sm:grid-cols-2">
-							{
-								camping.perfectFor.map((item) => (
-									<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
-										{item[locale]}
-									</li>
-								))
-							}
-						</ul>
-					</div>
-				</article>
-
-				<aside
-					class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28"
-				>
-					<p class="text-sm text-dark/60">
-						{t.camping.detail.pricing}
-					</p>
-					<p class="mt-2 leading-relaxed font-semibold text-dark">
-						{camping.pricingNote[locale]}
-					</p>
+					)}
+				</div>
+				<div class="mt-32 flex flex-col items-center justify-between md:mt-44 lg:mt-52">
+					<h2 class="text-2xl font-bold text-balance text-center">
+						{t.camping.detail.ctaHeadline}
+					</h2>
 					<a
-						href={whatsappUrl}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+						href={getWhatsAppUrl(
+							formatMessage(t.camping.detail.whatsappMessage, {
+								campingName: camping.name[locale],
+							}),
+						)}
+						class="mt-4 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
 					>
-						{t.camping.detail.bookingButton}
+						{t.camping.detail.ctaButton}
 					</a>
-				</aside>
-			</div>
+				</div>
+			</section>
+		</BaseLayout>
+	)
+}
 
-			{
-				galleryRowImages.length > 0 && (
-					<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-						{galleryRowImages.map((src, index) => (
-							<Image
-								src={src}
-								alt={`${camping.name[locale]} — ${index + 2}`}
-								widths={[300, 600]}
-								sizes="(max-width: 640px) 50vw, 25vw"
-								loading="lazy"
-								class="aspect-3/4 w-full rounded-xl object-cover"
-							/>
-						))}
-					</div>
-				)
-			}
-		</div>
-		<div
-			class="mt-32 flex flex-col items-center justify-between md:mt-44 lg:mt-52"
+{
+	areaResult && (
+		<BaseLayout
+			title={areaResult.area.name}
+			description={areaResult.camping.description[locale]}
+			image={areaResult.camping.heroImage.src}
 		>
-			<h2 class="text-2xl font-bold text-balance text-center">
-				{t.camping.detail.ctaHeadline}
-			</h2>
-			<a
-				href={whatsappUrl}
-				class="mt-4 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
-			>
-				{t.camping.detail.ctaButton}
-			</a>
-		</div>
-	</section>
-</BaseLayout>
+			<section class="px-6 pt-32 pb-20" transition:animate="fade">
+				<div class="mx-auto max-w-6xl space-y-10">
+					<nav
+						aria-label="Breadcrumb"
+						class="text-sm font-medium text-dark/60"
+					>
+						<a href={`/${locale}/camping`} class="hover:text-dark">
+							{t.camping.detail.breadcrumbHome} / {t.camping.detail.breadcrumbCamping}
+						</a>
+						<span aria-hidden="true"> / </span>
+						<a
+							href={`/${locale}/camping/${areaResult.camping.id}`}
+							class="hover:text-dark"
+						>
+							{areaResult.camping.name[locale]}
+						</a>
+						<span aria-hidden="true"> / </span>
+						<span class="text-dark">{areaResult.area.name}</span>
+					</nav>
+
+					<Image
+						src={areaResult.camping.heroImage}
+						alt={areaResult.area.name}
+						widths={[640, 768, 1024]}
+						sizes="100vw"
+						loading="eager"
+						fetchpriority="high"
+						class="aspect-video h-[40svh] w-full rounded-2xl object-cover"
+					/>
+
+					<div class="grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
+						<article class="space-y-6">
+							<div>
+								<p class="text-xs font-semibold tracking-widest text-dark/50 uppercase">
+									{formatMessage(t.camping.index.partOfLabel, {
+										category: areaResult.camping.name[locale],
+									})}
+								</p>
+								<h1 class="font-heading mt-2 text-4xl text-dark md:text-5xl">
+									{areaResult.area.name}
+								</h1>
+								<p class="mt-3 text-lg text-dark/85">
+									{areaResult.camping.tagline[locale]}
+								</p>
+							</div>
+							<p class="leading-relaxed text-dark/75">
+								{areaResult.camping.description[locale]}
+							</p>
+
+							<div class="grid grid-cols-2 gap-4">
+								<div class="rounded-xl bg-highlight p-4">
+									<p class="text-xs uppercase tracking-wide text-dark/60">
+										{t.camping.detail.spots}
+									</p>
+									<p class="mt-1 text-xl font-semibold text-dark">
+										{formatSpotsValue(
+											t.camping.index.spotsValue,
+											areaResult.area.spots.length,
+										)}
+									</p>
+								</div>
+								<div class="rounded-xl bg-highlight p-4">
+									<p class="text-xs uppercase tracking-wide text-dark/60">
+										{t.camping.detail.pricing}
+									</p>
+									<p class="mt-1 text-sm leading-relaxed font-medium text-dark">
+										{areaResult.camping.pricingNote[locale]}
+									</p>
+								</div>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.spots}
+								</h2>
+								<ul class="mt-4 flex flex-wrap gap-2">
+									{areaResult.area.spots.map((spot) => (
+										<li class="rounded-full bg-dark/10 px-3 py-1.5 text-sm text-dark/90">
+											{spot}
+										</li>
+									))}
+								</ul>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.amenities}
+								</h2>
+								<ul class="mt-4 grid gap-2 sm:grid-cols-2">
+									{areaResult.camping.amenities.map((amenity) => (
+										<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
+											{amenity[locale]}
+										</li>
+									))}
+								</ul>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.perfectFor}
+								</h2>
+								<ul class="mt-4 grid gap-2 sm:grid-cols-2">
+									{areaResult.camping.perfectFor.map((item) => (
+										<li class="rounded-lg border border-dark/10 px-3 py-2 text-sm text-dark/75">
+											{item[locale]}
+										</li>
+									))}
+								</ul>
+							</div>
+
+							<div>
+								<h2 class="font-heading text-2xl text-dark">
+									{t.camping.detail.areasLabel}
+								</h2>
+								<div class="mt-4 grid gap-3 sm:grid-cols-2">
+									{areaResult.camping.areas
+										.filter((sibling) => sibling.id !== areaResult.area.id)
+										.map((sibling) => (
+											<a
+												href={`/${locale}/camping/${sibling.id}`}
+												class="group rounded-xl border border-dark/10 p-4 transition-colors hover:border-dark/25 hover:bg-white"
+											>
+												<p class="font-semibold text-dark group-hover:underline">
+													{sibling.name}
+												</p>
+												<p class="mt-1 text-sm text-dark/60">
+													{formatSpotsValue(
+														t.camping.index.spotsValue,
+														sibling.spots.length,
+													)}
+												</p>
+											</a>
+										))}
+								</div>
+							</div>
+						</article>
+
+						<aside class="h-fit rounded-2xl border border-dark/10 bg-white p-6 shadow-sm lg:sticky lg:top-28">
+							<p class="text-sm text-dark/60">{t.camping.detail.pricing}</p>
+							<p class="mt-2 leading-relaxed font-semibold text-dark">
+								{areaResult.camping.pricingNote[locale]}
+							</p>
+							<a
+								href={getWhatsAppUrl(
+									formatMessage(t.camping.detail.whatsappMessage, {
+										campingName: areaResult.area.name,
+									}),
+								)}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="mt-6 inline-flex w-full items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+							>
+								{t.camping.detail.bookingButton}
+							</a>
+							<a
+								href={`/${locale}/camping/${areaResult.camping.id}`}
+								class="mt-3 inline-flex w-full items-center justify-center text-sm font-semibold text-primary hover:underline"
+							>
+								{t.camping.index.exploreLabel}
+							</a>
+						</aside>
+					</div>
+
+					{areaResult.camping.gallery.slice(1).length > 0 && (
+						<div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+							{areaResult.camping.gallery.slice(1).map((src, index) => (
+								<Image
+									src={src}
+									alt={`${areaResult.area.name} — ${index + 2}`}
+									widths={[300, 600]}
+									sizes="(max-width: 640px) 50vw, 25vw"
+									loading="lazy"
+									class="aspect-3/4 w-full rounded-xl object-cover"
+								/>
+							))}
+						</div>
+					)}
+				</div>
+				<div class="mt-32 flex flex-col items-center justify-between md:mt-44 lg:mt-52">
+					<h2 class="text-2xl font-bold text-balance text-center">
+						{t.camping.detail.ctaHeadline}
+					</h2>
+					<a
+						href={getWhatsAppUrl(
+							formatMessage(t.camping.detail.whatsappMessage, {
+								campingName: areaResult.area.name,
+							}),
+						)}
+						class="mt-4 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+					>
+						{t.camping.detail.ctaButton}
+					</a>
+				</div>
+			</section>
+		</BaseLayout>
+	)
+}

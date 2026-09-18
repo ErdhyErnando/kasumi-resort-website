@@ -61,6 +61,8 @@ export type UiTranslations = {
 			introText: string;
 			perfectFor: string;
 			exploreLabel: string;
+			exploreAreaLabel: string;
+			partOfLabel: string;
 			spotsValue: string;
 			pricingNoteTitle: string;
 			areasLabel: string;
@@ -262,6 +264,8 @@ const id: UiTranslations = {
 
 			perfectFor: "Cocok Untuk",
 			exploreLabel: "Lihat Detail Kategori",
+			exploreAreaLabel: "Lihat Detail Area",
+			partOfLabel: "Bagian dari {category}",
 			spotsValue: "{count} spot",
 			pricingNoteTitle: "Harga dinamis — tanya via WhatsApp",
 			areasLabel: "Area di kategori ini",
@@ -481,6 +485,8 @@ const en: UiTranslations = {
 				"Whether you prefer camping beneath tall forest or waking up to wide mountain views.",
 			perfectFor: "Perfect For",
 			exploreLabel: "View category details",
+			exploreAreaLabel: "View area details",
+			partOfLabel: "Part of {category}",
 			spotsValue: "{count} pitches",
 			pricingNoteTitle: "Dynamic pricing — ask via WhatsApp",
 			areasLabel: "Areas in this category",
